@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainLayout from '@/layouts/Main.layout.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+import Games from '@/pages/Games.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -7,7 +8,13 @@ const router = createRouter({
     {
       path: '/',
       component: MainLayout,
-      children: [],
+      redirect: '/games',
+      children: [
+        {
+          path: '/games',
+          component: () => Games,
+        },
+      ],
     },
   ],
 })
