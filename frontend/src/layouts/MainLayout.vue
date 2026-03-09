@@ -3,7 +3,7 @@
     <q-header class="header">
       <q-toolbar class="toolbar">
         <q-avatar>
-          <img src="../../public/logo.png" />
+          <img src="/logo.png" />
         </q-avatar>
         <q-item>
           <q-item-section>
