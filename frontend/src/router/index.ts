@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
 import Games from '@/pages/Games.vue'
+import Offers from '@/pages/Offers.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,6 +14,10 @@ const router = createRouter({
         {
           path: '/games',
           component: () => Games,
+        },
+        {
+          path: '/offers',
+          component: () => Offers,
         },
       ],
     },

@@ -1,119 +1,58 @@
 <template>
-  <div class="offer_menu">
-    <p>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        label="Rechargement"
-        icon="electric_bolt"
-        :style="tab == 'rechargement' ? { color: 'blue' } : {}"
-        @click="() => (tab = 'rechargement')"
-      />
-    </p>
-    <p>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        label="Abonnement"
-        icon="electric_bolt"
-        :style="tab == 'abonnement' ? { color: 'blue' } : {}"
-        @click="() => (tab = 'abonnement')"
-      />
-    </p>
-    <p>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        label="Largage"
-        icon="electric_bolt"
-        :style="tab == 'largage' ? { color: 'blue' } : {}"
-        @click="() => (tab = 'largage')"
-      />
-    </p>
-    <p>
-      <q-btn
-        no-caps
-        outline
-        rounded
-        label="Level up"
-        icon="electric_bolt"
-        :style="tab == 'level up' ? { color: 'blue' } : {}"
-        @click="() => (tab = 'level up')"
-      />
-    </p>
-  </div>
-  <q-tab-panels v-model="tab" animated>
-    <q-tab-panel name="rechargement">
-      <div class="text-h6">rechargement</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </q-tab-panel>
-
-    <q-tab-panel name="alarms">
-      <div class="text-h6">Alarms</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </q-tab-panel>
-
-    <q-tab-panel name="movies">
-      <div class="text-h6">Movies</div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </q-tab-panel>
-  </q-tab-panels>
-
+  <p class="text-h5 text-bold q-mx-md">Jeux disponibles</p>
   <div class="gamelist">
-    <div v-for="i in 10" :key="i" class="q-ma-md">
-      <q-card flat bordered class="game">
-        <q-card-section class="q-pa-none">
-          <q-img
-            class="image"
-            src="https://wallpapercat.com/w/full/f/a/4/1868530-1920x1200-desktop-hd-garena-free-fire-background.jpg"
-          />
-          <p class="text-center text-h6 text-bold">Free Fire</p>
-        </q-card-section>
-      </q-card>
+    <div v-for="game in games" :key="game.id" class="q-ma-md">
+      <q-btn flat no-caps class="q-pa-none game" :to="`/offers?game_id=${game.id}`">
+        <q-card flat bordered class="fit">
+          <q-card-section class="q-pa-none">
+            <q-img class="image" :src="game.image" />
+            <p class="text-center text-h6 text-bold">{{ game.name }}</p>
+          </q-card-section>
+        </q-card>
+      </q-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-const slide = ref(1)
-const tab = ref('rechargement')
+
+const games = ref([
+  {
+    id: '1',
+    name: 'Free Fire',
+    image:
+      'https://wallpapercat.com/w/full/f/a/4/1868530-1920x1200-desktop-hd-garena-free-fire-background.jpg',
+  },
+  {
+    id: '2',
+    name: 'PUBG',
+    image: 'https://wallpapercave.com/wp/wp2208719.jpg',
+  },
+  {
+    id: '3',
+    name: 'Clash of Clans',
+    image: 'https://wallpapers.com/images/hd/clash-of-clans-the-wizard-an0jszy0voljyl8p.jpgs',
+  },
+])
 </script>
 
-<style lang="css" scoped>
+<style scoped lang="css">
 .gamelist {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: left;
 }
 
 .game {
   width: 300px;
   max-width: 350px;
-  border-radius: 16px;
   background-color: #ecf8f8;
 }
 
 .image {
-  border-radius: 12px 12px 0px 0px;
   background-size: cover !important;
   background-position: center top !important;
-  max-height: 120px;
-}
-
-.carousel {
-  background-size: cover !important;
-  background-position: center top !important;
-}
-
-.offer_menu {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  max-height: 150px;
 }
 </style>
