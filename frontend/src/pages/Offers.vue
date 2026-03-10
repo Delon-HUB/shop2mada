@@ -13,7 +13,7 @@
     </p>
   </div>
   <q-tab-panels v-model="tab" animated>
-    <q-tab-panel name="rechargement" class="gamelist">
+    <q-tab-panel v-for="offer in offers" :name="offer.name" class="gamelist">
       <q-card flat bordered class="article q-ma-md" v-for="i in 10" :key="i">
         <q-card-section
           class="q-pa-none"
