@@ -1,0 +1,7 @@
+export enum ECategory {
+  ACTION = "ACTION",
+  ADVENTURE = "ADVENTURE",
+  RACING = "RACING",
+  SPORTS = "SPORTS",
+  STRATEGY = "STRATEGY",
+}
