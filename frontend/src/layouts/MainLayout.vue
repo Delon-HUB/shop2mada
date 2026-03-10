@@ -58,7 +58,7 @@
         <div style="display: flex; gap: 20px; justify-content: center">
           <div><router-view /></div>
           <div
-            v-if="panier && $q.screen.gt.md"
+            v-if="breading && $q.screen.gt.md"
             style="max-width: 25%; max-height: 600px; overflow: auto"
           >
             <q-card bordered>
@@ -75,7 +75,7 @@
                 quaerat odit veniam veritatis minus, illum officiis cupiditate tenetur quo!
               </q-card-section>
               <q-card-actions align="center">
-                <q-btn rounded  color="blue" bordered class="fit">Acheter</q-btn>
+                <q-btn rounded color="blue" bordered class="fit">Acheter</q-btn>
               </q-card-actions>
             </q-card>
           </div>
@@ -88,7 +88,7 @@
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 const covers = ref(1)
-const panier = ref(true)
+const breading = ref(true)
 
 const $q = useQuasar()
 </script>
