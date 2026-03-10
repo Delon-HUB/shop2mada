@@ -3,18 +3,14 @@
   <div class="gamelist">
     <div v-for="game in games" :key="game.id" class="q-ma-md">
       <q-btn flat no-caps class="q-pa-none game" :to="`/offers?game_id=${game.id}`">
-        <q-card flat bordered class="fit">
-          <q-card-section class="q-pa-none">
-            <q-img class="image" :src="game.image" />
-            <p class="text-center text-h6 text-bold">{{ game.name }}</p>
-          </q-card-section>
-        </q-card>
+        <game :game="game" />
       </q-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Game from '@/components/Game.vue'
 import { ref } from 'vue'
 
 const games = ref([
