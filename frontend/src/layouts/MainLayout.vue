@@ -55,15 +55,28 @@
 
     <q-page-container>
       <q-page class="q-pa-none q-pt-md">
-        <div style="display: flex; gap: 20px; justify-content: center">
+        <div style="display: flex; justify-content: center">
           <div><router-view /></div>
           <div
-            v-if="breading && $q.screen.gt.md"
+            v-if="shoppingCart && $q.screen.gt.md"
             style="max-width: 25%; max-height: 600px; overflow: auto"
           >
-            <q-card bordered>
-              <q-card-section>
-                PANIER <br />
+            <q-card bordered class="q-mx-md q-mb-md">
+              <q-card-section class="q-pt-none">
+                <q-item class="q-pa-none">
+                  <q-item-section>
+                    <q-item-label class="text-bold text-h6"
+                      ><q-icon name="shopping_cart" color="blue" />Panier</q-item-label
+                    >
+                  </q-item-section>
+                  <q-space />
+                  <q-item-section>
+                    <q-item-label class="text-right"
+                      ><q-btn flat icon-right="delete" color="red"
+                    /></q-item-label>
+                  </q-item-section>
+                </q-item>
+                <q-separator />
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus ad, voluptatem
                 nulla aliquid dignissimos dolore quibusdam, corporis ex quo, magni praesentium ipsa
                 odio provident iusto quidem minima quos rem doloribus a non aut deserunt! Vitae
@@ -88,7 +101,7 @@
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 const covers = ref(1)
-const breading = ref(true)
+const shoppingCart = ref(true)
 
 const $q = useQuasar()
 </script>

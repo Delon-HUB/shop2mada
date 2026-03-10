@@ -6,9 +6,9 @@
         outline
         rounded
         :label="offer.name"
-        icon="electric_bolt"
         :style="tab == offer.name ? { color: 'blue' } : {}"
         @click="() => (tab = offer.name)"
+        class="text-bold text-caption"
       />
     </p>
   </div>
@@ -38,7 +38,7 @@ const offers = ref([
   {
     id: '1',
     game_id: '1',
-    name: 'rechargement',
+    name: 'Rechargement',
     articles: [
       {
         id: '1',
@@ -62,7 +62,7 @@ const offers = ref([
   {
     id: '3',
     game_id: '1',
-    name: 'abonnement',
+    name: 'Abonnement',
     articles: [
       {
         id: '1',
@@ -74,7 +74,7 @@ const offers = ref([
   {
     id: '4',
     game_id: '1',
-    name: 'largage',
+    name: 'Largage',
     articles: [
       {
         id: '1',
