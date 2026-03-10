@@ -55,14 +55,42 @@
 
     <q-page-container>
       <q-page class="q-pa-none q-pt-md">
-        <router-view />
+        <div style="display: flex; gap: 20px; justify-content: center">
+          <div><router-view /></div>
+          <div
+            v-if="panier && $q.screen.gt.md"
+            style="max-width: 25%; max-height: 600px; overflow: auto"
+          >
+            <q-card bordered>
+              <q-card-section>
+                PANIER <br />
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Temporibus ad, voluptatem
+                nulla aliquid dignissimos dolore quibusdam, corporis ex quo, magni praesentium ipsa
+                odio provident iusto quidem minima quos rem doloribus a non aut deserunt! Vitae
+                aperiam distinctio sed eligendi! Voluptatem temporibus quas culpa, nesciunt porro
+                architecto, earum cumque pariatur possimus natus soluta maiores sint, laborum dolore
+                enim expedita fugiat tempore. Enim temporibus ut impedit. Enim doloremque eos
+                incidunt. Eligendi velit amet magnam sequi quidem neque vero illo, error tempora
+                repellendus id, adipisci facere dolorem, cumque corrupti cum. Tempora sequi, quis
+                quaerat odit veniam veritatis minus, illum officiis cupiditate tenetur quo!
+              </q-card-section>
+              <q-card-actions align="center">
+                <q-btn rounded  color="blue" bordered class="fit">Acheter</q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
+        </div>
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 <script setup lang="ts">
+import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 const covers = ref(1)
+const panier = ref(true)
+
+const $q = useQuasar()
 </script>
 
 <style lang="css" scoped>
