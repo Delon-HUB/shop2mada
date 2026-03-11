@@ -17,7 +17,7 @@
         </q-item>
       </q-toolbar>
 
-      <q-card flat class="q-ma-md q-mb-none cover">
+      <q-card flat class="cover q-ma-md q-mb-none">
         <q-carousel
           v-model="covers"
           padding
@@ -54,14 +54,14 @@
     </q-header>
 
     <q-page-container>
-      <q-page class="q-pa-none q-pt-md">
-        <div style="display: flex; justify-content: center">
-          <div><router-view /></div>
+      <q-page class="q-pa-md">
+        <div class="split">
+          <div class="fit"><router-view /></div>
           <div
             v-if="shoppingCart && $q.screen.gt.md"
             style="max-width: 25%; max-height: 600px; overflow: auto"
           >
-            <q-card bordered class="q-mx-md q-mb-md">
+            <q-card flat bordered>
               <q-card-section class="q-pt-none">
                 <q-item class="q-pa-none">
                   <q-item-section>
@@ -88,7 +88,7 @@
                 quaerat odit veniam veritatis minus, illum officiis cupiditate tenetur quo!
               </q-card-section>
               <q-card-actions align="center">
-                <q-btn rounded color="blue" bordered class="fit">Acheter</q-btn>
+                <q-btn no-caps color="blue" class="fit">Acheter</q-btn>
               </q-card-actions>
             </q-card>
           </div>
@@ -108,9 +108,8 @@ const $q = useQuasar()
 
 <style lang="css" scoped>
 .header {
-  background-color: white;
+  background-color: #f1f2eb;
 }
-
 .header .cover {
   border-radius: 18px;
 }
@@ -150,5 +149,11 @@ const $q = useQuasar()
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+
+.split {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 </style>

@@ -1,102 +1,52 @@
 <template>
-  <div class="offer">
-    <p v-for="offer in offers" :key="offer.id" class="text-h5 text-bold q-mx-md">
+  <q-card flat class="offer">
+    <p v-for="offer in offers" :key="offer.id" class="text-caption text-bold q-mx-md q-mt-md">
       <q-btn
         no-caps
-        outline
+        flat
         rounded
         :label="offer.name"
-        :style="tab == offer.name ? { color: 'blue' } : {}"
-        @click="() => (tab = offer.name)"
         class="text-bold text-caption"
+        :style="
+          tab == offer.name
+            ? { backgroundColor: 'blue', color: 'white' }
+            : { backgroundColor: 'lightgray', color: 'black' }
+        "
+        @click="() => (tab = offer.name)"
       />
     </p>
-  </div>
-  <q-tab-panels v-model="tab" animated>
-    <q-tab-panel v-for="offer in offers" :name="offer.name" class="gamelist">
-      <q-card flat bordered class="article q-ma-md" v-for="i in 10" :key="i">
-        <q-card-section
-          class="q-pa-none"
-          style="display: flex; flex-direction: column; align-items: center"
-        >
-          <p class="text-center text-overline text-blue">+100 diamonds</p>
-          <p class="text-center text-h6 text-bold">2500 ar</p>
-          <p>
-            <q-btn outline rounded no-caps color="blue" style="width: 200px">Ajouter</q-btn>
-          </p>
-        </q-card-section>
-      </q-card>
-    </q-tab-panel>
-  </q-tab-panels>
+    <q-tab-panels v-model="tab" animated>
+      <q-tab-panel v-for="offer in offers" :name="offer.name" class="offer-list">
+        <article-item v-for="article in offer.articles" :key="article.id" :article="article" />
+      </q-tab-panel>
+    </q-tab-panels>
+  </q-card>
 </template>
 
 <script setup lang="ts">
+import ArticleItem from '@/components/ArticleItem.vue'
+import { DATASET } from '@/stores/dataset'
+import type { IOffer } from '@shared/Types/Interfaces'
 import { ref } from 'vue'
-const tab = ref('rechargement')
+import { useRouter } from 'vue-router'
+const tab = ref('Rechargement')
 
-const offers = ref([
-  {
-    id: '1',
-    game_id: '1',
-    name: 'Rechargement',
-    articles: [
-      {
-        id: '1',
-        name: '+100 diamonds',
-        price: 2500,
-      },
-    ],
-  },
-  {
-    id: '2',
-    game_id: '1',
-    name: 'Level up',
-    articles: [
-      {
-        id: '1',
-        name: 'niveau 10',
-        price: 2500,
-      },
-    ],
-  },
-  {
-    id: '3',
-    game_id: '1',
-    name: 'Abonnement',
-    articles: [
-      {
-        id: '1',
-        name: '+100 diamonds',
-        price: 2500,
-      },
-    ],
-  },
-  {
-    id: '4',
-    game_id: '1',
-    name: 'Largage',
-    articles: [
-      {
-        id: '1',
-        name: '+100 diamonds',
-        price: 2500,
-      },
-    ],
-  },
-])
+const offers = ref<IOffer[]>([])
+const router = useRouter()
+const gameId = router.currentRoute.value.query.game_id
+if (gameId) {
+  const game = DATASET.find((g) => g.id === gameId)
+  if (game && game.offers) {
+    offers.value = game.offers
+  }
+}
 </script>
 
 <style lang="css" scoped>
-.gamelist {
+.offer-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
-
-.article {
-  width: 300px;
-  max-width: 350px;
-  background-color: #ecf8f8;
 }
 
 .image {
@@ -116,5 +66,7 @@ const offers = ref([
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 </style>
