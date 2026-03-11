@@ -1,5 +1,5 @@
 import { ECategory } from "../Enums";
-import { IOffer } from "./IOffer";
+import type { IOffer } from "./IOffer";
 
 export interface IGame {
   id: string;

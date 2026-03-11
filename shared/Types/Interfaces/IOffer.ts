@@ -1,4 +1,4 @@
-import { IArticle } from "./IArticle";
+import type { IArticle } from "./IArticle";
 
 export interface IOffer {
   id: string;
