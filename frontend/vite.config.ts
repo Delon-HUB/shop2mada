@@ -7,6 +7,7 @@ import { quasar } from '@quasar/vite-plugin'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/',
   plugins: [vue(), vueDevTools(), quasar()],
   resolve: {
     alias: {
