@@ -1,6 +1,6 @@
 <template>
-  <q-card flat>
-    <p class="text-h5 text-bold">Jeux disponibles</p>
+  <q-card flat class="fit">
+    <p class="text-h5 text-bold text-center">Jeux disponibles</p>
     <div class="gamelist">
       <div v-for="game in games" :key="game.id" class="q-ma-md">
         <q-btn flat no-caps class="q-pa-none game" :to="`/offers?game_id=${game.id}`">
@@ -24,7 +24,7 @@ const games = ref<IGame[]>(DATASET)
 .gamelist {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
 }
 
 .game {
