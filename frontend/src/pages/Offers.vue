@@ -29,15 +29,16 @@ import { DATASET } from '@/stores/dataset'
 import type { IOffer } from '@shared/Types/Interfaces'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-const tab = ref('Rechargement')
+const tab = ref('')
 
 const offers = ref<IOffer[]>([])
 const router = useRouter()
 const gameId = router.currentRoute.value.query.game_id
 if (gameId) {
   const game = DATASET.find((g) => g.id === gameId)
-  if (game && game.offers) {
+  if (game && game.offers && game.offers.length > 0) {
     offers.value = game.offers
+    tab.value = game.offers[0]!.name
   }
 }
 </script>
@@ -62,7 +63,7 @@ if (gameId) {
 
 .offer {
   display: flex;
-  gap: 10px;
+  gap: 4px;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
