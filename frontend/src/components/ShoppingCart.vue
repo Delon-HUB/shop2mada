@@ -6,22 +6,27 @@
           ><q-icon name="shopping_cart" />Panier</q-item-label
         >
         <q-space />
-        <q-btn flat v-close-popup dense>
+        <q-btn flat dense class="q-mr-md">
           <q-icon name="delete" color="red" /><span color="white">Vider</span></q-btn
         >
-        <q-btn flat v-close-popup round dense icon="close" @click="() => (model = !model)" />
+        <q-btn flat rounded v-close-popup icon="close" @click="() => (model = !model)" />
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <q-page>
+      <q-page class="bg-white">
         <q-card flat class="fit">
-          <q-card-section class="q-pt-md">
-            <q-list bordered>
-              <q-item v-for="i in 20" clickable v-ripple>
-                <q-item-section>Single line item</q-item-section>
-              </q-item>
+          <q-card-section v-if="shoppingCartList.length > 0" class="q-pt-md">
+            <q-list separator>
+              <shopping-cart-item
+                v-for="article in shoppingCartList"
+                :article="article"
+                :key="article.id"
+              />
             </q-list>
+          </q-card-section>
+          <q-card-section v-else class="text-center text-grey text-overline">
+            <p>Aucun article ajouté...</p>
           </q-card-section>
         </q-card>
       </q-page>
@@ -53,9 +58,13 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
+import ShoppingCartItem from './ShoppingCartItem.vue'
+import type { IArticle } from '@shared/Types/Interfaces'
 
 const text = ref()
 const model = defineModel<boolean>()
+
+const shoppingCartList = ref<IArticle[]>([])
 </script>
 
 <style scoped lang="css">
