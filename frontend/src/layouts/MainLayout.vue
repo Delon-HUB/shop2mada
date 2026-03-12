@@ -29,7 +29,14 @@
           @click="shoppingCart = !shoppingCart"
           icon="shopping_cart"
           no-caps
-        ></q-btn>
+        >
+          <q-badge
+            v-if="$shoppingCartStore.counter"
+            color="red"
+            rounded
+            floating
+            :label="$shoppingCartStore.counter"
+        /></q-btn>
       </q-toolbar>
 
       <q-toolbar>
@@ -81,9 +88,11 @@
 </template>
 <script setup lang="ts">
 import ShoppingCart from '@/components/ShoppingCart.vue'
+import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 
+const $shoppingCartStore = useShoppingCartStore()
 const covers = ref(1)
 const shoppingCart = ref(false)
 

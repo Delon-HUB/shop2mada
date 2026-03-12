@@ -24,7 +24,6 @@
           :disable="!canAddToCart"
           :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
         />
-        >
       </p>
     </q-card-section>
   </q-card>

@@ -1,9 +1,11 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { IArticle } from '@shared/Types/Interfaces'
 
 export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   const articles = ref<IArticle[]>([])
+
+  const counter = computed(() => articles.value.length)
 
   const add = (article: IArticle) => {
     articles.value.push(article)
@@ -26,5 +28,5 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
     return articles.value.find((art) => art.id == id)
   }
 
-  return { getOne, getAll, add, remove, clear }
+  return { counter, getOne, getAll, add, remove, clear }
 })
