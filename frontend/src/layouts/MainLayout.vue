@@ -1,8 +1,11 @@
 <template>
   <q-layout view="hHr lpR lff" container>
-    <q-drawer side="right" v-model="drawer" :width="500" :breakpoint="200">
-      <shopping-cart />
+    <q-drawer v-if="$q.screen.gt.md" side="right" :width="500" v-model="shoppingCart">
+      <shopping-cart v-model="shoppingCart" />
     </q-drawer>
+    <q-dialog v-else v-model="shoppingCart" maximized>
+      <shopping-cart v-model="shoppingCart" />
+    </q-dialog>
 
     <q-header class="header">
       <q-toolbar class="toolbar">
@@ -20,7 +23,13 @@
           </q-item-section>
         </q-item>
         <q-space />
-        <q-btn flat @click="drawer = !drawer" icon="shopping_cart" no-caps>Panier</q-btn>
+        <q-btn
+          v-if="!shoppingCart"
+          flat
+          @click="shoppingCart = !shoppingCart"
+          icon="shopping_cart"
+          no-caps
+        ></q-btn>
       </q-toolbar>
 
       <q-toolbar>
@@ -63,11 +72,8 @@
 
     <q-page-container>
       <q-page class="q-pa-md">
-        <div class="split">
-          <div class="fit">
-            <router-view />
-          </div>
-          <div v-if="shoppingCart && $q.screen.gt.md" style="max-width: 25%; overflow: auto"></div>
+        <div class="fit">
+          <router-view />
         </div>
       </q-page>
     </q-page-container>
@@ -78,9 +84,8 @@ import ShoppingCart from '@/components/ShoppingCart.vue'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 const covers = ref(1)
-const shoppingCart = ref(true)
 
-const drawer = ref(false)
+const shoppingCart = ref(false)
 
 const $q = useQuasar()
 </script>
