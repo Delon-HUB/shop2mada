@@ -14,24 +14,39 @@
       <p class="text-center text-overline text-blue">{{ props.article.name }}</p>
       <p class="text-center text-h6 text-bold">{{ props.article.price }}$</p>
       <p>
-        <q-btn outline rounded no-caps color="blue" style="width: 200px">Ajouter</q-btn>
+        <q-btn
+          outline
+          rounded
+          no-caps
+          :color="canAddToCart ? 'blue' : 'grey'"
+          style="width: 200px"
+          @click="$shoppingCartStore.add(props.article)"
+          :disable="!canAddToCart"
+          :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
+        />
+        >
       </p>
     </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
+import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import { type IArticle } from '@shared/Types/Interfaces'
+import { computed } from 'vue'
 
 const props = defineProps<{
   article: IArticle
 }>()
+
+const $shoppingCartStore = useShoppingCartStore()
+
+const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article.id) == undefined)
 </script>
 
 <style scoped lang="css">
 .article {
   width: 300px;
   max-width: 350px;
-  /* background-color: #ecf8f8; */
 }
 </style>

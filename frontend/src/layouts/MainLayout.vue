@@ -83,8 +83,8 @@
 import ShoppingCart from '@/components/ShoppingCart.vue'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
-const covers = ref(1)
 
+const covers = ref(1)
 const shoppingCart = ref(false)
 
 const $q = useQuasar()

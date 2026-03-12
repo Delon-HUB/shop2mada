@@ -34,7 +34,14 @@
       </q-item-label>
     </q-item>
     <q-item class="text-center">
-      <q-btn icon="close" color="red-3" rounded dense flat />
+      <q-btn
+        icon="close"
+        color="red-3"
+        rounded
+        dense
+        flat
+        @click="() => $shoppingCartStore.remove(article.id)"
+      />
     </q-item>
   </div>
 </template>
@@ -42,10 +49,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { type IArticle } from '@shared/Types/Interfaces'
+import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 
 const props = defineProps<{
   article: IArticle
 }>()
+
+const $shoppingCartStore = useShoppingCartStore()
 
 const quantity = ref(1)
 </script>

@@ -6,7 +6,7 @@
           ><q-icon name="shopping_cart" />Panier</q-item-label
         >
         <q-space />
-        <q-btn flat dense class="q-mr-md">
+        <q-btn flat dense class="q-mr-md" @click="$shoppingCartStore.clear()">
           <q-icon name="delete" color="red" /><span color="white">Vider</span></q-btn
         >
         <q-btn flat rounded v-close-popup icon="close" @click="() => (model = !model)" />
@@ -16,10 +16,10 @@
     <q-page-container>
       <q-page class="bg-white">
         <q-card flat class="fit">
-          <q-card-section v-if="shoppingCartList.length > 0" class="q-pt-md">
+          <q-card-section v-if="$shoppingCartStore.getAll().length > 0" class="q-pt-md">
             <q-list separator>
               <shopping-cart-item
-                v-for="article in shoppingCartList"
+                v-for="article in $shoppingCartStore.getAll()"
                 :article="article"
                 :key="article.id"
               />
@@ -60,11 +60,12 @@
 import { ref } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import type { IArticle } from '@shared/Types/Interfaces'
+import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 
 const text = ref()
 const model = defineModel<boolean>()
 
-const shoppingCartList = ref<IArticle[]>([])
+const $shoppingCartStore = useShoppingCartStore()
 </script>
 
 <style scoped lang="css">
