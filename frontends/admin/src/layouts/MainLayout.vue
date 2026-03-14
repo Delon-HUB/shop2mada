@@ -7,11 +7,11 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="drawer" show-if-above :width="200" :breakpoint="500" bordered>
+    <q-drawer v-model="drawer" show-if-above :width="250" :breakpoint="500" bordered>
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.label === 'Outbox'" v-ripple>
+            <q-item clickable :active="menuItem.icon === 'show_chart'" v-ripple>
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -19,7 +19,7 @@
                 {{ menuItem.label }}
               </q-item-section>
             </q-item>
-            <q-separator :key="'sep' + index" v-if="menuItem.separator" />
+            <q-separator inset :key="'sep' + index" v-if="menuItem.separator" />
           </template>
         </q-list>
       </q-scroll-area>
@@ -44,39 +44,38 @@ const drawer = ref(false)
 
 const menuList = [
   {
-    icon: 'inbox',
-    label: 'Inbox',
+    icon: 'show_chart',
+    label: 'Tableau de bord',
+    separator: false,
+  },
+  {
+    icon: 'shopping_bag',
+    label: 'Commandes',
     separator: true,
   },
   {
-    icon: 'send',
-    label: 'Outbox',
+    icon: 'gamepad',
+    label: 'Jeux',
     separator: false,
   },
   {
-    icon: 'delete',
-    label: 'Trash',
+    icon: 'diamond',
+    label: 'Offres',
     separator: false,
   },
   {
-    icon: 'error',
-    label: 'Spam',
+    icon: 'list_alt',
+    label: 'Articles',
     separator: true,
   },
   {
     icon: 'settings',
-    label: 'Settings',
+    label: 'Paramètres',
     separator: false,
   },
   {
-    icon: 'feedback',
-    label: 'Send Feedback',
-    separator: false,
-  },
-  {
-    icon: 'help',
-    iconColor: 'primary',
-    label: 'Help',
+    icon: 'logout',
+    label: 'Se deconnecter',
     separator: false,
   },
 ]
