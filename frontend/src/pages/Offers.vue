@@ -16,7 +16,7 @@
       />
     </p>
     <q-tab-panels v-model="tab" animated>
-      <q-tab-panel v-for="offer in offers" :name="offer.name" class="offer-list">
+      <q-tab-panel v-for="offer in offers" :name="offer.name" class="articles">
         <article-item v-for="article in offer.articles" :key="article.id" :article="article" />
       </q-tab-panel>
     </q-tab-panels>
@@ -44,7 +44,7 @@ if (gameId) {
 </script>
 
 <style lang="css" scoped>
-.offer-list {
+.articles {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

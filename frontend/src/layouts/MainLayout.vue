@@ -40,7 +40,7 @@
       </q-toolbar>
 
       <q-toolbar>
-        <q-card flat class="cover fit q-ma-md q-mb-none">
+        <q-card flat class="fit q-ma-md q-mb-none cover">
           <q-carousel
             v-model="covers"
             padding
@@ -50,28 +50,18 @@
             control-type="unelevated"
             arrows
             control-color="gray"
-            style="max-height: 250px"
+            class="carousel"
           >
+            <q-carousel-slide :name="1" img-src="https://wallpapercave.com/wp/wp5175839.jpg" />
             <q-carousel-slide
-              class="carousel"
-              :name="1"
-              img-src="https://wallpapercave.com/wp/wp5175839.jpg"
-            />
-            <q-carousel-slide
-              class="carousel"
               :name="2"
               img-src="https://wallpapercat.com/w/full/f/a/4/1868530-1920x1200-desktop-hd-garena-free-fire-background.jpg"
             />
             <q-carousel-slide
-              class="carousel"
               :name="3"
               img-src="https://wallpapercat.com/w/full/8/1/1/1868685-1920x1200-desktop-hd-garena-free-fire-background.jpg"
             />
-            <q-carousel-slide
-              class="carousel"
-              :name="4"
-              img-src="https://wallpaperaccess.com/full/2390977.jpg"
-            />
+            <q-carousel-slide :name="4" img-src="https://wallpaperaccess.com/full/2390977.jpg" />
           </q-carousel>
         </q-card>
       </q-toolbar>
@@ -112,19 +102,6 @@ const $q = useQuasar()
   background-color: #05668d;
 }
 
-.gamelist {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.game {
-  width: 300px;
-  max-width: 350px;
-  border-radius: 16px;
-  background-color: #ecf8f8;
-}
-
 .image {
   border-radius: 12px 12px 0px 0px;
   background-size: cover !important;
@@ -132,21 +109,14 @@ const $q = useQuasar()
 }
 
 .carousel {
-  background-size: cover !important;
-  background-position: center top !important;
+  max-height: 35vh;
+  width: auto;
 }
 
-.offer_menu {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-}
-
-.split {
-  display: flex;
-  gap: 20px;
-  align-items: stretch;
+@media (max-width: 1000px) {
+  .carousel {
+    height: 18vh;
+    width: auto;
+  }
 }
 </style>

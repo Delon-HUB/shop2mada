@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
-import Offers from '@/pages/Offers.vue'
 import Games from '@/pages/Games.vue'
 
 const router = createRouter({
