@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
-import Games from '@/pages/Games.vue'
 import Offers from '@/pages/Offers.vue'
+import Games from '@/pages/Games.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,11 +13,11 @@ const router = createRouter({
       children: [
         {
           path: '/games',
-          component: () => Games,
+          component: Games,
         },
         {
           path: '/offers',
-          component: () => Offers,
+          component: () => import('@/pages/Offers.vue'),
         },
       ],
     },
