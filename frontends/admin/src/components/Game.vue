@@ -1,47 +1,55 @@
 <template>
-  <q-card flat bordered class="card q-pa-none fit">
-    <q-card-section class="q-pa-none">
-      <q-img class="image" :src="game.cover" />
-      <p class="text-center text-h6 text-bold">{{ game.name }}</p>
-    </q-card-section>
+  <q-card flat bordered>
+    <q-splitter v-model="splitterModel">
+      <template v-slot:before>
+        <div>
+          <q-img
+            class="image"
+            :src="'https://wallpapercat.com/w/full/b/8/e/1868764-3840x2160-desktop-4k-garena-free-fire-background-photo.jpg'"
+          />
+          <p class="text-center text-h6 text-bold">Free Fire</p>
+        </div>
+      </template>
+
+      <template v-slot:after>
+        <q-tabs
+          v-model="tab"
+          dense
+          class="text-grey"
+          active-color="primary"
+          indicator-color="primary"
+          align="justify"
+        >
+          <q-tab name="mails" label="Mails" />
+          <q-tab name="alarms" label="Alarms" />
+          <q-tab name="movies" label="Movies" />
+          <q-tab name="add" icon="add" @click="() => console.log('open dialog')" />
+        </q-tabs>
+
+        <q-tab-panels v-model="tab" animated>
+          <q-tab-panel name="mails" class="flex row wrap">
+            <p v-for="i in 10">
+              <article-item />
+            </p>
+          </q-tab-panel>
+
+          <q-tab-panel name="alarms">
+            <p>alarms</p>
+          </q-tab-panel>
+
+          <q-tab-panel name="movies">
+            <p>movies</p>
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+    </q-splitter>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import { type IGame } from '@shared/Types/Interfaces/IGame'
-const props = defineProps<{
-  game: IGame
-}>()
+import { ref } from 'vue'
+import ArticleItem from './ArticleItem.vue'
+
+const tab = ref('mails')
+const splitterModel = ref(20)
 </script>
-
-<style scoped lang="css">
-.image {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  background-size: cover !important;
-  background-position: center top !important;
-  width: 248px;
-  height: 150px;
-}
-
-.card {
-  max-width: 250px;
-  border-radius: 12px;
-}
-
-@media (max-width: 1000px) {
-  .image {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    background-size: cover !important;
-    background-position: center top !important;
-    width: 158px;
-    height: 100px;
-  }
-
-  .card {
-    max-width: 160px;
-    border-radius: 12px;
-  }
-}
-</style>

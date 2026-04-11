@@ -2,45 +2,29 @@
   <q-card flat bordered class="article q-ma-md">
     <q-card-section class="q-pa-none q-ma-none">
       <p class="text-right">
-        <q-chip class="q-ma-none" dense text-color="white" color="red" square>
-          {{ props.article.badge }}</q-chip
-        >
+        <q-chip class="q-ma-none" dense text-color="white" color="red" square> HOT</q-chip>
       </p>
     </q-card-section>
     <q-card-section
       class="q-pa-none q-ma-none"
       style="display: flex; flex-direction: column; align-items: center"
     >
-      <p class="text-center text-overline text-blue">{{ props.article.name }}</p>
-      <p class="text-center text-h6 text-bold">{{ props.article.price }}$</p>
-      <p>
-        <q-btn
-          outline
-          rounded
-          no-caps
-          :color="canAddToCart ? 'blue' : 'grey'"
-          style="width: 200px"
-          @click="$shoppingCartStore.add(props.article)"
-          :disable="!canAddToCart"
-          :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
-        />
-      </p>
+      <p class="text-center text-overline text-blue">1000 diamonds</p>
+      <p class="text-center text-h6 text-bold">9.99 $</p>
     </q-card-section>
+    <q-card-actions class="justify-center">
+      <q-btn outline rounded no-caps icon="edit" color="primary" label="modifier" />
+      <q-btn outline rounded no-caps icon="delete" color="negative" label="supprimer" />
+    </q-card-actions>
   </q-card>
 </template>
 
 <script setup lang="ts">
-import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
-import { type IArticle } from '@shared/Types/Interfaces'
-import { computed } from 'vue'
+// import { type IArticle } from '@shared/Types/Interfaces'
 
-const props = defineProps<{
-  article: IArticle
-}>()
-
-const $shoppingCartStore = useShoppingCartStore()
-
-const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article.id) == undefined)
+// const props = defineProps<{
+//   article: IArticle
+// }>()
 </script>
 
 <style scoped lang="css">
