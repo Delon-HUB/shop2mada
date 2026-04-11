@@ -11,7 +11,7 @@
       <q-scroll-area class="fit">
         <q-list>
           <template v-for="(menuItem, index) in menuList" :key="index">
-            <q-item clickable :active="menuItem.icon === 'show_chart'" v-ripple>
+            <q-item clickable v-ripple :to="menuItem.path">
               <q-item-section avatar>
                 <q-icon :name="menuItem.icon" />
               </q-item-section>
@@ -27,11 +27,7 @@
 
     <q-page-container>
       <q-page padding>
-        <p v-for="n in 15" :key="n">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit nihil praesentium molestias
-          a adipisci, dolore vitae odit, quidem consequatur optio voluptates asperiores pariatur eos
-          numquam rerum delectus commodi perferendis voluptate?
-        </p>
+        <router-view />
       </q-page>
     </q-page-container>
   </q-layout>
@@ -47,26 +43,19 @@ const menuList = [
     icon: 'show_chart',
     label: 'Tableau de bord',
     separator: false,
+    path: '/dashboard',
   },
   {
     icon: 'shopping_bag',
     label: 'Commandes',
-    separator: true,
+    separator: false,
+    path: '',
   },
   {
     icon: 'gamepad',
     label: 'Jeux',
-    separator: false,
-  },
-  {
-    icon: 'diamond',
-    label: 'Offres',
-    separator: false,
-  },
-  {
-    icon: 'list_alt',
-    label: 'Articles',
     separator: true,
+    path: '/games',
   },
   {
     icon: 'settings',

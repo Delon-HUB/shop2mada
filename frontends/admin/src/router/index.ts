@@ -14,6 +14,10 @@ const router = createRouter({
           path: '/dashboard',
           component: Dashboard,
         },
+        {
+          path: '/games',
+          component: () => import('@/pages/Game.vue'),
+        },
       ],
     },
   ],
