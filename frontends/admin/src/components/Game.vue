@@ -31,6 +31,9 @@
             <p v-for="i in 10">
               <article-item />
             </p>
+            <div class="article q-pa-md">
+                <q-btn class="fit" flat no-caps icon="add" color="grey" label="ajouter" />
+            </div>
           </q-tab-panel>
 
           <q-tab-panel name="alarms">
@@ -53,3 +56,10 @@ import ArticleItem from './ArticleItem.vue'
 const tab = ref('mails')
 const splitterModel = ref(20)
 </script>
+
+<style scoped lang="css">
+.article {
+  width: 100%;
+  max-width: 250px;
+}
+</style>
