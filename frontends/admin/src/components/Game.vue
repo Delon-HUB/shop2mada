@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { type IGame } from '@shared/Types/Interfaces'
+import { type IGame } from '@shared/Types/Interfaces/IGame'
 const props = defineProps<{
   game: IGame
 }>()
