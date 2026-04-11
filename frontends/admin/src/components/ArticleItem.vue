@@ -2,15 +2,17 @@
   <q-card flat bordered class="q-ma-md">
     <q-card-section class="q-pa-none q-ma-none article">
       <p class="text-right">
-        <q-chip class="q-ma-none" dense text-color="white" color="red" square> HOT</q-chip>
+        <q-chip class="q-ma-none" dense text-color="white" color="red" square>
+          {{ props.article.badge }}</q-chip
+        >
       </p>
     </q-card-section>
     <q-card-section
       class="q-pa-none q-ma-none"
       style="display: flex; flex-direction: column; align-items: center"
     >
-      <p class="text-center text-overline text-blue">1000 diamonds</p>
-      <p class="text-center text-h6 text-bold">9.99 $</p>
+      <p class="text-center text-overline text-blue">{{ props.article.name }}</p>
+      <p class="text-center text-h6 text-bold">{{ props.article.price }} $</p>
     </q-card-section>
 
     <q-separator inset />
@@ -23,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-// import { type IArticle } from '@shared/Types/Interfaces'
+import { type IArticle } from '@shared/Types/Interfaces'
 
-// const props = defineProps<{
-//   article: IArticle
-// }>()
+const props = defineProps<{
+  article: IArticle
+}>()
 </script>
 
 <style scoped lang="css">

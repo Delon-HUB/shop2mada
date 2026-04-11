@@ -3,11 +3,8 @@
     <q-splitter v-model="splitterModel">
       <template v-slot:before>
         <div>
-          <q-img
-            class="image"
-            :src="'https://wallpapercat.com/w/full/b/8/e/1868764-3840x2160-desktop-4k-garena-free-fire-background-photo.jpg'"
-          />
-          <p class="text-center text-h6 text-bold">Free Fire</p>
+          <q-img class="image" :src="props.game.cover" />
+          <p class="text-center text-h6 text-bold">{{ props.game.name }}</p>
         </div>
       </template>
 
@@ -20,28 +17,30 @@
           indicator-color="primary"
           align="justify"
         >
-          <q-tab name="mails" label="Mails" />
-          <q-tab name="alarms" label="Alarms" />
-          <q-tab name="movies" label="Movies" />
+          <q-tab
+            no-caps
+            v-for="offer in props.game.offers"
+            :key="offer.id"
+            :name="offer.id"
+            :label="offer.name"
+          />
+
           <q-tab name="add" icon="add" @click="() => console.log('open dialog')" />
         </q-tabs>
 
         <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="mails" class="flex row wrap">
-            <p v-for="i in 10">
-              <article-item />
+          <q-tab-panel
+            v-for="offer in props.game.offers"
+            :key="offer.id"
+            :name="offer.id"
+            class="flex row wrap"
+          >
+            <p v-for="article in offer.articles" :key="article.id" class="q-pa-sm">
+              <article-item :article="article" />
             </p>
             <div class="article q-pa-md">
-                <q-btn class="fit" flat no-caps icon="add" color="grey" label="ajouter" />
+              <q-btn class="fit" flat no-caps icon="add" color="grey" label="ajouter" />
             </div>
-          </q-tab-panel>
-
-          <q-tab-panel name="alarms">
-            <p>alarms</p>
-          </q-tab-panel>
-
-          <q-tab-panel name="movies">
-            <p>movies</p>
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -53,7 +52,12 @@
 import { ref } from 'vue'
 import ArticleItem from './ArticleItem.vue'
 
-const tab = ref('mails')
+import { type IGame } from '@shared/Types/Interfaces'
+const props = defineProps<{
+  game: IGame
+}>()
+
+const tab = ref((props.game.offers ?? [])[0]?.id || 'none')
 const splitterModel = ref(20)
 </script>
 
