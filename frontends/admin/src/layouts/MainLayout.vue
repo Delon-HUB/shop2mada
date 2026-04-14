@@ -3,7 +3,17 @@
     <q-header>
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
-        <q-toolbar-title>Shop2MADA</q-toolbar-title>
+
+        <q-item>
+          <q-item-section>
+            <q-item-label
+              ><q-toolbar-title class="text-bold">Shop2MADA</q-toolbar-title></q-item-label
+            >
+            <q-item-label caption class="text-white"
+              ><q-icon name="security" color="orange" />Administrateur</q-item-label
+            >
+          </q-item-section>
+        </q-item>
       </q-toolbar>
     </q-header>
 
