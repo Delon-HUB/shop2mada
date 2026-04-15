@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GameModule } from './modules/game/game.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     MongooseModule.forRoot(
       process.env.DB_URI ?? 'mongodb://localhost:27017/shop2mada',
     ),
+    GameModule,
   ],
   controllers: [AppController],
   providers: [AppService],
