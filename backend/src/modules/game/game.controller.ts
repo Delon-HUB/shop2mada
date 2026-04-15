@@ -6,15 +6,13 @@ import { GameService } from './game.service';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
   @Get()
-  getHello() {
-    return this.gameService.findAll();
+  async getHello() {
+    return await this.gameService.findAll();
   }
 
   @Post()
   async createGame(@Body() createGameDto: IGame) {
-    console.log(createGameDto);
     const newGame = await this.gameService.create(createGameDto);
-    console.log(newGame);
     return newGame;
   }
 }
