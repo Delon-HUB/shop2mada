@@ -8,7 +8,7 @@ export class GameEntity {
   name!: string;
 
   @Prop({ required: true })
-  description!: string;
+  description?: string;
 
   @Prop({ required: true })
   cover!: string;
