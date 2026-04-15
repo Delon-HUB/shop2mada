@@ -16,4 +16,8 @@ export class GameService {
     const createdGame = await this.gameModel.create(game);
     return await createdGame;
   }
+
+  async findAll(): Promise<GameEntity[]> {
+    return await this.gameModel.find().exec();
+  }
 }

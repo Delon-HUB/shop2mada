@@ -6,8 +6,8 @@ import { GameService } from './game.service';
 export class GameController {
   constructor(private readonly gameService: GameService) {}
   @Get()
-  getHello(): string {
-    return 'Hello World from game controller!';
+  getHello() {
+    return this.gameService.findAll();
   }
 
   @Post()
