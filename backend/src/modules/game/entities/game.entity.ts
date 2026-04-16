@@ -7,7 +7,7 @@ export class GameEntity {
   @Prop({ required: true })
   name!: string;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   description?: string;
 
   @Prop({ required: true })

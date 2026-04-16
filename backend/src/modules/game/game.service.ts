@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
+import { InjectModel, Schema } from '@nestjs/mongoose';
 import { GameEntity } from './entities/game.entity';
-import { Model } from 'mongoose';
+import { Model, SchemaType, SchemaTypes } from 'mongoose';
 
 @Injectable()
 export class GameService {
@@ -19,5 +19,9 @@ export class GameService {
 
   async findAll(): Promise<GameEntity[]> {
     return await this.gameModel.find().exec();
+  }
+
+  async findById(id: string): Promise<GameEntity | null> {
+    return await this.gameModel.findById(id).exec();
   }
 }
