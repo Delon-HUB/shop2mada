@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GameModule } from './modules/game/game.module';
 import { OfferModule } from './modules/offer/offer.module';
+import { ArticleModule } from './modules/article/article.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { OfferModule } from './modules/offer/offer.module';
     ),
     GameModule,
     OfferModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
