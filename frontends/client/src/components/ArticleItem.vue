@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="article q-ma-md">
+  <q-card flat bordered class="article q-ma-none q-pa-none">
     <q-card-section class="q-pa-none q-ma-none">
       <p class="text-right">
         <q-chip class="q-ma-none" dense text-color="white" color="red" square>
@@ -19,7 +19,6 @@
           rounded
           no-caps
           :color="canAddToCart ? 'blue' : 'grey'"
-          style="width: 200px"
           @click="$shoppingCartStore.add(props.article)"
           :disable="!canAddToCart"
           :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
@@ -46,6 +45,11 @@ const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article.id) 
 <style scoped lang="css">
 .article {
   width: 300px;
-  max-width: 350px;
+}
+
+@media (max-width: 1000px) {
+  .article {
+    width: 150px;
+  }
 }
 </style>

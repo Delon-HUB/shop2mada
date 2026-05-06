@@ -17,7 +17,12 @@
     </p>
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel v-for="offer in offers" :name="offer.name" class="articles">
-        <article-item v-for="article in offer.articles" :key="article.id" :article="article" />
+        <article-item
+          v-for="article in offer.articles"
+          :key="article.id"
+          :article="article"
+          class="q-mr-md q-mb-md"
+        />
       </q-tab-panel>
     </q-tab-panels>
   </q-card>
