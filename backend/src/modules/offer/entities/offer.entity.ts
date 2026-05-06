@@ -14,9 +14,6 @@ export class OfferEntity {
   @Prop({ required: true, type: SchemaTypes.ObjectId, ref: GameEntity.name })
   gameId!: ObjectId | string;
 
-  @Prop()
-  articles?: IArticle[];
-
   @Prop({ required: true, default: Date.now() })
   createdAt!: Date;
 

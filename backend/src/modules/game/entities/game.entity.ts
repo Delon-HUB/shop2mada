@@ -16,9 +16,6 @@ export class GameEntity {
   @Prop()
   categories!: ECategory[];
 
-  @Prop()
-  offers?: IOffer[];
-
   @Prop({ required: true, default: Date.now() })
   createdAt!: Date;
 
