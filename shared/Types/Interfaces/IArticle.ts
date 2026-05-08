@@ -1,10 +1,10 @@
 export interface IArticle {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
+  description?: string;
   price: number;
   gameId: string;
-  badge: string;
+  badge?: string;
   createdAt: Date;
   updatedAt: Date;
 }

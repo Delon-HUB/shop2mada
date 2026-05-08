@@ -18,8 +18,8 @@ export class OfferController {
   ) {}
 
   @Post()
-  async create(@Body() offer: IOffer) {
-    const game = await this.gameService.findById(offer.gameId);
+  async create(@Body() offer: Partial<IOffer>) {
+    const game = await this.gameService.findById(offer.gameId!);
     if (!game) throw new NotFoundException('Game not found');
 
     const newOffer = await this.offerService.create(offer);

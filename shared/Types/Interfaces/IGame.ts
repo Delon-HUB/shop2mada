@@ -2,12 +2,12 @@ import { ECategory } from "../Enums";
 import type { IOffer } from "./IOffer";
 
 export interface IGame {
-  id: string;
+  _id: string;
   name: string;
-  description: string;
+  description?: string;
   cover: string;
   categories: ECategory[];
-  offers?: IOffer[];
+  offers: IOffer[];
   createdAt: Date;
   updatedAt: Date;
 }

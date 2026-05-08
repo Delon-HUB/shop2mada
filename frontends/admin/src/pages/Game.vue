@@ -9,7 +9,7 @@
       @click="() => (showGameInput = !showGameInput)"
     />
   </p>
-  <p v-for="game in games" :key="game.id">
+  <p v-for="game in games" :key="game._id">
     <Game :game="game" />
   </p>
 
@@ -22,16 +22,16 @@ import GameInputDialog from '@/components/GameInputDialog.vue'
 import { DATASET } from '@/stores/dataset'
 import { useGameStore } from '@/stores/game.store'
 import type { IGame } from '@shared/Types/Interfaces'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const $gameStore = useGameStore()
 $gameStore.init()
-const games = ref<IGame[]>(DATASET)
+// const games = ref<IGame[]>(DATASET)
+const games = computed(() => $gameStore.games || [])
 
 const showGameInput = ref(false)
 
 const handleAddGame = async (newGame: Partial<IGame>) => {
-  console.log(newGame)
   await $gameStore.addGame(newGame)
 }
 </script>

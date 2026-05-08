@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { OfferEntity } from './entities/offer.entity';
 import { Model } from 'mongoose';
+import { IOffer } from '../../shared/Types/Interfaces';
 
 @Injectable()
 export class OfferService {
@@ -10,7 +11,7 @@ export class OfferService {
     private readonly offerModel: Model<OfferEntity>,
   ) {}
 
-  async create(offer: OfferEntity): Promise<OfferEntity> {
+  async create(offer: Partial<IOffer>): Promise<OfferEntity> {
     offer.createdAt = new Date(Date.now());
     offer.updatedAt = new Date(Date.now());
 

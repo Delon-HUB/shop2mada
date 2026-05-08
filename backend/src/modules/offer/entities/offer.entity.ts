@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IArticle } from '../../../shared/Types/Interfaces';
 import { GameEntity } from '../../game/entities/game.entity';
 import { SchemaTypes, type ObjectId } from 'mongoose';
 

@@ -3,7 +3,7 @@ import type { IGame } from '@shared/Types/Interfaces'
 
 export const DATASET: IGame[] = [
   {
-    id: 'game-ff',
+    _id: 'game-ff',
     name: 'Free Fire',
     description: 'Battle royale mobile where players fight to be the last survivor.',
     cover:
@@ -13,7 +13,7 @@ export const DATASET: IGame[] = [
     updatedAt: new Date(),
     offers: [
       {
-        id: 'offer-ff-1',
+        _id: 'offer-ff-1',
         name: 'Diamond Top-Up',
         description: 'Recharge diamonds to purchase skins and items.',
         price: 4.99,
@@ -22,7 +22,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'ff-a1',
+            _id: 'ff-a1',
             name: '100 Diamonds',
             description: 'Basic diamond recharge.',
             price: 0.99,
@@ -32,7 +32,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a2',
+            _id: 'ff-a2',
             name: '310 Diamonds',
             description: 'Small diamond bundle.',
             price: 2.99,
@@ -42,7 +42,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a3',
+            _id: 'ff-a3',
             name: '520 Diamonds',
             description: 'Medium diamond bundle.',
             price: 4.99,
@@ -52,7 +52,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a4',
+            _id: 'ff-a4',
             name: '1060 Diamonds',
             description: 'Large diamond bundle.',
             price: 9.99,
@@ -62,7 +62,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a5',
+            _id: 'ff-a5',
             name: '2180 Diamonds',
             description: 'Premium diamond pack.',
             price: 19.99,
@@ -74,7 +74,7 @@ export const DATASET: IGame[] = [
         ],
       },
       {
-        id: 'offer-ff-2',
+        _id: 'offer-ff-2',
         name: 'Membership & Pass',
         description: 'Subscriptions and seasonal passes.',
         price: 7.99,
@@ -83,7 +83,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'ff-a6',
+            _id: 'ff-a6',
             name: 'Weekly Membership',
             description: 'Daily diamonds for 7 days.',
             price: 1.99,
@@ -93,7 +93,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a7',
+            _id: 'ff-a7',
             name: 'Monthly Membership',
             description: 'Daily rewards for 30 days.',
             price: 7.99,
@@ -103,7 +103,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a8',
+            _id: 'ff-a8',
             name: 'Elite Pass',
             description: 'Season battle pass with rewards.',
             price: 9.99,
@@ -113,7 +113,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a9',
+            _id: 'ff-a9',
             name: 'Elite Bundle',
             description: 'Battle pass with extra levels.',
             price: 19.99,
@@ -123,7 +123,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'ff-a10',
+            _id: 'ff-a10',
             name: 'Character Bundle',
             description: 'Unlock exclusive character.',
             price: 5.99,
@@ -138,7 +138,7 @@ export const DATASET: IGame[] = [
   },
 
   {
-    id: 'game-coc',
+    _id: 'game-coc',
     name: 'Clash Of Clans',
     description: 'Strategy game where players build villages and battle clans.',
     cover: 'https://wallpapercave.com/wp/wp1808757.png',
@@ -147,7 +147,7 @@ export const DATASET: IGame[] = [
     updatedAt: new Date(),
     offers: [
       {
-        id: 'offer-coc-1',
+        _id: 'offer-coc-1',
         name: 'Gem Packs',
         description: 'Purchase gems for upgrades and boosts.',
         price: 4.99,
@@ -156,7 +156,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'coc-a1',
+            _id: 'coc-a1',
             name: '80 Gems',
             description: 'Small gem pack.',
             price: 0.99,
@@ -166,7 +166,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a2',
+            _id: 'coc-a2',
             name: '500 Gems',
             description: 'Medium gem pack.',
             price: 4.99,
@@ -176,7 +176,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a3',
+            _id: 'coc-a3',
             name: '1200 Gems',
             description: 'Large gem pack.',
             price: 9.99,
@@ -186,7 +186,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a4',
+            _id: 'coc-a4',
             name: '2500 Gems',
             description: 'Huge gem bundle.',
             price: 19.99,
@@ -196,7 +196,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a5',
+            _id: 'coc-a5',
             name: '6500 Gems',
             description: 'Ultimate gem pack.',
             price: 49.99,
@@ -208,7 +208,7 @@ export const DATASET: IGame[] = [
         ],
       },
       {
-        id: 'offer-coc-2',
+        _id: 'offer-coc-2',
         name: 'Gold Pass & Magic Items',
         description: 'Season pass and magical items.',
         price: 6.99,
@@ -217,7 +217,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'coc-a6',
+            _id: 'coc-a6',
             name: 'Gold Pass',
             description: 'Season pass with rewards.',
             price: 6.99,
@@ -227,7 +227,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a7',
+            _id: 'coc-a7',
             name: 'Builder Potion',
             description: 'Boost builder speed.',
             price: 1.99,
@@ -237,7 +237,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a8',
+            _id: 'coc-a8',
             name: 'Research Potion',
             description: 'Faster troop research.',
             price: 1.99,
@@ -247,7 +247,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a9',
+            _id: 'coc-a9',
             name: 'Book of Heroes',
             description: 'Instant hero upgrade.',
             price: 4.99,
@@ -257,7 +257,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'coc-a10',
+            _id: 'coc-a10',
             name: 'Rune of Gold',
             description: 'Fill gold storage instantly.',
             price: 3.99,
@@ -272,7 +272,7 @@ export const DATASET: IGame[] = [
   },
 
   {
-    id: 'game-cod',
+    _id: 'game-cod',
     name: 'Call Of Duty Mobile',
     description: 'Fast paced FPS with multiplayer battles and battle royale.',
     cover: 'https://wallpaperaccess.com/full/1470917.jpg',
@@ -281,7 +281,7 @@ export const DATASET: IGame[] = [
     updatedAt: new Date(),
     offers: [
       {
-        id: 'offer-cod-1',
+        _id: 'offer-cod-1',
         name: 'CP Top-Up',
         description: 'Recharge COD Points for skins and crates.',
         price: 4.99,
@@ -290,7 +290,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'cod-a1',
+            _id: 'cod-a1',
             name: '80 CP',
             description: 'Small CP pack.',
             price: 0.99,
@@ -300,7 +300,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a2',
+            _id: 'cod-a2',
             name: '420 CP',
             description: 'Medium CP pack.',
             price: 4.99,
@@ -310,7 +310,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a3',
+            _id: 'cod-a3',
             name: '880 CP',
             description: 'Large CP pack.',
             price: 9.99,
@@ -320,7 +320,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a4',
+            _id: 'cod-a4',
             name: '2400 CP',
             description: 'Huge CP pack.',
             price: 24.99,
@@ -330,7 +330,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a5',
+            _id: 'cod-a5',
             name: '5000 CP',
             description: 'Ultimate CP pack.',
             price: 49.99,
@@ -342,7 +342,7 @@ export const DATASET: IGame[] = [
         ],
       },
       {
-        id: 'offer-cod-2',
+        _id: 'offer-cod-2',
         name: 'Battle Pass',
         description: 'Seasonal pass with weapons and skins.',
         price: 9.99,
@@ -351,7 +351,7 @@ export const DATASET: IGame[] = [
         updatedAt: new Date(),
         articles: [
           {
-            id: 'cod-a6',
+            _id: 'cod-a6',
             name: 'Battle Pass',
             description: 'Unlock seasonal rewards.',
             price: 9.99,
@@ -361,7 +361,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a7',
+            _id: 'cod-a7',
             name: 'Battle Pass Bundle',
             description: 'Battle pass + tier skips.',
             price: 19.99,
@@ -371,7 +371,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a8',
+            _id: 'cod-a8',
             name: 'Weapon Skin Crate',
             description: 'Random weapon skins.',
             price: 2.99,
@@ -381,7 +381,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a9',
+            _id: 'cod-a9',
             name: 'Operator Skin',
             description: 'Exclusive character skin.',
             price: 6.99,
@@ -391,7 +391,7 @@ export const DATASET: IGame[] = [
             updatedAt: new Date(),
           },
           {
-            id: 'cod-a10',
+            _id: 'cod-a10',
             name: 'XP Card Pack',
             description: 'Level up weapons faster.',
             price: 1.99,
