@@ -40,7 +40,6 @@ export class GameController {
         return { ...game, offers: offersReturned };
       }),
     );
-    console.log(gameReturned);
     return gameReturned;
   }
 

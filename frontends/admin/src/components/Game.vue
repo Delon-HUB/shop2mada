@@ -88,7 +88,6 @@ const showOfferInput = ref(false)
 const props = defineProps<{
   game: IGame
 }>()
-console.log(props.game)
 const $offerStore = useOfferStore()
 const $articleStore = useArticleStore()
 
