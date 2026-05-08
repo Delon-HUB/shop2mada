@@ -8,10 +8,14 @@ import {
 } from '@nestjs/common';
 import type { IGame } from '../../shared/Types/Interfaces';
 import { GameService } from './game.service';
+import { OfferService } from '../offer/offer.service';
 
 @Controller('game')
 export class GameController {
-  constructor(private readonly gameService: GameService) {}
+  constructor(
+    private readonly gameService: GameService,
+    private readonly offerService: OfferService,
+  ) {}
 
   @Post()
   async createGame(@Body() createGameDto: IGame) {
@@ -21,7 +25,15 @@ export class GameController {
 
   @Get()
   async findAll() {
-    return await this.gameService.findAll();
+    const games = await this.gameService.findAll();
+    const gamesWithOffers = await Promise.all(
+      games.map(async (game) => {
+        const offers = await this.offerService.findByGameId(game.id);
+        return { ...game, offers };
+      }),
+    );
+    console.log(gamesWithOffers);
+    return gamesWithOffers;
   }
 
   @Get(':id')

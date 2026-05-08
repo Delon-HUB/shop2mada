@@ -13,6 +13,7 @@ export const useGameStore = defineStore('gameStore', () => {
   const getAll = async () => {
     const response = await publicAPI.get('/game')
     games.value = response.data as IGame[]
+    console.log(games.value)
   }
 
   const addGame = async (newGame: Partial<IGame>) => {

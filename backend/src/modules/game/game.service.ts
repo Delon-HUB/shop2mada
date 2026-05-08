@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel, Schema } from '@nestjs/mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 import { GameEntity } from './entities/game.entity';
-import { Model, SchemaType, SchemaTypes } from 'mongoose';
+import { Model } from 'mongoose';
 import { IGame } from '../../shared/Types/Interfaces';
 
 @Injectable()
@@ -15,14 +15,31 @@ export class GameService {
     game.updatedAt = new Date(Date.now());
 
     const createdGame = await this.gameModel.create(game);
-    return (await createdGame) as IGame;
+    return {
+      ...createdGame.toObject(),
+      offers: [],
+      id: createdGame._id.toString(),
+    } as IGame;
   }
 
   async findAll(): Promise<IGame[]> {
-    return (await this.gameModel.find().exec()) as IGame[];
+    const games = await this.gameModel.find().exec();
+    return [
+      ...games.map((game) => ({
+        ...game.toObject(),
+        offers: [],
+        id: game._id.toString(),
+      })),
+    ] as IGame[];
   }
 
   async findById(id: string): Promise<IGame | null> {
-    return (await this.gameModel.findById(id).exec()) as IGame | null;
+    const game = await this.gameModel.findById(id).exec();
+    if (!game) return null;
+    return {
+      ...game.toObject(),
+      offers: [],
+      id: game._id.toString(),
+    } as IGame;
   }
 }

@@ -9,7 +9,7 @@
       @click="() => (showGameInput = !showGameInput)"
     />
   </p>
-  <p v-for="game in games" :key="game._id">
+  <p v-for="game in games" :key="game.id">
     <Game :game="game" />
   </p>
 
@@ -26,7 +26,6 @@ import { computed, ref } from 'vue'
 
 const $gameStore = useGameStore()
 $gameStore.init()
-// const games = ref<IGame[]>(DATASET)
 const games = computed(() => $gameStore.games || [])
 
 const showGameInput = ref(false)

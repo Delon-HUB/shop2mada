@@ -42,7 +42,7 @@ const offer = ref<Partial<IOffer>>({
 const handleSave = () => {
   emits('finished', {
     ...offer.value,
-    gameId: props.game._id,
+    gameId: props.game.id,
   } as Partial<IOffer>)
   model.value = false
 }

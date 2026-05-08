@@ -2,7 +2,7 @@ import { ECategory } from "../Enums";
 import type { IOffer } from "./IOffer";
 
 export interface IGame {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   cover: string;

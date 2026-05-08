@@ -9,7 +9,7 @@ export const useOfferStore = defineStore('offerStore', () => {
   const addOffer = async (newOffer: Partial<IOffer>) => {
     const response = await publicAPI.post('/offer', newOffer)
     if (response.data) {
-      gameStore.games.find((g) => g._id === newOffer.gameId)?.offers?.push(response.data as IOffer)
+      gameStore.games.find((g) => g.id === newOffer.gameId)?.offers?.push(response.data as IOffer)
     }
   }
 

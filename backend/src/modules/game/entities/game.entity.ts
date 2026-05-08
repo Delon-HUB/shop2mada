@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ECategory } from '../../../shared/Types/Enums';
-import { IOffer } from '../../../shared/Types/Interfaces';
 
 @Schema({ timestamps: true, collection: 'games' })
 export class GameEntity {

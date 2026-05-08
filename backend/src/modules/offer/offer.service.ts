@@ -26,4 +26,8 @@ export class OfferService {
   async findById(id: string): Promise<OfferEntity | null> {
     return await this.offerModel.findById(id).exec();
   }
+
+  async findByGameId(gameId: string): Promise<OfferEntity[]> {
+    return await this.offerModel.find({ gameId }).exec();
+  }
 }

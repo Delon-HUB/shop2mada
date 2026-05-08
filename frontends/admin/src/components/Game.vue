@@ -23,8 +23,8 @@
           <q-tab
             no-caps
             v-for="offer in props.game.offers"
-            :key="offer._id"
-            :name="offer._id"
+            :key="offer.id"
+            :name="offer.id"
             :label="offer.name"
           />
 
@@ -39,11 +39,11 @@
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel
             v-for="offer in props.game.offers"
-            :key="offer._id"
-            :name="offer._id"
+            :key="offer.id"
+            :name="offer.id"
             class="flex row wrap"
           >
-            <p v-for="article in offer.articles" :key="article._id" class="q-pa-sm">
+            <p v-for="article in offer.articles" :key="article.id" class="q-pa-sm">
               <article-item :article="article" />
             </p>
             <div class="article q-pa-md">

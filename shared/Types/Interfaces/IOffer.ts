@@ -1,7 +1,7 @@
 import type { IArticle } from "./IArticle";
 
 export interface IOffer {
-  _id: string;
+  id: string;
   name: string;
   description?: string;
   gameId: string;
