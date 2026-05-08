@@ -13,7 +13,7 @@
 
       <template v-slot:after>
         <q-tabs
-          v-model="tab"
+          v-model="offerTab"
           dense
           class="text-grey"
           active-color="primary"
@@ -28,27 +28,23 @@
             :label="offer.name"
           />
 
-          <q-tab name="add" icon="add" no-caps @click="() => (showOfferInput = true)" />
-          <offer-input-dialog
-            :game="props.game"
-            v-model="showOfferInput"
-            @finished="(offer: Partial<IOffer>) => handleAddOffer(offer)"
-          />
+          <q-tab name="add" icon="add" no-caps @click="() => (showOfferInput = true)">
+            <offer-input-dialog
+              :game="props.game"
+              v-model="showOfferInput"
+              @finished="(offer: Partial<IOffer>) => handleAddOffer(offer)"
+            />
+          </q-tab>
         </q-tabs>
 
-        <q-tab-panels v-model="tab" animated>
+        <q-tab-panels v-model="offerTab" animated>
           <q-tab-panel
             v-for="offer in props.game.offers"
             :key="offer.id"
             :name="offer.id"
             class="flex row wrap"
           >
-            <p v-for="article in offer.articles" :key="article.id" class="q-pa-sm">
-              <article-item :article="article" />
-            </p>
-            <div class="article q-pa-md">
-              <q-btn class="fit" flat no-caps icon="add" color="grey" label="ajouter" />
-            </div>
+            akory
           </q-tab-panel>
         </q-tab-panels>
       </template>
@@ -58,7 +54,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import ArticleItem from './ArticleItem.vue'
 import { type IGame, type IOffer } from '@shared/Types/Interfaces'
 import OfferInputDialog from './OfferInputDialog.vue'
 import { useOfferStore } from '@/stores/offer.store'
@@ -67,9 +62,10 @@ const showOfferInput = ref(false)
 const props = defineProps<{
   game: IGame
 }>()
+console.log(props.game)
 const offerStore = useOfferStore()
 
-const tab = ref((props.game.offers ?? [])[0]?._id || 'none')
+const offerTab = ref((props.game.offers ?? [])[0]?.id || 'none')
 const splitterModel = ref(20)
 
 const handleAddOffer = async (newOffer: Partial<IOffer>) => {

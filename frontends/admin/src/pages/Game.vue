@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import Game from '@/components/Game.vue'
 import GameInputDialog from '@/components/GameInputDialog.vue'
-import { DATASET } from '@/stores/dataset'
 import { useGameStore } from '@/stores/game.store'
 import type { IGame } from '@shared/Types/Interfaces'
 import { computed, ref } from 'vue'

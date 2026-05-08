@@ -32,7 +32,6 @@ export class GameController {
         return { ...game, offers };
       }),
     );
-    console.log(gamesWithOffers);
     return gamesWithOffers;
   }
 

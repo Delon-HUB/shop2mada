@@ -11,23 +11,45 @@ export class OfferService {
     private readonly offerModel: Model<OfferEntity>,
   ) {}
 
-  async create(offer: Partial<IOffer>): Promise<OfferEntity> {
+  async create(offer: Partial<IOffer>): Promise<IOffer> {
     offer.createdAt = new Date(Date.now());
     offer.updatedAt = new Date(Date.now());
 
     const createdOffer = await this.offerModel.create(offer);
-    return await createdOffer;
+    return {
+      ...createdOffer.toObject(),
+      id: createdOffer._id.toString(),
+      articles: [],
+    } as IOffer;
   }
 
-  async findAll(): Promise<OfferEntity[]> {
-    return await this.offerModel.find().exec();
+  async findAll(): Promise<IOffer[]> {
+    const offers = await this.offerModel.find().exec();
+    return [
+      ...offers.map((offer) => ({
+        ...offer.toObject(),
+        id: offer._id.toString(),
+        articles: [],
+      })),
+    ] as IOffer[];
   }
 
-  async findById(id: string): Promise<OfferEntity | null> {
-    return await this.offerModel.findById(id).exec();
+  async findById(id: string): Promise<IOffer | null> {
+    const offer = await this.offerModel.findById(id).exec();
+    if (!offer) return null;
+    return {
+      ...offer.toObject(),
+      id: offer._id.toString(),
+      articles: [],
+    } as IOffer;
   }
 
-  async findByGameId(gameId: string): Promise<OfferEntity[]> {
-    return await this.offerModel.find({ gameId }).exec();
+  async findByGameId(gameId: string): Promise<IOffer[]> {
+    const offers = await this.offerModel.find({ gameId }).exec();
+    return offers.map((offer) => ({
+      ...offer.toObject(),
+      id: offer._id.toString(),
+      articles: [],
+    })) as IOffer[];
   }
 }
