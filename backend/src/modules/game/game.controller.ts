@@ -9,12 +9,14 @@ import {
 import type { IGame } from '../../shared/Types/Interfaces';
 import { GameService } from './game.service';
 import { OfferService } from '../offer/offer.service';
+import { ArticleService } from '../article/article.service';
 
 @Controller('game')
 export class GameController {
   constructor(
     private readonly gameService: GameService,
     private readonly offerService: OfferService,
+    private readonly articleService: ArticleService,
   ) {}
 
   @Post()
@@ -26,13 +28,20 @@ export class GameController {
   @Get()
   async findAll() {
     const games = await this.gameService.findAll();
-    const gamesWithOffers = await Promise.all(
+    const gameReturned = await Promise.all(
       games.map(async (game) => {
         const offers = await this.offerService.findByGameId(game.id);
-        return { ...game, offers };
+        const offersReturned = await Promise.all(
+          offers.map(async (offer) => {
+            const articles = await this.articleService.findByOfferId(offer.id);
+            return { ...offer, articles };
+          }),
+        );
+        return { ...game, offers: offersReturned };
       }),
     );
-    return gamesWithOffers;
+    console.log(gameReturned);
+    return gameReturned;
   }
 
   @Get(':id')

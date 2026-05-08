@@ -1,7 +1,7 @@
 <template>
   <q-card flat bordered class="q-ma-md">
     <q-card-section class="q-pa-none q-ma-none article">
-      <p class="text-right">
+      <p class="text-right"  v-if="props.article.badge">
         <q-chip class="q-ma-none" dense text-color="white" color="red" square>
           {{ props.article.badge }}</q-chip
         >

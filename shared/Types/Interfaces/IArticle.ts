@@ -3,7 +3,7 @@ export interface IArticle {
   name: string;
   description?: string;
   price: number;
-  gameId: string;
+  offerId: string;
   badge?: string;
   createdAt: Date;
   updatedAt: Date;
