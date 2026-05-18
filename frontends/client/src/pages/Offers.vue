@@ -1,7 +1,23 @@
 <template>
-  <q-card flat class="offer">
-    <p v-for="offer in offers" :key="offer.id" class="text-caption text-bold q-mx-md q-mt-md">
+  <q-card flat>
+    <!-- <q-tabs
+      v-model="tab"
+      dense
+      class="text-grey"
+      active-color="primary"
+      indicator-color="primary"
+      align="justify"
+    >
+      <q-tab no-caps v-for="offer in offers" :key="offer.id" :name="offer.id" :label="offer.name" />
+    </q-tabs> -->
+
+    <p
+      class="text-caption text-bold q-mx-md q-mt-md text-center wrap"
+      style="transform: translate(0, -50%)"
+    >
       <q-btn
+        v-for="offer in offers"
+        :key="offer.id"
         no-caps
         flat
         rounded
@@ -15,6 +31,7 @@
         @click="() => (tab = offer.name)"
       />
     </p>
+
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel v-for="offer in offers" :name="offer.name" class="articles">
         <article-item
@@ -34,11 +51,11 @@ import { useGameStore } from '@/stores/game.store'
 import type { IOffer } from '@shared/Types/Interfaces'
 import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-const tab = ref('')
 
 const games = computed(() => useGameStore().games)
 const router = useRouter()
 const offers = ref<IOffer[]>([])
+const tab = ref(offers.value.length > 0 ? offers.value[0]!.name : '')
 
 watch(
   () => games.value,

@@ -12,7 +12,7 @@
       style="display: flex; flex-direction: column; align-items: center"
     >
       <p class="text-center text-overline text-blue">{{ props.article.name }}</p>
-      <p class="text-center text-h6 text-bold">{{ props.article.price }}$</p>
+      <p class="text-center text-h6 text-bold">{{ props.article.price }} Ar</p>
       <p>
         <q-btn
           outline

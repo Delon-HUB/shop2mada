@@ -26,7 +26,7 @@
             </q-list>
           </q-card-section>
           <q-card-section v-else class="text-center text-grey text-overline">
-            <p>Aucun article ajouté...</p>
+            <p>Vôtre panier est vide</p>
           </q-card-section>
         </q-card>
       </q-page>
