@@ -32,20 +32,20 @@
 import ArticleItem from '@/components/ArticleItem.vue'
 import { useGameStore } from '@/stores/game.store'
 import type { IOffer } from '@shared/Types/Interfaces'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 const tab = ref('')
 
-const $gameStore = useGameStore()
+const games = computed(() => useGameStore().games)
 const router = useRouter()
 const offers = ref<IOffer[]>([])
 
 watch(
-  () => $gameStore.games,
+  () => games.value,
   () => {
     const gameId = router.currentRoute.value.query.game_id
     if (gameId) {
-      const game = $gameStore.games.find((g) => g.id === gameId)
+      const game = games.value.find((g) => g.id === gameId)
       if (game && game.offers && game.offers.length > 0) {
         offers.value = game.offers
         tab.value = game.offers[0]!.name
@@ -53,6 +53,15 @@ watch(
     }
   },
 )
+
+const gameId = router.currentRoute.value.query.game_id
+if (gameId) {
+  const game = games.value.find((g) => g.id === gameId)
+  if (game && game.offers && game.offers.length > 0) {
+    offers.value = game.offers
+    tab.value = game.offers[0]!.name
+  }
+}
 </script>
 
 <style lang="css" scoped>
