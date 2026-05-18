@@ -30,22 +30,29 @@
 
 <script setup lang="ts">
 import ArticleItem from '@/components/ArticleItem.vue'
-import { DATASET } from '@/stores/dataset'
+import { useGameStore } from '@/stores/game.store'
 import type { IOffer } from '@shared/Types/Interfaces'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 const tab = ref('')
 
-const offers = ref<IOffer[]>([])
+const $gameStore = useGameStore()
 const router = useRouter()
-const gameId = router.currentRoute.value.query.game_id
-if (gameId) {
-  const game = DATASET.find((g) => g.id === gameId)
-  if (game && game.offers && game.offers.length > 0) {
-    offers.value = game.offers
-    tab.value = game.offers[0]!.name
-  }
-}
+const offers = ref<IOffer[]>([])
+
+watch(
+  () => $gameStore.games,
+  () => {
+    const gameId = router.currentRoute.value.query.game_id
+    if (gameId) {
+      const game = $gameStore.games.find((g) => g.id === gameId)
+      if (game && game.offers && game.offers.length > 0) {
+        offers.value = game.offers
+        tab.value = game.offers[0]!.name
+      }
+    }
+  },
+)
 </script>
 
 <style lang="css" scoped>

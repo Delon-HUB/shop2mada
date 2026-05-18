@@ -1,8 +1,8 @@
 <template>
   <q-card flat class="fit q-pa-md">
-    <p class="text-h5 text-bold q-ml-md q-mt-md">Jeux disponibles</p>
+    <p class="text-h6 text-bold text-grey q-ml-md q-mt-md">Jeux disponibles</p>
     <div class="gamelist">
-      <q-btn
+      <q-item
         v-for="game in games"
         :key="game.id"
         flat
@@ -11,18 +11,19 @@
         :to="`/offers?game_id=${game.id}`"
       >
         <game :game="game" />
-      </q-btn>
+      </q-item>
     </div>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import Game from '@/components/Game.vue'
+import { useGameStore } from '@/stores/game.store'
 import type { IGame } from '@shared/Types/Interfaces'
-import { ref } from 'vue'
-import { DATASET } from '@/stores/dataset'
+import { computed } from 'vue'
 
-const games = ref<IGame[]>(DATASET)
+const $gameStore = useGameStore()
+const games = computed<IGame[]>(() => $gameStore.games)
 </script>
 
 <style scoped lang="css">

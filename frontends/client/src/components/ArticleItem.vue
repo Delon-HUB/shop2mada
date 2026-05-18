@@ -1,6 +1,6 @@
 <template>
   <q-card flat bordered class="article q-ma-none q-pa-none">
-    <q-card-section class="q-pa-none q-ma-none">
+    <q-card-section class="q-pa-none q-ma-none" v-if="props.article.badge">
       <p class="text-right">
         <q-chip class="q-ma-none" dense text-color="white" color="red" square>
           {{ props.article.badge }}</q-chip

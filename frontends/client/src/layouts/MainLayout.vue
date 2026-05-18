@@ -42,7 +42,7 @@
       <q-toolbar>
         <q-card flat class="fit q-ma-md q-mb-none cover">
           <q-carousel
-            v-model="covers"
+            v-model="caroussel"
             padding
             animated
             infinite
@@ -78,15 +78,18 @@
 </template>
 <script setup lang="ts">
 import ShoppingCart from '@/components/ShoppingCart.vue'
+import { useGameStore } from '@/stores/game.store'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
+const $q = useQuasar()
+
+const $gameStore = useGameStore()
+$gameStore.init()
 
 const $shoppingCartStore = useShoppingCartStore()
-const covers = ref(1)
+const caroussel = ref(1)
 const shoppingCart = ref(false)
-
-const $q = useQuasar()
 </script>
 
 <style lang="css" scoped>
