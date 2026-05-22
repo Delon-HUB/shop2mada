@@ -19,7 +19,7 @@
           rounded
           no-caps
           :color="canAddToCart ? 'blue' : 'grey'"
-          @click="$shoppingCartStore.add(props.article)"
+          @click="$shoppingCartStore.add({ ...props.article, quantity: 1 })"
           :disable="!canAddToCart"
           :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
         />

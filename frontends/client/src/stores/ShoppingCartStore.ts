@@ -3,11 +3,14 @@ import { defineStore } from 'pinia'
 import type { IArticle } from '@shared/Types/Interfaces'
 
 export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
-  const articles = ref<IArticle[]>([])
+  const articles = ref<(IArticle & { quantity: number })[]>([])
 
   const counter = computed(() => articles.value.length)
+  const total = computed(() => {
+    return articles.value.reduce((total, article) => total + article.price * article.quantity, 0)
+  })
 
-  const add = (article: IArticle) => {
+  const add = (article: IArticle & { quantity: number }) => {
     articles.value.push(article)
   }
 
@@ -28,5 +31,9 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
     return articles.value.find((art) => art.id == id)
   }
 
-  return { counter, getOne, getAll, add, remove, clear }
+  const getTotal = () => {
+    return total.value
+  }
+
+  return { counter, getOne, getAll, add, remove, clear, getTotal }
 })

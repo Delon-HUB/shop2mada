@@ -8,7 +8,13 @@
     </q-item>
     <q-item class="text-bold" style="max-width: 180px">
       <q-item-label>
-        <q-input input-class="text-center" type="number" outlined v-model="quantity" min="1">
+        <q-input
+          input-class="text-center"
+          type="number"
+          outlined
+          v-model="props.article.quantity"
+          min="1"
+        >
           <template v-slot:prepend>
             <q-btn
               rounded
@@ -17,7 +23,12 @@
               icon="remove"
               color="grey"
               class="bg-grey-3"
-              @click="() => (quantity && quantity > 1 ? quantity-- : (quantity = 1))"
+              @click="
+                () =>
+                  props.article.quantity && props.article.quantity > 1
+                    ? props.article.quantity--
+                    : (props.article.quantity = 1)
+              "
             />
           </template>
           <template v-slot:append>
@@ -28,14 +39,19 @@
               icon="add"
               color="blue"
               class="bg-light-blue-1"
-              @click="() => (quantity != undefined ? quantity++ : (quantity = 1))"
+              @click="
+                () =>
+                  props.article.quantity != undefined
+                    ? props.article.quantity++
+                    : (props.article.quantity = 1)
+              "
             /> </template
         ></q-input>
       </q-item-label>
     </q-item>
     <q-item class="text-center">
       <q-btn
-        icon="close"
+        icon="backspace"
         color="red-3"
         rounded
         dense
@@ -47,17 +63,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { type IArticle } from '@shared/Types/Interfaces'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 
 const props = defineProps<{
-  article: IArticle
+  article: IArticle & { quantity: number }
 }>()
 
 const $shoppingCartStore = useShoppingCartStore()
-
-const quantity = ref(1)
 </script>
 
 <style scoped lang="css">
