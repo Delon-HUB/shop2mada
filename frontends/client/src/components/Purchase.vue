@@ -19,100 +19,44 @@
               clickable
               v-ripple
               class="bg-grey-3 q-ma-xs q-pa-none"
-              :active="paymentMethod == 'MVOLA'"
-              @click="() => (paymentMethod = 'MVOLA')"
+              @click="() => ($shoppingCartStore.lastSelectedPaymentMethod = pm)"
+              v-for="pm in paymentMethods"
+              :key="pm.id"
+              :active="selectedPaymentMethod?.id == pm.id"
+              :style="selectedPaymentMethod?.id == pm.id ? 'border: 2px solid #05668d' : ''"
             >
-              <q-card
-                bordered
-                :style="paymentMethod == 'MVOLA' ? 'border: 2px solid #05668d' : ''"
-                flat
-                style="width: 9em"
-                class="q-pa-xs text-center"
-              >
+              <q-card bordered flat style="width: 9em" class="q-pa-xs text-center">
                 <q-item-section>
                   <q-item-label class="text-center">
                     <q-avatar rounded size="64px">
-                      <img
-                        src="https://mvola-telma.en.aptoide.com/_next/image?url=https://cdn.aptoide.com/imgs/0/c/d/0cd0c68fb872f077c7204bbdddb3fdc0_icon.png&w=3840&q=75"
-                      />
+                      <img :src="pm.cover" />
                     </q-avatar>
                   </q-item-label>
-                  <q-item-label>MVola</q-item-label>
-                </q-item-section>
-              </q-card>
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              class="bg-grey-3 q-ma-xs q-pa-none"
-              :active="paymentMethod == 'ORANGE_MONEY'"
-              @click="() => (paymentMethod = 'ORANGE_MONEY')"
-            >
-              <q-card
-                bordered
-                :style="paymentMethod == 'ORANGE_MONEY' ? 'border: 2px solid #05668d' : ''"
-                flat
-                style="width: 9em"
-                class="q-pa-xs text-center"
-              >
-                <q-item-section>
-                  <q-item-label class="text-center">
-                    <q-avatar rounded size="64px">
-                      <img
-                        src="https://i.pinimg.com/originals/3b/d8/bd/3bd8bdd06c49b4c19aee3a167c5a83cb.jpg"
-                      />
-                    </q-avatar>
-                  </q-item-label>
-                  <q-item-label>Orange Money</q-item-label>
-                </q-item-section>
-              </q-card>
-            </q-item>
-
-            <q-item
-              clickable
-              v-ripple
-              class="bg-grey-3 q-ma-xs q-pa-none"
-              :active="paymentMethod == 'AIRTEL_MONEY'"
-              @click="() => (paymentMethod = 'AIRTEL_MONEY')"
-            >
-              <q-card
-                bordered
-                :style="paymentMethod == 'AIRTEL_MONEY' ? 'border: 2px solid #05668d' : ''"
-                flat
-                style="width: 9em"
-                class="q-pa-xs text-center"
-              >
-                <q-item-section>
-                  <q-item-label class="text-center">
-                    <q-avatar rounded size="64px">
-                      <img
-                        src="https://www.agenceecofin.com/images/2017/05/04/airtel_madagascar.png"
-                      />
-                    </q-avatar>
-                  </q-item-label>
-                  <q-item-label>Airtel Money</q-item-label>
+                  <q-item-label>{{ pm.name }}</q-item-label>
                 </q-item-section>
               </q-card>
             </q-item>
           </div>
 
-          <div>
+          <div v-if="selectedPaymentMethod">
             <q-card bordered flat class="bg-grey-3" style="border: 2px dashed grey">
               <p class="text-bold q-mx-xs q-mt-xs">Envoyer l'argent:</p>
               <ul class="q-ma-none">
                 <li>
                   Via :
                   <q-chip class="text-bold"
-                    ><q-avatar>
-                      <img
-                        src="https://mvola-telma.en.aptoide.com/_next/image?url=https://cdn.aptoide.com/imgs/0/c/d/0cd0c68fb872f077c7204bbdddb3fdc0_icon.png&w=3840&q=75"
-                      /> </q-avatar
-                    >MVola</q-chip
+                    ><q-avatar> <img :src="selectedPaymentMethod?.cover" /> </q-avatar
+                    >{{ selectedPaymentMethod?.name }}</q-chip
                   >
                 </li>
-                <li>Sur le numéro: <q-chip class="text-bold"> 034 12 345 67</q-chip></li>
-                <li>Nom du compte: <q-chip class="text-bold"> RAKOTO jean</q-chip></li>
+                <li>
+                  Sur le numéro:
+                  <q-chip class="text-bold"> {{ selectedPaymentMethod?.phone }}</q-chip>
+                </li>
+                <li>
+                  Nom du compte:
+                  <q-chip class="text-bold"> {{ selectedPaymentMethod?.account_name }}</q-chip>
+                </li>
                 <li>
                   Montant à payer:
                   <q-chip class="text-bold"> {{ $shoppingCartStore.getTotal() }} Ar</q-chip>
@@ -147,11 +91,17 @@
 </template>
 <script setup lang="ts">
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
-import { ref } from 'vue'
+import type { IPaymentMethod } from '@shared/Types/Interfaces'
+import { computed, ref } from 'vue'
 
 const $shoppingCartStore = useShoppingCartStore()
+$shoppingCartStore.init()
 const model = defineModel<boolean>()
-const paymentMethod = ref<'MVOLA' | 'AIRTEL_MONEY' | 'ORANGE_MONEY'>()
+const paymentMethods = computed<IPaymentMethod[]>(() => $shoppingCartStore.paymentMethods || [])
+const selectedPaymentMethod = computed<IPaymentMethod | null>(
+  () => $shoppingCartStore.lastSelectedPaymentMethod || null,
+)
+
 const text = ref()
 </script>
 

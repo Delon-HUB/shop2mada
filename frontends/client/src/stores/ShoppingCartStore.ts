@@ -1,9 +1,21 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { IArticle } from '@shared/Types/Interfaces'
+import type { IArticle, IPaymentMethod } from '@shared/Types/Interfaces'
+import { publicAPI } from '@/instances/axios'
 
 export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   const articles = ref<(IArticle & { quantity: number })[]>([])
+  const paymentMethods = ref<IPaymentMethod[]>([])
+  const lastSelectedPaymentMethod = ref<IPaymentMethod | null>(null)
+
+  const init = async () => {
+    await getPaymentMethods()
+  }
+
+  const getPaymentMethods = async () => {
+    const response = await publicAPI.get('/payment-method')
+    paymentMethods.value = response.data as IPaymentMethod[]
+  }
 
   const counter = computed(() => articles.value.length)
   const total = computed(() => {
@@ -35,5 +47,16 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
     return total.value
   }
 
-  return { counter, getOne, getAll, add, remove, clear, getTotal }
+  return {
+    counter,
+    paymentMethods,
+    lastSelectedPaymentMethod,
+    init,
+    getOne,
+    getAll,
+    add,
+    remove,
+    clear,
+    getTotal,
+  }
 })

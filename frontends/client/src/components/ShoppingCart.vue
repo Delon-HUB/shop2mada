@@ -24,6 +24,8 @@
                 :key="article.id"
               />
             </q-list>
+            <q-separator class="q-my-md" />
+            <p class="text-bold" flat no-caps>Total = {{ $shoppingCartStore.getTotal() }}Ar</p>
           </q-card-section>
           <q-card-section v-else class="text-center text-grey text-overline">
             <p>Vôtre panier est vide</p>
@@ -47,7 +49,7 @@
                   </template>
                 </q-input>
 
-                <q-input rounded outlined v-model="text" label="C'est bien vôtre pseudo ?" disable>
+                <q-input rounded outlined v-model="text" label="C'est bien vôtre pseudo ?">
                   <template v-slot:prepend>
                     <q-icon name="person" />
                   </template>
