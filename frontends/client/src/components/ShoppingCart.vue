@@ -75,7 +75,12 @@
                 >Procéder au paiement</q-btn
               >
             </p>
-            <q-dialog :maximized="$q.screen.lt.md" persistent v-model="showPurchase">
+            <q-dialog
+              backdrop-filter="blur(4px) saturate(150%)"
+              :maximized="$q.screen.lt.md"
+              persistent
+              v-model="showPurchase"
+            >
               <purchase v-model="showPurchase" />
             </q-dialog>
           </div>

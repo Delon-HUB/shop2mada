@@ -1,30 +1,32 @@
 <template>
   <q-card flat bordered class="article q-ma-none q-pa-none">
-    <q-card-section class="q-pa-none q-ma-none" v-if="props.article.badge">
-      <p class="text-right">
-        <q-chip class="q-ma-none" dense text-color="white" color="red" square>
-          {{ props.article.badge }}</q-chip
-        >
-      </p>
-    </q-card-section>
+    <q-badge color="red-8" v-if="props.article.badge" floating class="text-bold">
+      {{ props.article.badge }}</q-badge
+    >
+
     <q-card-section
-      class="q-pa-none q-ma-none"
+      class="q-pa-none q-ma-none q-mt-md"
       style="display: flex; flex-direction: column; align-items: center"
     >
-      <p class="text-center text-overline text-blue">{{ props.article.name }}</p>
-      <p class="text-center text-h6 text-bold">{{ props.article.price }} Ar</p>
-      <p>
-        <q-btn
-          outline
-          rounded
-          no-caps
-          :color="canAddToCart ? 'blue' : 'grey'"
-          @click="$shoppingCartStore.add({ ...props.article, quantity: 1 })"
-          :disable="!canAddToCart"
-          :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
-        />
+      <p class="text-center q-ma-none text-bold">{{ props.article.name }}</p>
+      <p class="text-center text-overline text-bold text-primary">
+        + {{ Math.floor(Math.random() * 100) }} diamonds bonus
       </p>
+
+      <p class="text-center">{{ props.article.price }} Ar</p>
     </q-card-section>
+    <q-card-actions align="center">
+      <q-btn
+        class="text-bold"
+        style="width: 50%"
+        outline
+        no-caps
+        :color="canAddToCart ? 'primary' : 'grey'"
+        @click="$shoppingCartStore.add({ ...props.article, quantity: 1 })"
+        :disable="!canAddToCart"
+        :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
+      />
+    </q-card-actions>
   </q-card>
 </template>
 

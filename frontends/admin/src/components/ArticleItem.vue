@@ -1,12 +1,6 @@
 <template>
-  <q-card flat bordered class="q-ma-md">
-    <q-card-section class="q-pa-none q-ma-none article">
-      <p class="text-right"  v-if="props.article.badge">
-        <q-chip class="q-ma-none" dense text-color="white" color="red" square>
-          {{ props.article.badge }}</q-chip
-        >
-      </p>
-    </q-card-section>
+  <q-card flat bordered class="q-ma-md card">
+    <q-badge v-if="props.article.badge" color="red" floating>{{ props.article.badge }}</q-badge>
     <q-card-section
       class="q-pa-none q-ma-none"
       style="display: flex; flex-direction: column; align-items: center"
@@ -33,8 +27,8 @@ const props = defineProps<{
 </script>
 
 <style scoped lang="css">
-.article {
-  width: 250px;
+.card {
+  width: 200px;
   max-width: 250px;
 }
 </style>

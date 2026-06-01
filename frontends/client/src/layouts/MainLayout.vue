@@ -7,7 +7,7 @@
       <shopping-cart v-model="shoppingCart" />
     </q-dialog>
 
-    <q-header class="header">
+    <q-header class="bg-grey-1">
       <q-toolbar class="toolbar">
         <q-avatar>
           <img src="/logo.png" />
@@ -17,8 +17,8 @@
             <q-item-label
               ><q-toolbar-title class="text-bold">Shop2MADA</q-toolbar-title></q-item-label
             >
-            <q-item-label caption class="text-white"
-              ><q-icon name="electric_bolt" color="orange" />Livraison instantanée</q-item-label
+            <q-item-label caption class="text-white text-bold"
+              ><q-icon name="shopping_cart" color="white" />Vente d'article d'un jeu</q-item-label
             >
           </q-item-section>
         </q-item>
@@ -93,9 +93,6 @@ const shoppingCart = ref(false)
 </script>
 
 <style lang="css" scoped>
-.header {
-  background-color: #f1f2eb;
-}
 .header .cover {
   border-radius: 18px;
 }

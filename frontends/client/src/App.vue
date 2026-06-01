@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="body bg-grey-1">
     <RouterView />
   </div>
 </template>
@@ -8,6 +8,5 @@
 .body {
   height: 100vh;
   margin: auto;
-  background-color: #f1f2eb;
 }
 </style>

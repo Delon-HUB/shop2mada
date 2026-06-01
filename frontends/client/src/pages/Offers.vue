@@ -1,32 +1,22 @@
 <template>
   <q-card flat>
-    <!-- <q-tabs
-      v-model="tab"
-      dense
-      class="text-grey"
-      active-color="primary"
-      indicator-color="primary"
-      align="justify"
-    >
-      <q-tab no-caps v-for="offer in offers" :key="offer.id" :name="offer.id" :label="offer.name" />
-    </q-tabs> -->
-
     <p
-      class="text-caption text-bold q-mx-md q-mt-md text-center wrap"
-      style="transform: translate(0, -50%)"
+      class="flex row wrap items-stretch justify-center bg-grey-1 q-pa-xs text-bold"
+      style="border-top-left-radius: 4px; border-top-right-radius: 4px"
     >
       <q-btn
+        icon="sell"
         v-for="offer in offers"
         :key="offer.id"
         no-caps
         flat
         rounded
         :label="offer.name"
-        class="text-bold text-caption"
+        class="text-overline q-mr-xs q-mb-xs text-white"
         :style="
           tab == offer.name
             ? { backgroundColor: 'blue', color: 'white' }
-            : { backgroundColor: 'lightgray', color: 'black' }
+            : { backgroundColor: 'gray', color: 'black' }
         "
         @click="() => (tab = offer.name)"
       />
@@ -35,11 +25,13 @@
     <q-tab-panels v-model="tab" animated>
       <q-tab-panel v-for="offer in offers" :name="offer.name" class="articles">
         <article-item
+          v-if="offer.articles.length > 0"
           v-for="article in offer.articles"
           :key="article.id"
           :article="article"
           class="q-mr-md q-mb-md"
         />
+        <p v-else class="text-bold text-caption">Aucun article disponible pour le moment</p>
       </q-tab-panel>
     </q-tab-panels>
   </q-card>
