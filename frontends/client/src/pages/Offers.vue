@@ -1,5 +1,5 @@
 <template>
-  <q-card flat>
+  <q-card flat class="q-pa-none q-ma-none">
     <p
       class="flex row wrap items-stretch justify-center bg-grey-1 q-pa-xs text-bold"
       style="border-top-left-radius: 4px; border-top-right-radius: 4px"
@@ -22,14 +22,19 @@
       />
     </p>
 
-    <q-tab-panels v-model="tab" animated>
-      <q-tab-panel v-for="offer in offers" :name="offer.name" class="articles">
+    <q-tab-panels v-model="tab" animated class="q-pa-none">
+      <q-tab-panel
+        v-for="offer in offers"
+        :name="offer.name"
+        class="articles q-pa-none flex row justify-center wrap"
+      >
         <article-item
           v-if="offer.articles.length > 0"
-          v-for="article in offer.articles"
+          v-for="article in offer.articles.sort((a,b) => a.price - b.price)"
           :key="article.id"
           :article="article"
-          class="q-mr-md q-mb-md"
+          style="margin: auto; margin-bottom: 8px"
+          class="article_item"
         />
         <p v-else class="text-bold text-caption">Aucun article disponible pour le moment</p>
       </q-tab-panel>
@@ -74,11 +79,11 @@ if (gameId) {
 </script>
 
 <style lang="css" scoped>
-.articles {
+/* .articles {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-}
+} */
 
 .image {
   background-size: cover !important;
@@ -99,5 +104,15 @@ if (gameId) {
   justify-content: center;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+
+.article_item {
+  width: 300px;
+}
+
+@media (max-width: 1000px) {
+  .article_item {
+    width: 45%;
+  }
 }
 </style>
