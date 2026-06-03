@@ -1,11 +1,11 @@
 <template>
   <p>
     <q-btn
-      flat
+      outline
       no-caps
       color="primary"
       icon="add"
-      label="ajouter un jeux"
+      label="nouveau jeu"
       @click="() => (showGameInput = !showGameInput)"
     />
   </p>

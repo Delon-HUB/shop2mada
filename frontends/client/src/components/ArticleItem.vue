@@ -1,6 +1,12 @@
 <template>
-  <q-card flat bordered class="article q-ma-none q-pa-none">
-    <q-badge color="red-8" v-if="props.article.badge" floating class="text-bold">
+  <q-card flat bordered class="q-pa-none">
+    <q-badge
+      color="red-8"
+      v-if="props.article.badge"
+      floating
+      class="text-bold"
+      style="height: 2.5em; border-bottom-left-radius: 12px; border-top-right-radius: 12px;"
+    >
       {{ props.article.badge }}</q-badge
     >
 
@@ -43,15 +49,3 @@ const $shoppingCartStore = useShoppingCartStore()
 
 const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article.id) == undefined)
 </script>
-
-<style scoped lang="css">
-.article {
-  width: 300px;
-}
-
-@media (max-width: 1000px) {
-  .article {
-    width: 150px;
-  }
-}
-</style>
