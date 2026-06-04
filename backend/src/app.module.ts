@@ -7,6 +7,8 @@ import { GameModule } from './modules/game/game.module';
 import { OfferModule } from './modules/offer/offer.module';
 import { ArticleModule } from './modules/article/article.module';
 import { PaymentMethodModule } from './modules/paymentMethod/paymentMethod.module';
+import { PaymentModule } from './modules/payment/payment.module';
+import { OrderModule } from './modules/order/order.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { PaymentMethodModule } from './modules/paymentMethod/paymentMethod.modul
     PaymentMethodModule,
     OfferModule,
     ArticleModule,
+    PaymentModule,
+    OrderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
