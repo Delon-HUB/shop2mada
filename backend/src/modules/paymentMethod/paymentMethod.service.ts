@@ -25,6 +25,11 @@ export class PaymentMethodService {
     };
   }
 
+  async findById(id: string): Promise<IPaymentMethod | null> {
+    const paymentMethod = await this.paymentMethodModel.findById(id);
+    return paymentMethod;
+  }
+
   async findAll(): Promise<IPaymentMethod[]> {
     const paymentMethods = await this.paymentMethodModel.find().exec();
     return paymentMethods.map((paymentMethod) => ({
