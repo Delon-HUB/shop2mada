@@ -5,7 +5,7 @@
       v-if="props.article.badge"
       floating
       class="text-bold"
-      style="height: 2.5em; border-bottom-left-radius: 12px; border-top-right-radius: 12px;"
+      style="height: 2.5em; border-bottom-left-radius: 12px; border-top-right-radius: 12px"
     >
       {{ props.article.badge }}</q-badge
     >
@@ -28,7 +28,13 @@
         outline
         no-caps
         :color="canAddToCart ? 'primary' : 'grey'"
-        @click="$shoppingCartStore.add({ ...props.article, quantity: 1 })"
+        @click="
+          $shoppingCartStore.add({
+            article: props.article as IArticle,
+            quantity: 1,
+            unitPrice: props.article.price,
+          })
+        "
         :disable="!canAddToCart"
         :label="canAddToCart ? 'Ajouter' : 'Ajouté'"
       />

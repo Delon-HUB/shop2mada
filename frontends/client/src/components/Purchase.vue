@@ -72,7 +72,7 @@
             Veuillez entrer la référence de votre transaction pour confirmer le paiement.
           </p>
           <p>
-            <q-input rounded outlined v-model="text" label="Référence de la transaction">
+            <q-input rounded outlined v-model="paymentRef" label="Référence de la transaction">
               <template v-slot:prepend>
                 <q-icon name="receipt" />
               </template>
@@ -82,7 +82,18 @@
 
         <q-footer class="bg-white">
           <p class="q-ma-md">
-            <q-btn no-caps color="blue" class="fit">Confirmer ma commande</q-btn>
+            <q-btn
+              no-caps
+              color="blue"
+              class="fit"
+              @click="
+                () => {
+                  emits('finished', paymentRef)
+                  model = false
+                }
+              "
+              >Confirmer ma commande</q-btn
+            >
           </p>
         </q-footer>
       </q-page>
@@ -94,6 +105,7 @@ import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import type { IPaymentMethod } from '@shared/Types/Interfaces'
 import { computed, ref } from 'vue'
 
+const emits = defineEmits(['finished'])
 const $shoppingCartStore = useShoppingCartStore()
 $shoppingCartStore.init()
 const model = defineModel<boolean>()
@@ -102,7 +114,7 @@ const selectedPaymentMethod = computed<IPaymentMethod | null>(
   () => $shoppingCartStore.lastSelectedPaymentMethod || null,
 )
 
-const text = ref()
+const paymentRef = ref()
 </script>
 
 <style scoped>

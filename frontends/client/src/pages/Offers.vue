@@ -30,11 +30,10 @@
       >
         <article-item
           v-if="offer.articles.length > 0"
-          v-for="article in offer.articles.sort((a,b) => a.price - b.price)"
+          v-for="article in offer.articles.sort((a, b) => a.price - b.price)"
           :key="article.id"
           :article="article"
-          style="margin: auto; margin-bottom: 8px"
-          class="article_item"
+          class="article_item q-ma-xs"
         />
         <p v-else class="text-bold text-caption">Aucun article disponible pour le moment</p>
       </q-tab-panel>
@@ -79,12 +78,6 @@ if (gameId) {
 </script>
 
 <style lang="css" scoped>
-/* .articles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-} */
-
 .image {
   background-size: cover !important;
   background-position: center top !important;

@@ -2,8 +2,8 @@
   <div class="items">
     <q-item class="text-bold fit">
       <q-item-section>
-        <q-item-label>{{ article.name }} </q-item-label>
-        <q-item-label caption> {{ article.price }} ar </q-item-label>
+        <q-item-label>{{ (orderItem.article as IArticle).name }} </q-item-label>
+        <q-item-label caption> {{ (orderItem.article as IArticle).price }} ar </q-item-label>
       </q-item-section>
     </q-item>
     <q-item class="text-bold" style="max-width: 180px">
@@ -12,7 +12,7 @@
           input-class="text-center"
           type="number"
           outlined
-          v-model="props.article.quantity"
+          v-model="props.orderItem.quantity"
           min="1"
         >
           <template v-slot:prepend>
@@ -25,9 +25,9 @@
               class="bg-grey-3"
               @click="
                 () =>
-                  props.article.quantity && props.article.quantity > 1
-                    ? props.article.quantity--
-                    : (props.article.quantity = 1)
+                  props.orderItem.quantity && props.orderItem.quantity > 1
+                    ? props.orderItem.quantity--
+                    : (props.orderItem.quantity = 1)
               "
             />
           </template>
@@ -41,9 +41,9 @@
               class="bg-light-blue-1"
               @click="
                 () =>
-                  props.article.quantity != undefined
-                    ? props.article.quantity++
-                    : (props.article.quantity = 1)
+                  props.orderItem.quantity != undefined
+                    ? props.orderItem.quantity++
+                    : (props.orderItem.quantity = 1)
               "
             /> </template
         ></q-input>
@@ -56,18 +56,18 @@
         rounded
         dense
         flat
-        @click="() => $shoppingCartStore.remove(article.id)"
+        @click="() => $shoppingCartStore.remove((orderItem.article as IArticle).id)"
       />
     </q-item>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type IArticle } from '@shared/Types/Interfaces'
+import { type IArticle, type IOrderItem } from '@shared/Types/Interfaces'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 
 const props = defineProps<{
-  article: IArticle & { quantity: number }
+  orderItem: IOrderItem
 }>()
 
 const $shoppingCartStore = useShoppingCartStore()
