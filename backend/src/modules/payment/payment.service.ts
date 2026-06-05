@@ -21,6 +21,7 @@ export class PaymentService {
       ...payment.toObject(),
       paymentMethod: payment.paymentMethod.toString(),
       id: payment._id.toString(),
+      order: payment.order.toString(),
     };
   }
 }

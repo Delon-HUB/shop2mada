@@ -14,7 +14,7 @@ export class OrderController {
 
   @Get()
   async findAll() {
-    return 'hello from order';
+    return await this.orderService.findAll();
   }
 
   @Post()
@@ -39,8 +39,9 @@ export class OrderController {
     );
     const order = await this.orderService.create(createOrderDto);
     createPaymentDto.amount = 0;
+    createPaymentDto.order = order.id;
     const payment = await this.paymentService.create(createPaymentDto);
-
+    console.log({ order, payment });
     return {
       order,
       payment,

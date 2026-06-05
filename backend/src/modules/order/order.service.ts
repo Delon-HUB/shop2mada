@@ -21,4 +21,12 @@ export class OrderService {
       id: order._id.toString(),
     };
   }
+
+  async findAll(): Promise<IOrder[]> {
+    const orders = await this.orderModel.find().exec();
+    return orders.map((order) => ({
+      ...order.toObject(),
+      id: order._id.toString(),
+    }));
+  }
 }
