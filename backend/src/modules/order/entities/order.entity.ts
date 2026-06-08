@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IOrderItem } from '../../../shared/Types/Interfaces';
+import { IOrderItem, IPayment } from '../../../shared/Types/Interfaces';
+import { type ObjectId, SchemaTypes } from 'mongoose';
+import { PaymentEntity } from '../../payment/entities/payment.entity';
 
 export class OrderItem {
   @Prop({ required: true })
@@ -14,7 +16,8 @@ export class OrderItem {
 export class OrderEntity {
   @Prop({ required: true, type: [OrderItem] })
   orderItems!: IOrderItem[];
-
+  @Prop({ required: true, type: SchemaTypes.ObjectId, ref: PaymentEntity.name })
+  payment!: ObjectId | string;
   @Prop({ required: true })
   totalAmount!: number;
 

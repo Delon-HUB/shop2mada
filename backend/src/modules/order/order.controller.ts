@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { IOrder, IPayment } from '../../shared/Types/Interfaces';
+import { IArticle, IOrder, IPayment } from '../../shared/Types/Interfaces';
 import { ArticleService } from '../article/article.service';
 import { OrderService } from './order.service';
 import { PaymentService } from '../payment/payment.service';
@@ -14,7 +14,23 @@ export class OrderController {
 
   @Get()
   async findAll() {
-    return await this.orderService.findAll();
+    const orders = await this.orderService.findAll();
+    const orderWithPaymentList = Promise.all(
+      orders.map(async (order) => {
+        order.orderItems = await Promise.all(
+          await order.orderItems.map(async (item) => {
+            item.article = (await this.articleService.findById(
+              item.article as string,
+            )) as IArticle;
+            return item;
+          }),
+        );
+        return order;
+      }),
+    );
+    return (await orderWithPaymentList).sort(
+      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
+    );
   }
 
   @Post()
@@ -37,11 +53,11 @@ export class OrderController {
       (result, item) => (result += item.unitPrice * item.quantity),
       0,
     );
-    const order = await this.orderService.create(createOrderDto);
-    createPaymentDto.amount = 0;
-    createPaymentDto.order = order.id;
+    createPaymentDto.amount = createOrderDto.totalAmount;
     const payment = await this.paymentService.create(createPaymentDto);
-    console.log({ order, payment });
+    createOrderDto.payment = payment.id;
+    const order = await this.orderService.create(createOrderDto);
+    createPaymentDto.amount = createOrderDto.totalAmount;
     return {
       order,
       payment,

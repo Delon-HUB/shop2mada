@@ -1,4 +1,5 @@
 import { IArticle } from './IArticle';
+import { IPayment } from './IPayment';
 
 export interface IOrderItem {
   article: string | IArticle;
@@ -13,6 +14,7 @@ export interface IOrder {
   playerId: string;
   nickname: string;
   contact: string;
+  payment: string | IPayment;
   deliveryStatus: string;
   createdAt: Date;
   updatedAt: Date;
