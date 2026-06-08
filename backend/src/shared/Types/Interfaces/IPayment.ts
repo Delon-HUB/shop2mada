@@ -1,6 +1,5 @@
 export interface IPayment {
   id: string;
-  order: string;
   paymentMethod: string;
   paymentRef: string;
   amount: number;

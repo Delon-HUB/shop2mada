@@ -21,7 +21,25 @@ export class PaymentService {
       ...payment.toObject(),
       paymentMethod: payment.paymentMethod.toString(),
       id: payment._id.toString(),
-      order: payment.order.toString(),
     };
+  }
+
+  async findById(id: string): Promise<IPayment | null> {
+    const payment = await this.paymentModel.findById(id).exec();
+    if (!payment) return null;
+    return {
+      ...payment.toObject(),
+      id: payment._id.toString(),
+      paymentMethod: payment.paymentMethod.toString(),
+    };
+  }
+
+  async findAll(): Promise<IPayment[]> {
+    const payments = await this.paymentModel.find().exec();
+    return payments.map((payment) => ({
+      ...payment.toObject(),
+      id: payment._id.toString(),
+      paymentMethod: payment.paymentMethod.toString(),
+    }));
   }
 }

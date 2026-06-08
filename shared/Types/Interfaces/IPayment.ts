@@ -1,7 +1,8 @@
+import type { IPaymentMethod } from "./IPaymentMethod";
+
 export interface IPayment {
   id: string;
-  order: string;
-  paymentMethod: string;
+  paymentMethod: string | IPaymentMethod;
   paymentRef: string;
   amount: number;
   paymentStatus: string;
