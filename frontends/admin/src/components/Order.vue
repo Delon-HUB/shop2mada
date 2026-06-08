@@ -39,20 +39,11 @@
       </div>
     </q-card-section>
 
-    <q-card-actions align="right" class="q-pa-xs q-ma-none">
-      <p>
-        <q-btn
-          color="primary"
-          flat
-          dense
-          no-caps
-          :icon-right="expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down'"
-          @click="expanded = !expanded"
-          :label="`Plus de détails (${props.order.orderItems.length} articles)`"
-        />
-      </p>
-    </q-card-actions>
-    <q-card-section class="q-pa-none q-ma-none" v-show="expanded">
+    <q-expansion-item
+      icon="shopping_bag"
+      :label="`Plus de détails `"
+      :caption="`${props.order.orderItems.length} article(s)`"
+    >
       <q-slide-transition>
         <div>
           <q-separator />
@@ -157,7 +148,7 @@
           </q-tab-panels>
         </div>
       </q-slide-transition>
-    </q-card-section>
+    </q-expansion-item>
   </q-card>
 </template>
 
@@ -172,9 +163,7 @@ import type {
 import { copyToClipboard } from 'quasar'
 import { ref } from 'vue'
 
-const expanded = ref<boolean>(false)
 const tab = ref<string>('shop')
-
 const props = defineProps<{ order: IOrder }>()
 const payment = ref<IPayment>(props.order.payment as IPayment)
 const orderItems = ref<IOrderItem[]>(props.order.orderItems)

@@ -35,6 +35,28 @@
               </q-item>
               <q-separator inset :key="'sep' + index" v-if="menuItem.separator" />
             </template>
+            <q-expansion-item expand-separator label="Paramètres">
+              <div>
+                <q-item clickable v-ripple class="q-my-none q-py-none">
+                  <q-item-section avatar>
+                    <q-icon name="payments" />
+                  </q-item-section>
+                  <q-item-section>Mobile money</q-item-section>
+                </q-item>
+                <q-item clickable v-ripple class="q-my-none q-py-none">
+                  <q-item-section avatar>
+                    <q-icon name="phone" />
+                  </q-item-section>
+                  <q-item-section>Contacts</q-item-section>
+                </q-item>
+                <q-item clickable v-ripple class="q-my-none q-py-none">
+                  <q-item-section avatar>
+                    <q-icon name="security" />
+                  </q-item-section>
+                  <q-item-section>Sécurité</q-item-section>
+                </q-item>
+              </div>
+            </q-expansion-item>
           </q-list>
         </q-scroll-area>
       </q-drawer>
@@ -67,16 +89,6 @@ const menuList = [
     label: 'Jeux',
     separator: true,
     path: '/games',
-  },
-  {
-    icon: 'settings',
-    label: 'Paramètres',
-    separator: false,
-  },
-  {
-    icon: 'logout',
-    label: 'Se deconnecter',
-    separator: false,
   },
 ]
 
