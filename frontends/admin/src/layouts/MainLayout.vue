@@ -43,6 +43,8 @@
 </template>
 
 <script setup lang="ts">
+import { useOrderStore } from '@/stores/order.store'
+import { usePaymentMethodStore } from '@/stores/paymentMethod.store'
 import { ref } from 'vue'
 
 const drawer = ref(false)
@@ -58,7 +60,7 @@ const menuList = [
     icon: 'shopping_bag',
     label: 'Commandes',
     separator: false,
-    path: '',
+    path: '/orders',
   },
   {
     icon: 'gamepad',
@@ -77,4 +79,14 @@ const menuList = [
     separator: false,
   },
 ]
+
+const $paymentMethodStore = usePaymentMethodStore()
+const $orderStore = useOrderStore()
+$paymentMethodStore.init()
+$orderStore.init()
+
+const refreshData = () => {
+  $paymentMethodStore.init()
+  $orderStore.init()
+}
 </script>

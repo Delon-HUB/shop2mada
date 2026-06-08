@@ -162,6 +162,7 @@ import { computed, ref } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import type { IArticle, IPaymentMethod } from '@shared/Types/Interfaces/index.ts'
+import { useQuasar } from 'quasar'
 
 const loading = ref<boolean>(false)
 const model = defineModel<boolean>()
@@ -170,6 +171,7 @@ const nickname = ref<string>('')
 const contact = ref<string>('')
 const paymentRef = ref<string>('')
 
+const $q = useQuasar()
 const $shoppingCartStore = useShoppingCartStore()
 $shoppingCartStore.init()
 const paymentMethods = computed<IPaymentMethod[]>(() => $shoppingCartStore.paymentMethods || [])
@@ -191,7 +193,10 @@ const sendOrder = async () => {
   loading.value = true
   await $shoppingCartStore.purchase(playerId.value, nickname.value, contact.value, paymentRef.value)
   loading.value = false
-  model.value = false
+  playerId.value = ''
+  nickname.value = ''
+  paymentRef.value = ''
+  if ($q.screen.lt.md) model.value = false
 }
 </script>
 

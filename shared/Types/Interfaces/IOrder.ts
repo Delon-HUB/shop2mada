@@ -1,4 +1,5 @@
 import type { IArticle } from "./IArticle";
+import type { IPayment } from "./IPayment";
 
 export interface IOrderItem {
   article: string | IArticle;
@@ -9,6 +10,7 @@ export interface IOrderItem {
 export interface IOrder {
   id: string;
   orderItems: IOrderItem[];
+  payment: string | IPayment;
   totalAmount: number;
   playerId: string;
   nickname: string;

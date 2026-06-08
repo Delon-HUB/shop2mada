@@ -18,6 +18,10 @@ const router = createRouter({
           path: '/games',
           component: () => import('@/pages/Game.vue'),
         },
+        {
+          path: '/orders',
+          component: () => import('@/pages/Order.vue'),
+        },
       ],
     },
   ],

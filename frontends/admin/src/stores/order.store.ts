@@ -1,0 +1,28 @@
+import { publicAPI } from '@/instances/axios'
+import type { IOrder, IPayment } from '@shared/Types/Interfaces'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { usePaymentMethodStore } from './paymentMethod.store'
+
+export const useOrderStore = defineStore('orderStore', () => {
+  let orders = ref<IOrder[]>([])
+  const $paymentMethodStore = usePaymentMethodStore()
+
+  const init = async () => {
+    await getAll()
+    orders.value = orders.value.map((order) => {
+      const pm = $paymentMethodStore.findById((order.payment as IPayment).paymentMethod as string)
+      ;(order.payment as IPayment).paymentMethod = pm
+        ? pm
+        : (order.payment as IPayment).paymentMethod
+      return order
+    })
+  }
+
+  const getAll = async () => {
+    const response = await publicAPI.get('/order')
+    orders.value = response.data as IOrder[]
+  }
+
+  return { orders, init }
+})
