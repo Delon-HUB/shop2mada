@@ -14,6 +14,7 @@ export class PaymentMethodService {
   async create(
     paymentMethod: Partial<IPaymentMethod>,
   ): Promise<IPaymentMethod> {
+    paymentMethod.activate = false;
     paymentMethod.createdAt = new Date(Date.now());
     paymentMethod.updatedAt = new Date(Date.now());
 
@@ -30,8 +31,10 @@ export class PaymentMethodService {
     return paymentMethod;
   }
 
-  async findAll(): Promise<IPaymentMethod[]> {
-    const paymentMethods = await this.paymentMethodModel.find().exec();
+  async findAll(activate: boolean): Promise<IPaymentMethod[]> {
+    const paymentMethods = await this.paymentMethodModel
+      .find(activate ? { activate: true } : {})
+      .exec();
     return paymentMethods.map((paymentMethod) => ({
       ...paymentMethod.toObject(),
       id: paymentMethod._id.toString(),
@@ -66,7 +69,7 @@ export class PaymentMethodService {
   ): Promise<IPaymentMethod | null> {
     updateData.updatedAt = new Date(Date.now());
     const updatedPaymentMethod = await this.paymentMethodModel
-      .findByIdAndUpdate(id, updateData, { new: true })
+      .findByIdAndUpdate(id, updateData, { returnDocument: 'after' })
       .exec();
     if (!updatedPaymentMethod) return null;
     return {

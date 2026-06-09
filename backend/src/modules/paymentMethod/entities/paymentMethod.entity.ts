@@ -14,6 +14,9 @@ export class PaymentMethodEntity {
   @Prop({ required: true })
   cover!: string;
 
+  @Prop({ required: true, default: false })
+  activate!: boolean;
+
   @Prop({ required: true, default: Date.now() })
   createdAt!: Date;
 

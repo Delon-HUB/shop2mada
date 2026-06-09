@@ -5,6 +5,8 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
+  Query,
 } from '@nestjs/common';
 import { IPaymentMethod } from '../../shared/Types/Interfaces';
 import { PaymentMethodService } from './paymentMethod.service';
@@ -24,14 +26,15 @@ export class PaymentMethodController {
   }
 
   @Get()
-  async findAll() {
-    return await this.paymentMethodService.findAll();
+  async findAll(@Query('activate') activate: string) {
+    return await this.paymentMethodService.findAll(activate == 'true');
   }
 
-  @Get(':name')
-  async findByName(@Param('name') name: string) {
-    const paymentMethod = await this.paymentMethodService.findByName(name);
-    if (!paymentMethod) throw new NotFoundException('Payment method not found');
-    return paymentMethod;
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updatedDto: Partial<IPaymentMethod>,
+  ) {
+    return await this.paymentMethodService.update(id, updatedDto);
   }
 }
