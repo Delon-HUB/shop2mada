@@ -37,13 +37,13 @@
             </template>
             <q-expansion-item expand-separator label="Paramètres">
               <div>
-                <q-item clickable v-ripple class="q-my-none q-py-none">
+                <q-item clickable v-ripple class="q-my-none q-py-none" :to="`payment-method`">
                   <q-item-section avatar>
                     <q-icon name="payments" />
                   </q-item-section>
                   <q-item-section>Mobile money</q-item-section>
                 </q-item>
-                <q-item clickable v-ripple class="q-my-none q-py-none">
+                <q-item clickable v-ripple class="q-my-none q-py-none" :to="`contact`">
                   <q-item-section avatar>
                     <q-icon name="phone" />
                   </q-item-section>

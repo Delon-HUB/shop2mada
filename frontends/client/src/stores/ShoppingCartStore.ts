@@ -47,7 +47,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   }
 
   const getPaymentMethods = async () => {
-    const response = await publicAPI.get('/payment-method')
+    const response = await publicAPI.get(`/payment-method?activate=true`)
     paymentMethods.value = response.data as IPaymentMethod[]
   }
 

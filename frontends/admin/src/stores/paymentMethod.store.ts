@@ -11,7 +11,7 @@ export const usePaymentMethodStore = defineStore('paymentMethodStore', () => {
   }
 
   const getAll = async () => {
-    const response = await publicAPI.get('/payment-method')
+    const response = await publicAPI.get(`/payment-method?activate=false`)
     paymentMethods.value = response.data as IPaymentMethod[]
   }
 
@@ -19,5 +19,12 @@ export const usePaymentMethodStore = defineStore('paymentMethodStore', () => {
     return paymentMethods.value.find((pm) => pm.id == id)
   }
 
-  return { paymentMethods, init, findById }
+  const update = async (id: string, updateData: Partial<IPaymentMethod>) => {
+    const response = await publicAPI.put(`/payment-method/${id}`, updateData)
+    const pmUpdated = response.data as IPaymentMethod
+    const index = paymentMethods.value.findIndex((pm) => pm.id == pmUpdated.id)
+    paymentMethods.value.splice(index, 1, pmUpdated)
+  }
+
+  return { paymentMethods, init, findById, update }
 })

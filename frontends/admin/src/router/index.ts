@@ -22,6 +22,20 @@ const router = createRouter({
           path: '/orders',
           component: () => import('@/pages/Order.vue'),
         },
+        {
+          path: '/settings',
+          redirect: 'payment-method',
+          children: [
+            {
+              path: '/payment-method',
+              component: () => import('@/pages/PaymentMethod.vue'),
+            },
+            {
+              path: '/contact',
+              component: () => import('@/pages/Contact.vue'),
+            },
+          ],
+        },
       ],
     },
   ],

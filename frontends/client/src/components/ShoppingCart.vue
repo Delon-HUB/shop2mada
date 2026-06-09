@@ -55,7 +55,14 @@
                 </template>
               </q-input>
 
-              <q-input rounded outlined v-model="contact" label="Numéro de téléphone" type="tel">
+              <q-input
+                rounded
+                outlined
+                v-model="contact"
+                label="Numéro de téléphone"
+                type="tel"
+                mask="### ## ### ##"
+              >
                 <template v-slot:prepend>
                   <q-icon name="call" />
                 </template>
@@ -68,7 +75,11 @@
           <div class="q-ml-md text-bold" style="transform: translateY(-50%)">
             <q-chip> <q-icon name="payments" color="primary" size="24px" />3.Paiment</q-chip>
           </div>
-          <div class="q-mx-md">
+          <p v-if="paymentMethods.length == 0" class="q-mx-md text-caption text-grey">
+            aucun méthode de paiement disponible pour le moment...
+          </p>
+
+          <div class="q-mx-md" v-else>
             <p class="text-bold">a.Choisissez le mode de paiement</p>
             <div class="flex row wrap justify-start q-mb-md text-caption">
               <q-item
@@ -105,9 +116,23 @@
                       >{{ selectedPaymentMethod?.name }}</q-chip
                     >
                   </li>
-                  <li>
-                    Sur le numéro:
-                    <q-chip class="text-bold"> {{ selectedPaymentMethod?.phone }}</q-chip>
+                  <li class="flex row">
+                    <p>
+                      sur le numéro:
+                      <q-chip class="text-bold">
+                        {{ selectedPaymentMethod?.phone }}
+                      </q-chip>
+                    </p>
+                    <q-space></q-space>
+                    <p>
+                      <q-btn
+                        flat
+                        icon="content_copy"
+                        color="primary"
+                        class="q-mr-xs"
+                        @click="() => copyToClipboard(selectedPaymentMethod?.phone ?? '')"
+                      />
+                    </p>
                   </li>
                   <li>
                     Nom du compte:
@@ -162,7 +187,7 @@ import { computed, ref } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import type { IArticle, IPaymentMethod } from '@shared/Types/Interfaces/index.ts'
-import { useQuasar } from 'quasar'
+import { useQuasar, copyToClipboard } from 'quasar'
 
 const loading = ref<boolean>(false)
 const model = defineModel<boolean>()
