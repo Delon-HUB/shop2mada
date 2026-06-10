@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { OrderEntity } from './entities/order.entity';
 import { IOrder, IPayment } from '../../shared/Types/Interfaces';
+import { EDeliveryStatus } from '../../shared/Types/Enums';
 
 @Injectable()
 export class OrderService {
@@ -12,7 +13,7 @@ export class OrderService {
   ) {}
 
   async create(orderDto: Partial<IOrder>): Promise<IOrder> {
-    orderDto.deliveryStatus = 'PENDING';
+    orderDto.deliveryStatus = EDeliveryStatus.PENDING;
     orderDto.createdAt = new Date(Date.now());
     orderDto.updatedAt = new Date(Date.now());
     const order = await this.orderModel.create({
@@ -22,7 +23,7 @@ export class OrderService {
 
     return {
       ...order.toObject(),
-      id: order._id.toString(),
+      _id: order._id.toString(),
       payment: order.payment.toString(),
     };
   }
@@ -32,7 +33,7 @@ export class OrderService {
     if (!order) return null;
     return {
       ...order.toObject(),
-      id: order._id.toString(),
+      _id: order._id.toString(),
       payment: order.payment as unknown as IPayment,
     };
   }
@@ -41,8 +42,30 @@ export class OrderService {
     const orders = await this.orderModel.find().populate('payment').exec();
     return orders.map((order) => ({
       ...order.toObject(),
-      id: order._id.toString(),
+      _id: order._id.toString(),
       payment: order.payment as unknown as IPayment,
     }));
+  }
+
+  async update(
+    id: string,
+    updateData: Partial<IOrder>,
+  ): Promise<IOrder | null> {
+    const updatedOrder = await this.orderModel
+      .findByIdAndUpdate(
+        id,
+        {
+          deliveryStatus: updateData.deliveryStatus,
+          updatedAt: new Date(Date.now()),
+        },
+        { returnDocument: 'after' },
+      )
+      .exec();
+    if (!updatedOrder) return null;
+    return {
+      ...updatedOrder.toObject(),
+      _id: updatedOrder._id.toString(),
+      payment: updatedOrder.payment.toString(),
+    };
   }
 }

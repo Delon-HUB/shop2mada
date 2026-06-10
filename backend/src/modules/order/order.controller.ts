@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { IArticle, IOrder, IPayment } from '../../shared/Types/Interfaces';
 import { ArticleService } from '../article/article.service';
 import { OrderService } from './order.service';
@@ -55,12 +55,19 @@ export class OrderController {
     );
     createPaymentDto.amount = createOrderDto.totalAmount;
     const payment = await this.paymentService.create(createPaymentDto);
-    createOrderDto.payment = payment.id;
+    createOrderDto.payment = payment._id;
     const order = await this.orderService.create(createOrderDto);
     createPaymentDto.amount = createOrderDto.totalAmount;
     return {
       order,
       payment,
     };
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateData: Partial<IOrder>) {
+    return await this.orderService.update(id, {
+      deliveryStatus: updateData.deliveryStatus,
+    });
   }
 }
