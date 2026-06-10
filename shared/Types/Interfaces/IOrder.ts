@@ -1,3 +1,4 @@
+import type { EDeliveryStatus } from "../Enums";
 import type { IArticle } from "./IArticle";
 import type { IPayment } from "./IPayment";
 
@@ -8,14 +9,14 @@ export interface IOrderItem {
 }
 
 export interface IOrder {
-  id: string;
+  _id: string;
   orderItems: IOrderItem[];
   payment: string | IPayment;
   totalAmount: number;
   playerId: string;
   nickname: string;
   contact: string;
-  deliveryStatus: string;
+  deliveryStatus: EDeliveryStatus;
   createdAt: Date;
   updatedAt: Date;
 }

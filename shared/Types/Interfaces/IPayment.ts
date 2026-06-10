@@ -1,11 +1,12 @@
+import type { EPaymentStatus } from "../Enums";
 import type { IPaymentMethod } from "./IPaymentMethod";
 
 export interface IPayment {
-  id: string;
+  _id: string;
   paymentMethod: string | IPaymentMethod;
   paymentRef: string;
   amount: number;
-  paymentStatus: string;
+  paymentStatus: EPaymentStatus;
   createdAt: Date;
   updatedAt: Date;
 }
