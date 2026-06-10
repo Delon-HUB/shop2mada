@@ -97,13 +97,13 @@
           <q-btn-dropdown
             no-caps
             v-for="offer in props.game.offers"
-            :key="offer.id"
-            @click="() => (offerTab = offer.id)"
+            :key="offer._id"
+            @click="() => (offerTab = offer._id)"
             split
             flat
             :label="offer.name"
             class="q-ma-sm"
-            :color="offerTab == offer.id ? 'primary' : 'grey'"
+            :color="offerTab == offer._id ? 'primary' : 'grey'"
           >
             <q-list>
               <q-item clickable v-close-popup>
@@ -128,8 +128,8 @@
         <q-tab-panels v-model="offerTab" animated>
           <q-tab-panel
             v-for="offer in props.game.offers"
-            :key="offer.id"
-            :name="offer.id"
+            :key="offer._id"
+            :name="offer._id"
             :class="
               $q.screen.lt.md
                 ? 'flex row wrap q-pa-none justify-around'
@@ -138,7 +138,7 @@
           >
             <article-item
               v-for="article in offer.articles"
-              :key="article.id"
+              :key="article._id"
               :article="article"
               class="q-ma-sm"
             />
@@ -185,7 +185,7 @@ const props = defineProps<{
 const $offerStore = useOfferStore()
 const $articleStore = useArticleStore()
 
-const offerTab = ref((props.game.offers ?? [])[0]?.id || 'none')
+const offerTab = ref((props.game.offers ?? [])[0]?._id || 'none')
 
 const handleAddOffer = async (newOffer: Partial<IOffer>) => {
   await $offerStore.addOffer(newOffer)

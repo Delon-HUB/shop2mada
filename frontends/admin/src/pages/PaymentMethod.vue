@@ -3,7 +3,7 @@
     <MobileMoney
       v-for="pm in $paymentMethodStore.paymentMethods"
       :payment-method="pm"
-      :key="pm.id"
+      :key="pm._id"
     />
   </div>
 </template>

@@ -108,7 +108,7 @@ watch(
 )
 
 const updatePaymentMethod = () => {
-  $paymentMethodStore.update(props.paymentMethod.id, paymentMethodTmp.value)
+  $paymentMethodStore.update(props.paymentMethod._id, paymentMethodTmp.value)
   editMode.value = false
 }
 </script>

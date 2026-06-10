@@ -9,7 +9,7 @@
       @click="() => (showGameInput = !showGameInput)"
     />
   </p>
-  <p v-for="game in games" :key="game.id">
+  <p v-for="game in games" :key="game._id">
     <Game :game="game" />
   </p>
 

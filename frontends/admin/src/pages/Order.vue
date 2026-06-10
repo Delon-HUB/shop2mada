@@ -1,6 +1,6 @@
 <template>
   <div class="q-gutter-md flex items-start wrap">
-    <Order v-for="order in $orderStore.orders" :order="order" :key="order.id" />
+    <Order v-for="order in $orderStore.orders" :order="order" :key="order._id" />
   </div>
 </template>
 

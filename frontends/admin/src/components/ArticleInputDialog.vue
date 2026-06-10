@@ -38,7 +38,7 @@ const props = defineProps<{
   offer: IOffer
 }>()
 const article = ref<Partial<IArticle>>({
-  offerId: props.offer.id,
+  offerId: props.offer._id,
   name: '',
   price: 0,
   badge: '',
