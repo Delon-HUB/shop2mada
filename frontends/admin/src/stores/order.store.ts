@@ -3,6 +3,7 @@ import type { IOrder, IPayment } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { usePaymentMethodStore } from './paymentMethod.store'
+import type { EPaymentStatus } from '@shared/Types/Enums'
 
 export const useOrderStore = defineStore('orderStore', () => {
   let orders = ref<IOrder[]>([])
@@ -24,5 +25,23 @@ export const useOrderStore = defineStore('orderStore', () => {
     orders.value = response.data as IOrder[]
   }
 
-  return { orders, init }
+  const updatedPaymentStatus = async (
+    id: string,
+    updateData: Partial<IPayment>,
+  ): Promise<IPayment> => {
+    const response = await publicAPI.put(`/payment/${id}`, updateData)
+    const pUpdated = response.data as IPayment
+    return pUpdated
+  }
+
+  const updatedDeliveryStatus = async (
+    id: string,
+    updateData: Partial<IOrder>,
+  ): Promise<IOrder> => {
+    const response = await publicAPI.put(`/order/${id}`, updateData)
+    const pUpdated = response.data as IOrder
+    return pUpdated
+  }
+
+  return { orders, init, updatedPaymentStatus, updatedDeliveryStatus }
 })

@@ -27,16 +27,47 @@
     </q-card-section>
 
     <q-card-section class="q-ma-none">
-      <div class="flex row">
-        <p>Statut paiment:</p>
-        <q-space />
-        <p class="text-positive">{{ payment.paymentStatus }}</p>
-      </div>
-      <div class="flex row">
-        <p>Statut livraison:</p>
-        <q-space />
-        <p class="text-orange">{{ props.order.deliveryStatus }}</p>
-      </div>
+      <p>
+        <q-select v-model="selectedPaymentStatus" :options="paymentStatusOptions" borderless>
+          <template v-slot:selected>
+            Statut de paiment:
+            <q-chip
+              v-if="selectedPaymentStatus"
+              :color="paymentStatusColor"
+              text-color="white"
+              class="q-my-none q-ml-xs q-mr-none"
+            >
+              {{ selectedPaymentStatus }}
+            </q-chip>
+          </template>
+        </q-select>
+      </p>
+      <p>
+        <q-select v-model="selectedDeliveryStatus" :options="deliveryStatusOptions" borderless>
+          <template v-slot:selected>
+            Statut de livraison:
+            <q-chip
+              v-if="selectedDeliveryStatus"
+              :color="deliveryStatusColor"
+              text-color="white"
+              class="q-my-none q-ml-xs q-mr-none"
+            >
+              {{ selectedDeliveryStatus }}
+            </q-chip>
+          </template>
+        </q-select>
+      </p>
+      <p class="text-center q-ma-none q-pa-none" v-show="showBtnSave">
+        <q-btn
+          color="primary"
+          rounded
+          no-caps
+          outline
+          class="q-pa-none q-ma-none fit"
+          label="Mettre à jour"
+          @click="updateStatus"
+        />
+      </p>
     </q-card-section>
 
     <q-expansion-item
@@ -153,6 +184,8 @@
 </template>
 
 <script setup lang="ts">
+import { useOrderStore } from '@/stores/order.store'
+import { EDeliveryStatus, EPaymentStatus } from '@shared/Types/Enums'
 import type {
   IOrderItem,
   IOrder,
@@ -161,12 +194,86 @@ import type {
   IArticle,
 } from '@shared/Types/Interfaces'
 import { copyToClipboard } from 'quasar'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const tab = ref<string>('shop')
 const props = defineProps<{ order: IOrder }>()
 const payment = ref<IPayment>(props.order.payment as IPayment)
 const orderItems = ref<IOrderItem[]>(props.order.orderItems)
+
+const paymentStatusOptions = ref<EPaymentStatus[]>(Object.values(EPaymentStatus))
+const selectedPaymentStatus = ref<EPaymentStatus>(payment.value.paymentStatus)
+
+const deliveryStatusOptions = ref<EDeliveryStatus[]>(Object.values(EDeliveryStatus))
+const selectedDeliveryStatus = ref<EDeliveryStatus>(props.order.deliveryStatus)
+
+const colorStatus = (status: EPaymentStatus | EDeliveryStatus): string => {
+  switch (status) {
+    case EPaymentStatus.PENDING:
+      return 'orange'
+    case EPaymentStatus.FAILED:
+      return 'red'
+    case EPaymentStatus.PAID:
+      return 'green'
+    case EPaymentStatus.REFUNDED:
+      return 'red'
+    case EDeliveryStatus.CANCELLED:
+      return 'red'
+    case EDeliveryStatus.DELIVERED:
+      return 'green'
+    default:
+      return 'white'
+  }
+}
+
+const paymentStatusColor = computed(() => colorStatus(selectedPaymentStatus.value))
+const deliveryStatusColor = computed(() => colorStatus(selectedDeliveryStatus.value))
+
+const showBtnSave = computed<'PAYMENT' | 'DELIVERY' | 'PAYMENT_DELIVERY' | undefined>(() =>
+  payment.value.paymentStatus != selectedPaymentStatus.value &&
+  props.order.deliveryStatus != selectedDeliveryStatus.value
+    ? 'PAYMENT_DELIVERY'
+    : props.order.deliveryStatus != selectedDeliveryStatus.value
+      ? 'DELIVERY'
+      : payment.value.paymentStatus != selectedPaymentStatus.value
+        ? 'PAYMENT'
+        : undefined,
+)
+
+const $orderStore = useOrderStore()
+const updateStatus = async () => {
+  if (showBtnSave.value == 'PAYMENT_DELIVERY') {
+    const pUpdated = await $orderStore.updatedPaymentStatus(payment.value._id, {
+      paymentStatus: selectedPaymentStatus.value,
+    })
+    payment.value = {
+      ...payment.value,
+      paymentStatus: pUpdated.paymentStatus,
+      updatedAt: pUpdated.updatedAt,
+    }
+
+    const oUpdated = await $orderStore.updatedDeliveryStatus(props.order._id, {
+      deliveryStatus: selectedDeliveryStatus.value,
+    })
+    props.order.deliveryStatus = oUpdated.deliveryStatus
+    props.order.updatedAt = oUpdated.updatedAt
+  } else if (showBtnSave.value == 'PAYMENT') {
+    const pUpdated = await $orderStore.updatedPaymentStatus(payment.value._id, {
+      paymentStatus: selectedPaymentStatus.value,
+    })
+    payment.value = {
+      ...payment.value,
+      paymentStatus: pUpdated.paymentStatus,
+      updatedAt: pUpdated.updatedAt,
+    }
+  } else if (showBtnSave.value == 'DELIVERY') {
+    const pUpdated = await $orderStore.updatedDeliveryStatus(props.order._id, {
+      deliveryStatus: selectedDeliveryStatus.value,
+    })
+    props.order.deliveryStatus = pUpdated.deliveryStatus
+    props.order.updatedAt = pUpdated.updatedAt
+  }
+}
 </script>
 
 <style scoped lang="css">
