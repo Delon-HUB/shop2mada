@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { IOrderItem, IPayment } from '../../../shared/Types/Interfaces';
 import { type ObjectId, SchemaTypes } from 'mongoose';
 import { PaymentEntity } from '../../payment/entities/payment.entity';
+import { EDeliveryStatus } from '../../../shared/Types/Enums';
 
 export class OrderItem {
   @Prop({ required: true })
@@ -29,7 +30,7 @@ export class OrderEntity {
   contact!: string;
 
   @Prop({ required: true })
-  deliveryStatus!: string;
+  deliveryStatus!: EDeliveryStatus;
   @Prop({ required: true, default: Date.now() })
   createdAt!: Date;
   @Prop({ required: true, default: Date.now() })

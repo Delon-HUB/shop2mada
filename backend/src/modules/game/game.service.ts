@@ -18,7 +18,7 @@ export class GameService {
     return {
       ...createdGame.toObject(),
       offers: [],
-      id: createdGame._id.toString(),
+      _id: createdGame._id.toString(),
     } as IGame;
   }
 
@@ -28,7 +28,7 @@ export class GameService {
       ...games.map((game) => ({
         ...game.toObject(),
         offers: [],
-        id: game._id.toString(),
+        _id: game._id.toString(),
       })),
     ] as IGame[];
   }
@@ -39,7 +39,7 @@ export class GameService {
     return {
       ...game.toObject(),
       offers: [],
-      id: game._id.toString(),
+      _id: game._id.toString(),
     } as IGame;
   }
 }

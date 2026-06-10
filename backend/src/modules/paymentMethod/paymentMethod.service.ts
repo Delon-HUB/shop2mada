@@ -22,13 +22,15 @@ export class PaymentMethodService {
       await this.paymentMethodModel.create(paymentMethod);
     return {
       ...createdPaymentMethod.toObject(),
-      id: createdPaymentMethod._id.toString(),
+      _id: createdPaymentMethod._id.toString(),
     };
   }
 
   async findById(id: string): Promise<IPaymentMethod | null> {
     const paymentMethod = await this.paymentMethodModel.findById(id);
-    return paymentMethod;
+    return paymentMethod
+      ? { ...paymentMethod, _id: paymentMethod._id.toString() }
+      : null;
   }
 
   async findAll(activate: boolean): Promise<IPaymentMethod[]> {
@@ -37,7 +39,7 @@ export class PaymentMethodService {
       .exec();
     return paymentMethods.map((paymentMethod) => ({
       ...paymentMethod.toObject(),
-      id: paymentMethod._id.toString(),
+      _id: paymentMethod._id.toString(),
     }));
   }
 
@@ -48,7 +50,7 @@ export class PaymentMethodService {
     if (!paymentMethod) return null;
     return {
       ...paymentMethod.toObject(),
-      id: paymentMethod._id.toString(),
+      _id: paymentMethod._id.toString(),
     };
   }
 
@@ -59,7 +61,7 @@ export class PaymentMethodService {
     if (!paymentMethod) return null;
     return {
       ...paymentMethod.toObject(),
-      id: paymentMethod._id.toString(),
+      _id: paymentMethod._id.toString(),
     };
   }
 
@@ -74,7 +76,7 @@ export class PaymentMethodService {
     if (!updatedPaymentMethod) return null;
     return {
       ...updatedPaymentMethod.toObject(),
-      id: updatedPaymentMethod._id.toString(),
+      _id: updatedPaymentMethod._id.toString(),
     };
   }
 

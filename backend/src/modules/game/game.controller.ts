@@ -30,10 +30,10 @@ export class GameController {
     const games = await this.gameService.findAll();
     const gameReturned = await Promise.all(
       games.map(async (game) => {
-        const offers = await this.offerService.findByGameId(game.id);
+        const offers = await this.offerService.findByGameId(game._id);
         const offersReturned = await Promise.all(
           offers.map(async (offer) => {
-            const articles = await this.articleService.findByOfferId(offer.id);
+            const articles = await this.articleService.findByOfferId(offer._id);
             return { ...offer, articles };
           }),
         );

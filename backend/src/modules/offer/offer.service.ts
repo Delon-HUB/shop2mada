@@ -18,7 +18,7 @@ export class OfferService {
     const createdOffer = await this.offerModel.create(offer);
     return {
       ...createdOffer.toObject(),
-      id: createdOffer._id.toString(),
+      _id: createdOffer._id.toString(),
       articles: [],
     } as IOffer;
   }
@@ -28,7 +28,7 @@ export class OfferService {
     return [
       ...offers.map((offer) => ({
         ...offer.toObject(),
-        id: offer._id.toString(),
+        _id: offer._id.toString(),
         articles: [],
       })),
     ] as IOffer[];
@@ -39,7 +39,7 @@ export class OfferService {
     if (!offer) return null;
     return {
       ...offer.toObject(),
-      id: offer._id.toString(),
+      _id: offer._id.toString(),
       articles: [],
     } as IOffer;
   }
@@ -48,7 +48,7 @@ export class OfferService {
     const offers = await this.offerModel.find({ gameId }).exec();
     return offers.map((offer) => ({
       ...offer.toObject(),
-      id: offer._id.toString(),
+      _id: offer._id.toString(),
       articles: [],
     })) as IOffer[];
   }

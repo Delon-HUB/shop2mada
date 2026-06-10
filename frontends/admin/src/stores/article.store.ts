@@ -10,7 +10,7 @@ export const useArticleStore = defineStore('articleStore', () => {
     const response = await publicAPI.post('/article', newArticle)
     if (response.data) {
       gameStore.games = gameStore.games.map((g) => {
-        const offer = g.offers.find((o) => o.id === newArticle.offerId)
+        const offer = g.offers.find((o) => o._id === newArticle.offerId)
         if (offer) {
           offer.articles.push(response.data as IArticle)
         }

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { type ObjectId, SchemaTypes } from 'mongoose';
 import { PaymentMethodEntity } from '../../paymentMethod/entities/paymentMethod.entity';
+import { EPaymentStatus } from '../../../shared/Types/Enums';
 
 @Schema({ timestamps: true, collection: 'payments' })
 export class PaymentEntity {
@@ -16,7 +17,7 @@ export class PaymentEntity {
   amount!: number;
 
   @Prop({ required: true })
-  paymentStatus!: string;
+  paymentStatus!: EPaymentStatus;
   @Prop({ required: true, default: Date.now() })
   createdAt!: Date;
   @Prop({ required: true, default: Date.now() })

@@ -18,7 +18,7 @@ export class ArticleService {
     const createdArticle = await this.articleModel.create(article);
     return {
       ...createdArticle.toObject(),
-      id: createdArticle._id.toString(),
+      _id: createdArticle._id.toString(),
       offerId: createdArticle.offerId.toString(),
     };
   }
@@ -27,7 +27,7 @@ export class ArticleService {
     const articles = await this.articleModel.find().exec();
     return articles.map((article) => ({
       ...article.toObject(),
-      id: article._id.toString(),
+      _id: article._id.toString(),
       offerId: article.offerId.toString(),
     }));
   }
@@ -37,7 +37,7 @@ export class ArticleService {
     if (!article) return null;
     return {
       ...article.toObject(),
-      id: article._id.toString(),
+      _id: article._id.toString(),
       offerId: article.offerId.toString(),
     };
   }
@@ -46,7 +46,7 @@ export class ArticleService {
     const articles = await this.articleModel.find({ offerId }).exec();
     return articles.map((article) => ({
       ...article.toObject(),
-      id: article._id.toString(),
+      _id: article._id.toString(),
       offerId: article.offerId.toString(),
     }));
   }

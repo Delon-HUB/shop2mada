@@ -16,13 +16,13 @@ export const usePaymentMethodStore = defineStore('paymentMethodStore', () => {
   }
 
   const findById = (id: string): IPaymentMethod | undefined => {
-    return paymentMethods.value.find((pm) => pm.id == id)
+    return paymentMethods.value.find((pm) => pm._id == id)
   }
 
   const update = async (id: string, updateData: Partial<IPaymentMethod>) => {
     const response = await publicAPI.put(`/payment-method/${id}`, updateData)
     const pmUpdated = response.data as IPaymentMethod
-    const index = paymentMethods.value.findIndex((pm) => pm.id == pmUpdated.id)
+    const index = paymentMethods.value.findIndex((pm) => pm._id == pmUpdated._id)
     paymentMethods.value.splice(index, 1, pmUpdated)
   }
 
