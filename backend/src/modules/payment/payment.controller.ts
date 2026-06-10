@@ -1,10 +1,19 @@
-import { Body, Controller, Get, NotFoundException, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { IPayment } from '../../shared/Types/Interfaces';
-import { PaymentMethodService } from '../paymentMethod/paymentMethod.service';
+import { EPaymentStatus } from '../../shared/Types/Enums';
+import { PaymentService } from './payment.service';
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private readonly paymentMethodService: PaymentMethodService) {}
+  constructor(private readonly paymentService: PaymentService) {}
 
   @Get()
   async findAll() {
@@ -13,11 +22,18 @@ export class PaymentController {
 
   @Post()
   async create(@Body() createPaymentDto: Partial<IPayment>) {
-    const pm = await this.paymentMethodService.findById(
+    const pm = await this.paymentService.findById(
       createPaymentDto.paymentMethod!,
     );
     if (!pm) throw new NotFoundException('PAYMENT_METHOD_NOT_FOUND');
 
     return pm;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateData: Partial<IPayment>) {
+    return await this.paymentService.update(id, {
+      paymentStatus: updateData.paymentStatus,
+    });
   }
 }

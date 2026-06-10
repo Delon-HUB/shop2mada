@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PaymentEntity } from './entities/payment.entity';
 import { IPayment } from '../../shared/Types/Interfaces';
+import { EPaymentStatus } from '../../shared/Types/Enums';
 
 @Injectable()
 export class PaymentService {
@@ -12,7 +13,7 @@ export class PaymentService {
   ) {}
 
   async create(paymentDto: Partial<IPayment>): Promise<IPayment> {
-    paymentDto.paymentStatus = 'PENDING';
+    paymentDto.paymentStatus = EPaymentStatus.PENDING;
     paymentDto.createdAt = new Date(Date.now());
     paymentDto.updatedAt = new Date(Date.now());
 
@@ -20,7 +21,7 @@ export class PaymentService {
     return {
       ...payment.toObject(),
       paymentMethod: payment.paymentMethod.toString(),
-      id: payment._id.toString(),
+      _id: payment._id.toString(),
     };
   }
 
@@ -29,7 +30,7 @@ export class PaymentService {
     if (!payment) return null;
     return {
       ...payment.toObject(),
-      id: payment._id.toString(),
+      _id: payment._id.toString(),
       paymentMethod: payment.paymentMethod.toString(),
     };
   }
@@ -38,8 +39,24 @@ export class PaymentService {
     const payments = await this.paymentModel.find().exec();
     return payments.map((payment) => ({
       ...payment.toObject(),
-      id: payment._id.toString(),
+      _id: payment._id.toString(),
       paymentMethod: payment.paymentMethod.toString(),
     }));
+  }
+
+  async update(
+    id: string,
+    updateData: Partial<IPayment>,
+  ): Promise<IPayment | null> {
+    updateData.updatedAt = new Date(Date.now());
+    const updatedPayment = await this.paymentModel
+      .findByIdAndUpdate(id, updateData, { returnDocument: 'after' })
+      .exec();
+    if (!updatedPayment) return null;
+    return {
+      ...updatedPayment.toObject(),
+      _id: updatedPayment._id.toString(),
+      paymentMethod: updatedPayment.toString(),
+    };
   }
 }
