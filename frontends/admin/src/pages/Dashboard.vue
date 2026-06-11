@@ -167,7 +167,7 @@
   </q-card>
 
   <q-card class="q-my-md" bordered flat>
-    <Chart :data="getData()" />
+    <Chart :data="getData" />
   </q-card>
 </template>
 <script setup lang="ts">
@@ -180,7 +180,7 @@ import { EDeliveryStatus, EPaymentStatus } from '@shared/Types/Enums'
 const $orderStore = useOrderStore()
 const payments = computed(() => $orderStore.orders.map((o) => o.payment as IPayment))
 
-const getData = (): number[] => {
+const getData = computed<number[]>((): number[] => {
   const currentYear = new Date(Date.now()).getFullYear()
   const data: number[] = new Array(12).fill(0)
   const paids = payments.value.filter(
@@ -191,8 +191,9 @@ const getData = (): number[] => {
     const month = new Date(p.updatedAt).getMonth()
     data[month]! += p.amount
   })
+
   return data
-}
+})
 </script>
 
 <style scoped lang="css">

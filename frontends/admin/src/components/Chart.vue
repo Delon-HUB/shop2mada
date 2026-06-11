@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import Chart from 'chart.js/auto'
-import { onMounted } from 'vue'
+import { onMounted, watch } from 'vue'
 
 const props = defineProps<{ data: number[] }>()
 
@@ -59,6 +59,23 @@ onMounted(() => {
     data: data,
     options: config.options,
   })
+
+  watch(
+    () => props.data,
+    (newData) => {
+      chart.data = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Recette',
+            data: newData,
+            borderWidth: 1.5,
+          },
+        ],
+      }
+      chart.update()
+    },
+  )
 })
 </script>
 
