@@ -35,7 +35,7 @@
               </q-item>
               <q-separator inset :key="'sep' + index" v-if="menuItem.separator" />
             </template>
-            <q-expansion-item expand-separator label="Paramètres">
+            <q-expansion-item expand-separator label="Paramètres" expand-icon="settings">
               <div>
                 <q-item clickable v-ripple class="q-my-none q-py-none" :to="`payment-method`">
                   <q-item-section avatar>
@@ -67,10 +67,12 @@
 <script setup lang="ts">
 import { useOrderStore } from '@/stores/order.store'
 import { usePaymentMethodStore } from '@/stores/paymentMethod.store'
+import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 
-const drawer = ref(false)
+const $q = useQuasar()
 
+const drawer = ref($q.screen.gt.md)
 const menuList = [
   {
     icon: 'show_chart',

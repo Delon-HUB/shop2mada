@@ -198,7 +198,7 @@ import { computed, ref } from 'vue'
 
 const tab = ref<string>('shop')
 const props = defineProps<{ order: IOrder }>()
-const payment = ref<IPayment>(props.order.payment as IPayment)
+const payment = computed<IPayment>(() => props.order.payment as IPayment)
 const orderItems = ref<IOrderItem[]>(props.order.orderItems)
 
 const paymentStatusOptions = ref<EPaymentStatus[]>(Object.values(EPaymentStatus))
@@ -246,7 +246,7 @@ const updateStatus = async () => {
     const pUpdated = await $orderStore.updatedPaymentStatus(payment.value._id, {
       paymentStatus: selectedPaymentStatus.value,
     })
-    payment.value = {
+    props.order.payment = {
       ...payment.value,
       paymentStatus: pUpdated.paymentStatus,
       updatedAt: pUpdated.updatedAt,
@@ -261,7 +261,7 @@ const updateStatus = async () => {
     const pUpdated = await $orderStore.updatedPaymentStatus(payment.value._id, {
       paymentStatus: selectedPaymentStatus.value,
     })
-    payment.value = {
+    props.order.payment = {
       ...payment.value,
       paymentStatus: pUpdated.paymentStatus,
       updatedAt: pUpdated.updatedAt,
