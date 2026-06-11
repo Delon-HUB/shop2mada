@@ -3,7 +3,6 @@ import type { IOrder, IPayment } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { usePaymentMethodStore } from './paymentMethod.store'
-import type { EPaymentStatus } from '@shared/Types/Enums'
 
 export const useOrderStore = defineStore('orderStore', () => {
   let orders = ref<IOrder[]>([])
