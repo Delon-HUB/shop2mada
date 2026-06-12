@@ -52,4 +52,23 @@ export class OfferService {
       articles: [],
     })) as IOffer[];
   }
+
+  async update(
+    id: string,
+    updateData: Partial<IOffer>,
+  ): Promise<IOffer | null> {
+    updateData.updatedAt = new Date(Date.now());
+    const updated = await this.offerModel
+      .findByIdAndUpdate(id, updateData, {
+        returnDocument: 'after',
+      })
+      .exec();
+    if (!updated) return null;
+    return {
+      ...updated.toObject(),
+      _id: updated._id.toString(),
+      gameId: updated.gameId.toString(),
+      articles: [],
+    };
+  }
 }

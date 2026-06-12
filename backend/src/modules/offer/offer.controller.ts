@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { GameService } from '../game/game.service';
@@ -36,5 +37,12 @@ export class OfferController {
     const offer = await this.offerService.findById(id);
     if (!offer) throw new NotFoundException('Offer not found');
     return offer;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateData: Partial<IOffer>) {
+    const updatedOffer = await this.offerService.findById(id);
+    if (!updatedOffer) throw new NotFoundException('Offer not found');
+    return await this.offerService.update(id, updateData);
   }
 }
