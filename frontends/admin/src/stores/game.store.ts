@@ -20,5 +20,11 @@ export const useGameStore = defineStore('gameStore', () => {
     response.data && games.value.push(response.data as IGame)
   }
 
-  return { games, init, addGame }
+  const update = async (id: string, updateData: Partial<IGame>) => {
+    const response = await publicAPI.put(`/game/${id}`, updateData)
+    const updatedGame = response.data as IGame
+    return updatedGame
+  }
+
+  return { games, init, addGame, update }
 })

@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import type { IGame } from '../../shared/Types/Interfaces';
 import { GameService } from './game.service';
@@ -48,5 +49,12 @@ export class GameController {
     const game = await this.gameService.findById(id);
     if (!game) throw new NotFoundException('Game not found');
     return game;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateData: Partial<IGame>) {
+    const updatedArticle = await this.gameService.findById(id);
+    if (!updatedArticle) throw new NotFoundException('Game not found');
+    return await this.gameService.update(id, updateData);
   }
 }

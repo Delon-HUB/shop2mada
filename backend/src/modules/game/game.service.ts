@@ -42,4 +42,17 @@ export class GameService {
       _id: game._id.toString(),
     } as IGame;
   }
+
+  async update(id: string, updateData: Partial<IGame>): Promise<IGame | null> {
+    updateData.updatedAt = new Date(Date.now());
+    const updated = await this.gameModel
+      .findByIdAndUpdate(id, updateData, { returnDocument: 'after' })
+      .exec();
+    if (!updated) return null;
+    return {
+      ...updated.toObject(),
+      _id: updated._id.toString(),
+      offers: [],
+    };
+  }
 }
