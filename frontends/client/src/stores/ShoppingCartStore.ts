@@ -28,7 +28,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
       orderItems: orderItems.value.map((item) => {
         const article = item.article as IArticle
         return {
-          article: article.id,
+          article: article._id,
           quantity: item.quantity,
           unitPrice: article.price,
         }
@@ -38,7 +38,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
       contact,
     }
     const payment: Partial<IPayment> = {
-      paymentMethod: lastSelectedPaymentMethod.value?.id,
+      paymentMethod: lastSelectedPaymentMethod.value?._id,
       paymentRef,
       amount: 0,
     }
@@ -64,7 +64,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   }
 
   const remove = (id: string) => {
-    const index = orderItems.value.findIndex((item) => (item.article as IArticle).id == id)
+    const index = orderItems.value.findIndex((item) => (item.article as IArticle)._id == id)
     if (index != -1) {
       orderItems.value.splice(index, 1)
     }
@@ -75,7 +75,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   }
 
   const getOne = (id: string) => {
-    return orderItems.value.find((item) => (item.article as IArticle).id == id)
+    return orderItems.value.find((item) => (item.article as IArticle)._id == id)
   }
 
   const getTotal = () => {

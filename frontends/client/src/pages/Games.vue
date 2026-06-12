@@ -4,11 +4,11 @@
     <div class="gamelist">
       <q-item
         v-for="game in games"
-        :key="game.id"
+        :key="game._id"
         flat
         no-caps
         class="q-pa-none"
-        :to="`/offers?game_id=${game.id}`"
+        :to="`/offers?game_id=${game._id}`"
       >
         <game :game="game" />
       </q-item>

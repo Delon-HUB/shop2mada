@@ -56,7 +56,7 @@
         rounded
         dense
         flat
-        @click="() => $shoppingCartStore.remove((orderItem.article as IArticle).id)"
+        @click="() => $shoppingCartStore.remove((orderItem.article as IArticle)._id)"
       />
     </q-item>
   </div>

@@ -53,5 +53,5 @@ const props = defineProps<{
 
 const $shoppingCartStore = useShoppingCartStore()
 
-const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article.id) == undefined)
+const canAddToCart = computed(() => $shoppingCartStore.getOne(props.article._id) == undefined)
 </script>

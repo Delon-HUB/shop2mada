@@ -24,7 +24,7 @@
               <shopping-cart-item
                 v-for="orderItem in $shoppingCartStore.orderItems"
                 :orderItem="orderItem"
-                :key="(orderItem.article as IArticle).id"
+                :key="(orderItem.article as IArticle)._id"
               />
             </q-list>
             <q-separator class="q-my-md" />
@@ -88,9 +88,9 @@
                 class="bg-grey-3 q-ma-xs q-pa-none"
                 @click="() => ($shoppingCartStore.lastSelectedPaymentMethod = pm)"
                 v-for="pm in paymentMethods"
-                :key="pm.id"
-                :active="selectedPaymentMethod?.id == pm.id"
-                :style="selectedPaymentMethod?.id == pm.id ? 'border: 2px solid #05668d' : ''"
+                :key="pm._id"
+                :active="selectedPaymentMethod?._id == pm._id"
+                :style="selectedPaymentMethod?._id == pm._id ? 'border: 2px solid #05668d' : ''"
               >
                 <q-card bordered flat style="width: 8em" class="q-pa-xs text-center">
                   <q-item-section>

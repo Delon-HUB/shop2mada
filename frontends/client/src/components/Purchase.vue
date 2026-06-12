@@ -21,9 +21,9 @@
               class="bg-grey-3 q-ma-xs q-pa-none"
               @click="() => ($shoppingCartStore.lastSelectedPaymentMethod = pm)"
               v-for="pm in paymentMethods"
-              :key="pm.id"
-              :active="selectedPaymentMethod?.id == pm.id"
-              :style="selectedPaymentMethod?.id == pm.id ? 'border: 2px solid #05668d' : ''"
+              :key="pm._id"
+              :active="selectedPaymentMethod?._id == pm._id"
+              :style="selectedPaymentMethod?._id == pm._id ? 'border: 2px solid #05668d' : ''"
             >
               <q-card bordered flat style="width: 9em" class="q-pa-xs text-center">
                 <q-item-section>

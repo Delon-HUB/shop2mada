@@ -7,7 +7,7 @@
       <q-btn
         icon="sell"
         v-for="offer in offers"
-        :key="offer.id"
+        :key="offer._id"
         no-caps
         flat
         rounded
@@ -31,7 +31,7 @@
         <article-item
           v-if="offer.articles.length > 0"
           v-for="article in offer.articles.sort((a, b) => a.price - b.price)"
-          :key="article.id"
+          :key="article._id"
           :article="article"
           class="article_item q-ma-xs"
         />
@@ -58,7 +58,7 @@ watch(
   () => {
     const gameId = router.currentRoute.value.query.game_id
     if (gameId) {
-      const game = games.value.find((g) => g.id === gameId)
+      const game = games.value.find((g) => g._id === gameId)
       if (game && game.offers && game.offers.length > 0) {
         offers.value = game.offers
         tab.value = game.offers[0]!.name
@@ -69,7 +69,7 @@ watch(
 
 const gameId = router.currentRoute.value.query.game_id
 if (gameId) {
-  const game = games.value.find((g) => g.id === gameId)
+  const game = games.value.find((g) => g._id === gameId)
   if (game && game.offers && game.offers.length > 0) {
     offers.value = game.offers
     tab.value = game.offers[0]!.name
