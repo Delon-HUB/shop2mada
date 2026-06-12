@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { OfferService } from '../offer/offer.service';
@@ -36,5 +37,12 @@ export class ArticleController {
     const article = await this.articleService.findById(id);
     if (!article) throw new NotFoundException('Article not found');
     return article;
+  }
+
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() updateData: Partial<IArticle>) {
+    const updatedArticle = await this.articleService.findById(id);
+    if (!updatedArticle) throw new NotFoundException('Article not found');
+    return await this.articleService.update(id, updateData);
   }
 }

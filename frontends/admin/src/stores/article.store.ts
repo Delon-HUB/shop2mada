@@ -18,6 +18,10 @@ export const useArticleStore = defineStore('articleStore', () => {
       })
     }
   }
-
-  return { addArticle }
+  const update = async (id: string, updateData: Partial<IArticle>) => {
+    const response = await publicAPI.put(`/article/${id}`, updateData)
+    const updatedArticle = response.data as IArticle
+    return updatedArticle
+  }
+  return { addArticle, update }
 })

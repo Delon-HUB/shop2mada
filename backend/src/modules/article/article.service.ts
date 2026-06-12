@@ -50,4 +50,20 @@ export class ArticleService {
       offerId: article.offerId.toString(),
     }));
   }
+
+  async update(
+    id: string,
+    updateData: Partial<IArticle>,
+  ): Promise<IArticle | null> {
+    updateData.updatedAt = new Date(Date.now());
+    const updated = await this.articleModel
+      .findByIdAndUpdate(id, updateData, { returnDocument: 'after' })
+      .exec();
+    if (!updated) return null;
+    return {
+      ...updated.toObject(),
+      _id: updated._id.toString(),
+      offerId: updated.offerId.toString(),
+    };
+  }
 }

@@ -1,10 +1,7 @@
 <template>
-  <q-dialog persistent backdrop-filter="blur(4px)" v-model="model">
+  <q-dialog persistent v-model="model">
     <q-card class="card">
-      <p class="text-center text-h6 q-mt-xs">
-        Nouveau article pour l'offre <span class="text-bold">{{ props.offer.name }}</span>
-      </p>
-      <q-separator inset />
+      <slot header> </slot>
       <q-card-section>
         <q-input outlined v-model="article.name" label="Nom" class="q-mb-md" />
         <q-input outlined v-model="article.price" label="Prix(Ariary)" class="q-mb-md" />
@@ -17,35 +14,53 @@
         />
       </q-card-section>
 
-      <q-separator inset />
-
-      <q-card-actions align="right">
-        <q-btn flat color="primary" no-caps label="Enregistrer" @click="handleSave" />
-        <q-btn v-close-popup flat color="negative" no-caps round label="Annuler" />
+      <q-card-actions class="flex row justify-between q-pa-md">
+        <q-btn style="width: 45%" v-close-popup outline no-caps label="Annuler" />
+        <q-btn
+          style="width: 45%"
+          outline
+          color="primary"
+          no-caps
+          label="Enregistrer"
+          @click="handleFinish"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import type { IArticle, IOffer } from '@shared/Types/Interfaces'
-import { ref } from 'vue'
+import type { IArticle } from '@shared/Types/Interfaces'
+import { ref, watch } from 'vue'
 
 const emits = defineEmits(['finished'])
 const model = defineModel<boolean>()
 
 const props = defineProps<{
-  offer: IOffer
+  article?: IArticle
 }>()
+
 const article = ref<Partial<IArticle>>({
-  offerId: props.offer._id,
-  name: '',
-  price: 0,
-  badge: '',
-  description: '',
+  name: props.article?.name || '',
+  price: props.article?.price || 0,
+  badge: props.article?.badge || '',
+  description: props.article?.description || '',
+  ...props.article,
 })
 
-const handleSave = () => {
+watch(
+  () => props.article,
+  (newVal) =>
+    (article.value = {
+      name: newVal?.name || '',
+      price: newVal?.price || 0,
+      badge: newVal?.badge || '',
+      description: newVal?.description || '',
+      ...newVal,
+    }),
+)
+
+const handleFinish = () => {
   emits('finished', article.value)
   model.value = false
 }
