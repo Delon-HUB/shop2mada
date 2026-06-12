@@ -13,7 +13,9 @@
     <Game :game="game" />
   </p>
 
-  <GameInputDialog v-model="showGameInput" @finished="handleAddGame" />
+  <GameInputDialog v-model="showGameInput" @finished="handleAddGame">
+    <p class="text-center text-h6 q-mt-xs">Ajouter un jeux</p>
+  </GameInputDialog>
 </template>
 
 <script setup lang="ts">

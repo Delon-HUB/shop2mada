@@ -1,48 +1,55 @@
 <template>
   <q-dialog persistent backdrop-filter="blur(4px)" v-model="model">
     <q-card class="card">
-      <p class="text-center text-h6 q-mt-xs">
-        Ajouter une offre pour <span class="text-bold">{{ props.game.name }}</span>
-      </p>
-      <q-separator inset />
+      <slot header></slot>
       <q-card-section>
         <q-input
           outlined
           v-model="offer.name"
           label="Nom de l'offre"
-          placeholder="ex: Top UP"
+          placeholder="ex: TOP UP"
           class="q-mb-md"
         />
       </q-card-section>
 
-      <q-separator inset />
-
-      <q-card-actions align="right">
-        <q-btn flat color="primary" no-caps label="Enregistrer" @click="handleSave" />
-        <q-btn v-close-popup flat color="negative" no-caps round label="Annuler" />
+      <q-card-actions class="flex row justify-between q-pa-md">
+        <q-btn style="width: 45%" v-close-popup outline no-caps label="Annuler" />
+        <q-btn
+          style="width: 45%"
+          outline
+          color="primary"
+          no-caps
+          label="Enregistrer"
+          @click="handleFinish"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script setup lang="ts">
-import type { IGame, IOffer } from '@shared/Types/Interfaces'
-import { ref } from 'vue'
+import type { IOffer } from '@shared/Types/Interfaces'
+import { ref, watch } from 'vue'
 
 const model = defineModel<boolean>()
 const emits = defineEmits(['finished'])
 const props = defineProps<{
-  game: IGame
+  offer?: IOffer
 }>()
 
 const offer = ref<Partial<IOffer>>({
-  name: '',
+  name: props.offer?.name || '',
 })
 
-const handleSave = () => {
+watch(
+  () => props.offer,
+  (newValue) => (offer.value = { ...newValue }),
+)
+
+const handleFinish = () => {
   emits('finished', {
     ...offer.value,
-    gameId: props.game._id,
+    name: offer.value.name?.trim(),
   } as Partial<IOffer>)
   model.value = false
 }

@@ -12,6 +12,10 @@ export const useOfferStore = defineStore('offerStore', () => {
       gameStore.games.find((g) => g._id === newOffer.gameId)?.offers?.push(response.data as IOffer)
     }
   }
-
-  return { addOffer }
+  const update = async (id: string, updateData: Partial<IOffer>) => {
+    const response = await publicAPI.put(`/offer/${id}`, updateData)
+    const updatedOffer = response.data as IOffer
+    return updatedOffer
+  }
+  return { addOffer, update }
 })
