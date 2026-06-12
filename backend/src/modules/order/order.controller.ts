@@ -44,7 +44,13 @@ export class OrderController {
           item.article as string,
         );
         if (!article) return;
-        item.unitPrice = article.price;
+        item = {
+          ...item,
+          article: article._id,
+          name: article.name,
+          description: article.description,
+          unitPrice: article.price,
+        };
         return item;
       }),
     );

@@ -99,7 +99,7 @@
                 <div v-for="item in orderItems">
                   <q-item class="text-bold fit q-ma-none q-py-none">
                     <q-item-section>
-                      <q-item-label>{{ (item.article as IArticle).name }} </q-item-label>
+                      <q-item-label>{{ item.name }} </q-item-label>
                       <q-item-label caption>P.U: {{ item.unitPrice }} ar </q-item-label>
                     </q-item-section>
                     <q-space />
@@ -108,12 +108,9 @@
                       <q-item-label caption>Qté: {{ item.quantity }} </q-item-label>
                     </q-item-section>
                   </q-item>
-                  <q-item class="q-ma-none q-py-none text-subtitle2">
+                  <q-item class="q-ma-none q-py-none text-subtitle2" v-if="item.description">
                     <q-item-section>
-                      <q-item-label
-                        >description: + {{ Math.floor(Math.random() * 100) }} en
-                        bonus.</q-item-label
-                      >
+                      <q-item-label>description: {{ item.description }}</q-item-label>
                     </q-item-section>
                   </q-item>
                   <q-separator inset />

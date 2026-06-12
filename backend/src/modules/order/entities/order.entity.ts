@@ -7,6 +7,10 @@ import { EDeliveryStatus } from '../../../shared/Types/Enums';
 export class OrderItem {
   @Prop({ required: true })
   article!: string;
+  @Prop({ required: true })
+  name!: string;
+  @Prop()
+  description?: string;
   @Prop({ required: true, min: 1 })
   quantity!: number;
   @Prop({ required: true })

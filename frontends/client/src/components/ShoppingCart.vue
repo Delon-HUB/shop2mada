@@ -183,7 +183,7 @@
   </q-layout>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import type { IArticle, IPaymentMethod } from '@shared/Types/Interfaces/index.ts'
@@ -209,7 +209,7 @@ const canSubmit = computed(
     $shoppingCartStore.orderItems.length > 0 &&
     playerId.value.length > 0 &&
     nickname.value.length > 0 &&
-    contact.value.length == 10 &&
+    contact.value.replace(/ /g, '').length == 10 &&
     paymentRef.value.length > 0 &&
     $shoppingCartStore.lastSelectedPaymentMethod,
 )

@@ -4,6 +4,8 @@ import type { IPayment } from "./IPayment";
 
 export interface IOrderItem {
   article: string | IArticle;
+  name: string;
+  description?: string;
   unitPrice: number;
   quantity: number;
 }
