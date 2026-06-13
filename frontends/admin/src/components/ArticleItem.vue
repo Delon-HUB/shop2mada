@@ -79,8 +79,8 @@ const deleteDialog = () => {
       color: 'negative',
     },
     persistent: true,
-  }).onOk(() => {
-    console.log('>>>> OK')
+  }).onOk(async () => {
+    const deleted = await $articleStore.deleteFn(props.article._id)
   })
 }
 </script>

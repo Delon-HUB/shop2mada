@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { ArticleController } from './article.controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -13,7 +13,7 @@ import { OfferService } from '../offer/offer.service';
       { name: OfferEntity.name, schema: OfferSchema },
       { name: ArticleEntity.name, schema: ArticleSchema },
     ]),
-    OfferModule,
+    forwardRef(() => OfferModule),
   ],
   providers: [ArticleService, OfferService],
   controllers: [ArticleController],

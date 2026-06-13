@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
@@ -16,10 +16,11 @@ import { OrderModule } from './modules/order/order.module';
     MongooseModule.forRoot(
       process.env.DB_URI ?? 'mongodb://localhost:27017/shop2mada',
     ),
-    GameModule,
+    forwardRef(() => GameModule),
+    forwardRef(() => OfferModule),
+    forwardRef(() => ArticleModule),
+
     PaymentMethodModule,
-    OfferModule,
-    ArticleModule,
     PaymentModule,
     OrderModule,
   ],
