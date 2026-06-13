@@ -111,7 +111,7 @@
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="deleteOfferDialog">
+              <q-item clickable v-close-popup @click="deleteOfferDialog(offer._id)">
                 <q-item-section>
                   <q-item-label>Supprimer</q-item-label>
                 </q-item-section>
@@ -243,7 +243,7 @@ const handleAddArticle = async (newArticle: Partial<IArticle>, offer: Partial<IO
 }
 
 const $q = useQuasar()
-const deleteOfferDialog = () => {
+const deleteOfferDialog = (offerId: string) => {
   $q.dialog({
     title: 'Suppression',
     message: 'Voulez-vous vraiment supprimer cette offre ainsi que ces articles ?',
@@ -259,8 +259,9 @@ const deleteOfferDialog = () => {
       color: 'negative',
     },
     persistent: true,
-  }).onOk(() => {
-    console.log('>>>> OK')
+  }).onOk(async () => {
+    const deleted = await $offerStore.deleteFn(offerId)
+    console.log(deleted)
   })
 }
 

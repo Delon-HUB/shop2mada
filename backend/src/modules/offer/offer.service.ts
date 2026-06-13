@@ -11,7 +11,7 @@ export class OfferService {
     private readonly offerModel: Model<OfferEntity>,
   ) {}
 
-  async create(offer: Partial<IOffer>): Promise<IOffer> {
+  async create(offer: Partial<Omit<IOffer, 'deletedAt'>>): Promise<IOffer> {
     offer.createdAt = new Date(Date.now());
     offer.updatedAt = new Date(Date.now());
 
@@ -23,8 +23,10 @@ export class OfferService {
     } as IOffer;
   }
 
-  async findAll(): Promise<IOffer[]> {
-    const offers = await this.offerModel.find().exec();
+  async findAll(includeDeleted = false): Promise<IOffer[]> {
+    const offers = await this.offerModel
+      .find({ deletedAt: { $exists: includeDeleted } })
+      .exec();
     return [
       ...offers.map((offer) => ({
         ...offer.toObject(),
@@ -34,9 +36,9 @@ export class OfferService {
     ] as IOffer[];
   }
 
-  async findById(id: string): Promise<IOffer | null> {
+  async findById(id: string, includeDeleted = false): Promise<IOffer | null> {
     const offer = await this.offerModel.findById(id).exec();
-    if (!offer) return null;
+    if (!offer || (includeDeleted && offer.deletedAt)) return null;
     return {
       ...offer.toObject(),
       _id: offer._id.toString(),
@@ -44,8 +46,13 @@ export class OfferService {
     } as IOffer;
   }
 
-  async findByGameId(gameId: string): Promise<IOffer[]> {
-    const offers = await this.offerModel.find({ gameId }).exec();
+  async findByGameId(
+    gameId: string,
+    includeDeleted = false,
+  ): Promise<IOffer[]> {
+    const offers = await this.offerModel
+      .find({ gameId, deletedAt: { $exists: includeDeleted } })
+      .exec();
     return offers.map((offer) => ({
       ...offer.toObject(),
       _id: offer._id.toString(),
@@ -68,6 +75,35 @@ export class OfferService {
       ...updated.toObject(),
       _id: updated._id.toString(),
       gameId: updated.gameId.toString(),
+      articles: [],
+    };
+  }
+
+  async delete(id: string): Promise<IOffer | null> {
+    const deleted = await this.offerModel.findByIdAndDelete(id).exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      gameId: deleted.gameId.toString(),
+      articles: [],
+    };
+  }
+
+  async softDelete(id: string): Promise<IOffer | null> {
+    const deleted = await this.offerModel
+      .findByIdAndUpdate(
+        id,
+        { deletedAt: new Date(Date.now()) },
+        { returnDocument: 'after' },
+      )
+      .exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      gameId: deleted.gameId.toString(),
+      deletedAt: deleted.deletedAt,
       articles: [],
     };
   }

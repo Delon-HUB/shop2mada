@@ -18,6 +18,9 @@ export class OfferEntity {
 
   @Prop({ required: true, default: Date.now() })
   updatedAt!: Date;
+
+  @Prop({ required: false })
+  deletedAt?: Date;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(OfferEntity);

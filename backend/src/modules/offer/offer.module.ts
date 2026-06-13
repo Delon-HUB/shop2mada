@@ -7,16 +7,24 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { OfferEntity, OfferSchema } from './entities/offer.entity';
 import { GameService } from '../game/game.service';
 import { GameEntity, GameSchema } from '../game/entities/game.entity';
+import {
+  ArticleEntity,
+  ArticleSchema,
+} from '../article/entities/article.entity';
+import { ArticleModule } from '../article/article.module';
+import { ArticleService } from '../article/article.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: OfferEntity.name, schema: OfferSchema },
       { name: GameEntity.name, schema: GameSchema },
+      { name: ArticleEntity.name, schema: ArticleSchema },
     ]),
     forwardRef(() => GameModule),
+    forwardRef(() => ArticleModule),
   ],
-  providers: [OfferService, GameService],
+  providers: [OfferService, GameService, ArticleService],
   controllers: [OfferController],
 })
 export class OfferModule {}

@@ -8,4 +8,5 @@ export interface IOffer {
   articles: IArticle[];
   createdAt: Date;
   updatedAt: Date;
+  deletedAt?: Date;
 }

@@ -4,12 +4,12 @@ import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
 
 export const useOfferStore = defineStore('offerStore', () => {
-  const gameStore = useGameStore()
+  const $gameStore = useGameStore()
 
   const addOffer = async (newOffer: Partial<IOffer>) => {
     const response = await publicAPI.post('/offer', newOffer)
     if (response.data) {
-      gameStore.games.find((g) => g._id === newOffer.gameId)?.offers?.push(response.data as IOffer)
+      $gameStore.games.find((g) => g._id === newOffer.gameId)?.offers?.push(response.data as IOffer)
     }
   }
   const update = async (id: string, updateData: Partial<IOffer>) => {
@@ -17,5 +17,16 @@ export const useOfferStore = defineStore('offerStore', () => {
     const updatedOffer = response.data as IOffer
     return updatedOffer
   }
-  return { addOffer, update }
+
+  const deleteFn = async (id: string) => {
+    const response = await publicAPI.delete(`/offer/${id}`)
+    const deletedObj = response.data as IOffer
+    const game = $gameStore.games.find((g) => g._id == deletedObj.gameId)
+    if (game) {
+      const restOffers = game.offers.filter((o) => o._id != deletedObj._id)
+      game.offers = restOffers
+    }
+    return deletedObj
+  }
+  return { addOffer, update, deleteFn }
 })
