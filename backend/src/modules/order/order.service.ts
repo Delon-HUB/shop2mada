@@ -1,18 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { OrderEntity } from './entities/order.entity';
-import { IOrder, IPayment } from '../../shared/Types/Interfaces';
+import { IArticle, IOrder, IPayment } from '../../shared/Types/Interfaces';
 import { EDeliveryStatus } from '../../shared/Types/Enums';
+import { ArticleService } from '../article/article.service';
+import { PaymentService } from '../payment/payment.service';
 
 @Injectable()
 export class OrderService {
   constructor(
     @InjectModel(OrderEntity.name)
     private readonly orderModel: Model<OrderEntity>,
+    private readonly articleService: ArticleService,
+    private readonly paymentService: PaymentService,
   ) {}
 
-  async create(orderDto: Partial<IOrder>): Promise<IOrder> {
+  async create(
+    orderDto: Partial<IOrder>,
+    paymentDto: Partial<IPayment>,
+  ): Promise<IOrder> {
+    orderDto.orderItems = await Promise.all(
+      await orderDto.orderItems!.map(async (item) => {
+        const article = await this.articleService.findById(
+          item.article as string,
+        );
+        if (!article) throw new NotFoundException('ARTICLE_NOT_FOUND');
+        item = {
+          ...item,
+          article: article._id,
+          name: article.name,
+          description: article.description,
+          unitPrice: article.price,
+        };
+        return item;
+      }),
+    );
+    orderDto.totalAmount = orderDto.orderItems.reduce(
+      (result, item) => (result += item.unitPrice * item.quantity),
+      0,
+    );
+
+    paymentDto.amount = orderDto.totalAmount;
+    const payment = await this.paymentService.create(paymentDto);
+
+    orderDto.payment = payment._id;
+    paymentDto.amount = orderDto.totalAmount;
     orderDto.deliveryStatus = EDeliveryStatus.PENDING;
     orderDto.createdAt = new Date(Date.now());
     orderDto.updatedAt = new Date(Date.now());
@@ -24,7 +57,7 @@ export class OrderService {
     return {
       ...order.toObject(),
       _id: order._id.toString(),
-      payment: order.payment.toString(),
+      payment: payment,
     };
   }
 
@@ -40,11 +73,30 @@ export class OrderService {
 
   async findAll(): Promise<IOrder[]> {
     const orders = await this.orderModel.find().populate('payment').exec();
-    return orders.map((order) => ({
-      ...order.toObject(),
-      _id: order._id.toString(),
-      payment: order.payment as unknown as IPayment,
-    }));
+    const mappedOrders = await Promise.all(
+      orders.map(async (order) => {
+        const orderItems = await Promise.all(
+          order.orderItems.map(async (item) => {
+            const article = await this.articleService.findById(
+              item.article as string,
+            );
+            return {
+              ...item,
+              article: article as IArticle,
+            };
+          }),
+        );
+
+        return {
+          ...order.toObject(),
+          _id: order._id.toString(),
+          orderItems,
+          payment: order.payment as unknown as IPayment,
+        };
+      }),
+    );
+
+    return mappedOrders;
   }
 
   async update(

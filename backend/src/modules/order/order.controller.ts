@@ -1,36 +1,15 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { IArticle, IOrder, IPayment } from '../../shared/Types/Interfaces';
-import { ArticleService } from '../article/article.service';
+import { IOrder, IPayment } from '../../shared/Types/Interfaces';
 import { OrderService } from './order.service';
-import { PaymentService } from '../payment/payment.service';
 
 @Controller('order')
 export class OrderController {
-  constructor(
-    private readonly orderService: OrderService,
-    private readonly articleService: ArticleService,
-    private readonly paymentService: PaymentService,
-  ) {}
+  constructor(private readonly orderService: OrderService) {}
 
   @Get()
   async findAll() {
     const orders = await this.orderService.findAll();
-    const orderWithPaymentList = Promise.all(
-      orders.map(async (order) => {
-        order.orderItems = await Promise.all(
-          await order.orderItems.map(async (item) => {
-            item.article = (await this.articleService.findById(
-              item.article as string,
-            )) as IArticle;
-            return item;
-          }),
-        );
-        return order;
-      }),
-    );
-    return (await orderWithPaymentList).sort(
-      (a, b) => b.createdAt.getTime() - a.createdAt.getTime(),
-    );
+    return orders.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   @Post()
@@ -38,36 +17,7 @@ export class OrderController {
     @Body('order') createOrderDto: Partial<IOrder>,
     @Body('payment') createPaymentDto: Partial<IPayment>,
   ) {
-    const orderItems = await Promise.all(
-      await createOrderDto.orderItems!.map(async (item) => {
-        const article = await this.articleService.findById(
-          item.article as string,
-        );
-        if (!article) return;
-        item = {
-          ...item,
-          article: article._id,
-          name: article.name,
-          description: article.description,
-          unitPrice: article.price,
-        };
-        return item;
-      }),
-    );
-    createOrderDto.orderItems = orderItems.filter((item) => item !== undefined);
-    createOrderDto.totalAmount = createOrderDto.orderItems.reduce(
-      (result, item) => (result += item.unitPrice * item.quantity),
-      0,
-    );
-    createPaymentDto.amount = createOrderDto.totalAmount;
-    const payment = await this.paymentService.create(createPaymentDto);
-    createOrderDto.payment = payment._id;
-    const order = await this.orderService.create(createOrderDto);
-    createPaymentDto.amount = createOrderDto.totalAmount;
-    return {
-      order,
-      payment,
-    };
+    return await this.orderService.create(createOrderDto, createPaymentDto);
   }
 
   @Put(':id')

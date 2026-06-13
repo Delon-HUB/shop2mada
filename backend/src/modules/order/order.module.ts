@@ -15,6 +15,11 @@ import {
 } from '../payment/entities/payment.entity';
 import { PaymentModule } from '../payment/payment.module';
 import { PaymentService } from '../payment/payment.service';
+import { OfferEntity, OfferSchema } from '../offer/entities/offer.entity';
+import {
+  PaymentMethodEntity,
+  PaymentMethodSchema,
+} from '../paymentMethod/entities/paymentMethod.entity';
 
 @Module({
   imports: [
@@ -22,6 +27,8 @@ import { PaymentService } from '../payment/payment.service';
       { name: OrderEntity.name, schema: OrderSchema },
       { name: ArticleEntity.name, schema: ArticleSchema },
       { name: PaymentEntity.name, schema: PaymentSchema },
+      { name: OfferEntity.name, schema: OfferSchema },
+      { name: PaymentMethodEntity.name, schema: PaymentMethodSchema },
     ]),
     ArticleModule,
     PaymentModule,
