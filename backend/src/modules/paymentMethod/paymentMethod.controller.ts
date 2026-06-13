@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  NotFoundException,
-  Param,
-  Post,
-  Put,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { IPaymentMethod } from '../../shared/Types/Interfaces';
 import { PaymentMethodService } from './paymentMethod.service';
 
@@ -17,9 +8,6 @@ export class PaymentMethodController {
 
   @Post()
   async create(@Body() paymentMethod: Partial<IPaymentMethod>) {
-    const p = await this.paymentMethodService.findByPhone(paymentMethod.phone!);
-    if (p) throw new NotFoundException('Payment method already exists');
-
     const newPaymentMethod =
       await this.paymentMethodService.create(paymentMethod);
     return newPaymentMethod;

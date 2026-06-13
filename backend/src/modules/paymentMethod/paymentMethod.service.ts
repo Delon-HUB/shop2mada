@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IPaymentMethod } from '../../shared/Types/Interfaces';
@@ -14,6 +14,8 @@ export class PaymentMethodService {
   async create(
     paymentMethod: Partial<IPaymentMethod>,
   ): Promise<IPaymentMethod> {
+    const p = await this.findByPhone(paymentMethod.phone!);
+    if (p) throw new NotFoundException('Payment method already exists');
     paymentMethod.activate = false;
     paymentMethod.createdAt = new Date(Date.now());
     paymentMethod.updatedAt = new Date(Date.now());
