@@ -10,12 +10,11 @@ import { OfferService } from '../offer/offer.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: OfferEntity.name, schema: OfferSchema },
       { name: ArticleEntity.name, schema: ArticleSchema },
+      { name: OfferEntity.name, schema: OfferSchema },
     ]),
-    forwardRef(() => OfferModule),
   ],
-  providers: [ArticleService, OfferService],
+  providers: [ArticleService],
   controllers: [ArticleController],
 })
 export class ArticleModule {}
