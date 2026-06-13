@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { OfferModule } from '../offer/offer.module';
 import {
   PaymentMethodEntity,
   PaymentMethodSchema,
@@ -13,7 +12,6 @@ import { PaymentMethodController } from './paymentMethod.controller';
     MongooseModule.forFeature([
       { name: PaymentMethodEntity.name, schema: PaymentMethodSchema },
     ]),
-    OfferModule,
   ],
   providers: [PaymentMethodService],
   controllers: [PaymentMethodController],

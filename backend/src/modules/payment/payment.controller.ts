@@ -8,7 +8,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { IPayment } from '../../shared/Types/Interfaces';
-import { EPaymentStatus } from '../../shared/Types/Enums';
 import { PaymentService } from './payment.service';
 
 @Controller('payment')
@@ -22,12 +21,7 @@ export class PaymentController {
 
   @Post()
   async create(@Body() createPaymentDto: Partial<IPayment>) {
-    const pm = await this.paymentService.findById(
-      createPaymentDto.paymentMethod!,
-    );
-    if (!pm) throw new NotFoundException('PAYMENT_METHOD_NOT_FOUND');
-
-    return pm;
+    return await this.paymentService.create(createPaymentDto);
   }
 
   @Put(':id')

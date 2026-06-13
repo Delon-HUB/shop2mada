@@ -1,22 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PaymentEntity } from './entities/payment.entity';
 import { IPayment } from '../../shared/Types/Interfaces';
 import { EPaymentStatus } from '../../shared/Types/Enums';
+import { PaymentMethodEntity } from '../paymentMethod/entities/paymentMethod.entity';
 
 @Injectable()
 export class PaymentService {
   constructor(
     @InjectModel(PaymentEntity.name)
     private readonly paymentModel: Model<PaymentEntity>,
+    @InjectModel(PaymentMethodEntity.name)
+    private readonly paymentMethodModel: Model<PaymentMethodEntity>,
   ) {}
 
   async create(paymentDto: Partial<IPayment>): Promise<IPayment> {
+    const pm = await this.paymentMethodModel.findById(paymentDto.paymentMethod);
+    if (!pm) throw new NotFoundException('PAYMENT_METHOD_NOT_FOUND');
+
     paymentDto.paymentStatus = EPaymentStatus.PENDING;
     paymentDto.createdAt = new Date(Date.now());
     paymentDto.updatedAt = new Date(Date.now());
-
     const payment = await this.paymentModel.create(paymentDto);
     return {
       ...payment.toObject(),
