@@ -26,5 +26,12 @@ export const useGameStore = defineStore('gameStore', () => {
     return updatedGame
   }
 
-  return { games, init, addGame, update }
+  const deleteFn = async (id: string) => {
+    const response = await publicAPI.delete(`/game/${id}`)
+    const deletedObj = response.data as IGame
+    games.value = games.value.filter((g) => g._id != deletedObj._id)
+    return deletedObj
+  }
+
+  return { games, init, addGame, update, deleteFn }
 })

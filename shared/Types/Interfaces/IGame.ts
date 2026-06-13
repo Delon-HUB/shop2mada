@@ -10,4 +10,5 @@ export interface IGame {
   offers: IOffer[];
   createdAt: Date;
   updatedAt: Date;
+  deletedAt?: Date;
 }

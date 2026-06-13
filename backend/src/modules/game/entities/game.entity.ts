@@ -20,6 +20,9 @@ export class GameEntity {
 
   @Prop({ required: true, default: Date.now() })
   updatedAt!: Date;
+
+  @Prop({ required: false })
+  deletedAt?: Date;
 }
 
 export const GameSchema = SchemaFactory.createForClass(GameEntity);

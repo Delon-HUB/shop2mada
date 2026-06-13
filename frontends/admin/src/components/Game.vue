@@ -261,7 +261,6 @@ const deleteOfferDialog = (offerId: string) => {
     persistent: true,
   }).onOk(async () => {
     const deleted = await $offerStore.deleteFn(offerId)
-    console.log(deleted)
   })
 }
 
@@ -281,8 +280,8 @@ const deleteGameDialog = () => {
       color: 'negative',
     },
     persistent: true,
-  }).onOk(() => {
-    console.log('>>>> OK')
+  }).onOk(async () => {
+    await $gameStore.deleteFn(props.game._id)
   })
 }
 </script>

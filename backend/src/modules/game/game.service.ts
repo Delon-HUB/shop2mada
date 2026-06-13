@@ -1,16 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { GameEntity } from './entities/game.entity';
 import { Model } from 'mongoose';
 import { IGame } from '../../shared/Types/Interfaces';
+import { OfferService } from '../offer/offer.service';
 
 @Injectable()
 export class GameService {
   constructor(
     @InjectModel(GameEntity.name) private readonly gameModel: Model<GameEntity>,
+    private readonly offerService: OfferService,
   ) {}
 
-  async create(game: GameEntity): Promise<IGame> {
+  async create(game: Partial<Omit<IGame, 'deletedAt'>>): Promise<IGame> {
     game.createdAt = new Date(Date.now());
     game.updatedAt = new Date(Date.now());
 
@@ -22,24 +24,28 @@ export class GameService {
     } as IGame;
   }
 
-  async findAll(): Promise<IGame[]> {
-    const games = await this.gameModel.find().exec();
-    return [
-      ...games.map((game) => ({
+  async findAll(includeDeleted = false): Promise<IGame[]> {
+    const games = await this.gameModel
+      .find({ deletedAt: { $exists: includeDeleted } })
+      .exec();
+    return (await Promise.all(
+      games.map(async (game) => ({
         ...game.toObject(),
-        offers: [],
         _id: game._id.toString(),
+        offers: await this.offerService.findByGameId(game.id),
       })),
-    ] as IGame[];
+    )) as IGame[];
   }
 
-  async findById(id: string): Promise<IGame | null> {
-    const game = await this.gameModel.findById(id).exec();
+  async findById(id: string, includeDeleted = false): Promise<IGame | null> {
+    const game = await this.gameModel
+      .findById({ _id: id, deletedAt: { $exists: includeDeleted } })
+      .exec();
     if (!game) return null;
     return {
       ...game.toObject(),
-      offers: [],
       _id: game._id.toString(),
+      offers: await this.offerService.findByGameId(game.id),
     } as IGame;
   }
 
@@ -52,6 +58,38 @@ export class GameService {
     return {
       ...updated.toObject(),
       _id: updated._id.toString(),
+      offers: await this.offerService.findByGameId(updated.id),
+    };
+  }
+
+  async delete(id: string): Promise<IGame | null> {
+    const deleted = await this.gameModel.findByIdAndDelete(id).exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      offers: [],
+    };
+  }
+
+  async softDelete(id: string): Promise<IGame | null> {
+    const game = await this.findById(id);
+    if (!game) throw new NotFoundException('Game not found');
+    const offers = await this.offerService.findByGameId(game._id);
+    offers.forEach(async (o) => await this.offerService.softDelete(o._id));
+
+    const deleted = await this.gameModel
+      .findByIdAndUpdate(
+        id,
+        { deletedAt: new Date(Date.now()) },
+        { returnDocument: 'after' },
+      )
+      .exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      deletedAt: deleted.deletedAt,
       offers: [],
     };
   }
