@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { OfferController } from './offer.controller';
-import { GameModule } from '../game/game.module';
-import { forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OfferEntity, OfferSchema } from './entities/offer.entity';
-import { GameService } from '../game/game.service';
 import { GameEntity, GameSchema } from '../game/entities/game.entity';
 import {
   ArticleEntity,
@@ -21,10 +18,10 @@ import { ArticleService } from '../article/article.service';
       { name: GameEntity.name, schema: GameSchema },
       { name: ArticleEntity.name, schema: ArticleSchema },
     ]),
-    forwardRef(() => GameModule),
-    forwardRef(() => ArticleModule),
+    ArticleModule,
   ],
-  providers: [OfferService, GameService, ArticleService],
+  providers: [OfferService, ArticleService],
   controllers: [OfferController],
+  exports: [OfferService, ArticleService],
 })
 export class OfferModule {}
