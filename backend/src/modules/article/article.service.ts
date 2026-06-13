@@ -11,7 +11,9 @@ export class ArticleService {
     private readonly articleModel: Model<ArticleEntity>,
   ) {}
 
-  async create(article: Partial<IArticle>): Promise<IArticle> {
+  async create(
+    article: Partial<Omit<IArticle, 'deletedAt'>>,
+  ): Promise<IArticle> {
     article.createdAt = new Date(Date.now());
     article.updatedAt = new Date(Date.now());
 

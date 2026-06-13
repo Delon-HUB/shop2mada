@@ -25,7 +25,7 @@ export class ArticleEntity {
   @Prop({ required: true, default: Date.now() })
   updatedAt!: Date;
 
-  @Prop({ required: false, default: null })
+  @Prop({ required: false })
   deletedAt?: Date;
 }
 
