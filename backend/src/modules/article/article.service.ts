@@ -23,8 +23,10 @@ export class ArticleService {
     };
   }
 
-  async findAll(): Promise<IArticle[]> {
-    const articles = await this.articleModel.find().exec();
+  async findAll(includeDeleted = false): Promise<IArticle[]> {
+    const articles = await this.articleModel
+      .find({ deletedAt: { $exists: includeDeleted } })
+      .exec();
     return articles.map((article) => ({
       ...article.toObject(),
       _id: article._id.toString(),
@@ -32,9 +34,9 @@ export class ArticleService {
     }));
   }
 
-  async findById(id: string): Promise<IArticle | null> {
+  async findById(id: string, includeDeleted = false): Promise<IArticle | null> {
     const article = await this.articleModel.findById(id).exec();
-    if (!article) return null;
+    if (!article || (includeDeleted && article.deletedAt)) return null;
     return {
       ...article.toObject(),
       _id: article._id.toString(),
@@ -42,8 +44,13 @@ export class ArticleService {
     };
   }
 
-  async findByOfferId(offerId: string): Promise<IArticle[]> {
-    const articles = await this.articleModel.find({ offerId }).exec();
+  async findByOfferId(
+    offerId: string,
+    includeDeleted = false,
+  ): Promise<IArticle[]> {
+    const articles = await this.articleModel
+      .find({ offerId, deletedAt: { $exists: includeDeleted } })
+      .exec();
     return articles.map((article) => ({
       ...article.toObject(),
       _id: article._id.toString(),
@@ -64,6 +71,33 @@ export class ArticleService {
       ...updated.toObject(),
       _id: updated._id.toString(),
       offerId: updated.offerId.toString(),
+    };
+  }
+
+  async delete(id: string): Promise<IArticle | null> {
+    const deleted = await this.articleModel.findByIdAndDelete(id).exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      offerId: deleted.offerId.toString(),
+    };
+  }
+
+  async softDelete(id: string): Promise<IArticle | null> {
+    const deleted = await this.articleModel
+      .findByIdAndUpdate(
+        id,
+        { deletedAt: new Date(Date.now()) },
+        { returnDocument: 'after' },
+      )
+      .exec();
+    if (!deleted) return null;
+    return {
+      ...deleted.toObject(),
+      _id: deleted._id.toString(),
+      offerId: deleted.offerId.toString(),
+      deletedAt: deleted.deletedAt,
     };
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -44,5 +45,12 @@ export class ArticleController {
     const updatedArticle = await this.articleService.findById(id);
     if (!updatedArticle) throw new NotFoundException('Article not found');
     return await this.articleService.update(id, updateData);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string) {
+    const deletedArticle = await this.articleService.findById(id);
+    if (!deletedArticle) throw new NotFoundException('Article not found');
+    return await this.articleService.softDelete(id);
   }
 }

@@ -24,6 +24,9 @@ export class ArticleEntity {
 
   @Prop({ required: true, default: Date.now() })
   updatedAt!: Date;
+
+  @Prop({ required: false, default: null })
+  deletedAt?: Date;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(ArticleEntity);

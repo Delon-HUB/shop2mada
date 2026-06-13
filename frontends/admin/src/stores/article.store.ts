@@ -1,15 +1,15 @@
 import { publicAPI } from '@/instances/axios'
-import type { IArticle, IOffer } from '@shared/Types/Interfaces'
+import type { IArticle } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
 
 export const useArticleStore = defineStore('articleStore', () => {
-  const gameStore = useGameStore()
+  const $gameStore = useGameStore()
 
   const addArticle = async (newArticle: Partial<IArticle>) => {
     const response = await publicAPI.post('/article', newArticle)
     if (response.data) {
-      gameStore.games = gameStore.games.map((g) => {
+      $gameStore.games = $gameStore.games.map((g) => {
         const offer = g.offers.find((o) => o._id === newArticle.offerId)
         if (offer) {
           offer.articles.push(response.data as IArticle)
@@ -18,10 +18,27 @@ export const useArticleStore = defineStore('articleStore', () => {
       })
     }
   }
+
   const update = async (id: string, updateData: Partial<IArticle>) => {
     const response = await publicAPI.put(`/article/${id}`, updateData)
     const updatedArticle = response.data as IArticle
     return updatedArticle
   }
-  return { addArticle, update }
+
+  const deleteFn = async (id: string) => {
+    const response = await publicAPI.delete(`/article/${id}`)
+    const deletedObj = response.data as IArticle
+
+    for (let i = 0; i < $gameStore.games.length; i++) {
+      const offer = $gameStore.games[i]!.offers.find((o) => o._id == deletedObj.offerId)
+      if (offer) {
+        offer.articles = offer?.articles.filter((a) => a._id != deletedObj._id)
+        break
+      }
+    }
+
+    return deletedObj
+  }
+
+  return { addArticle, update, deleteFn }
 })
