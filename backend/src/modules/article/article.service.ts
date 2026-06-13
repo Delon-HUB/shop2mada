@@ -1,22 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { ArticleEntity } from './entities/article.entity';
 import { Model } from 'mongoose';
 import { IArticle } from '../../shared/Types/Interfaces';
+import { OfferEntity } from '../offer/entities/offer.entity';
 
 @Injectable()
 export class ArticleService {
   constructor(
     @InjectModel(ArticleEntity.name)
     private readonly articleModel: Model<ArticleEntity>,
+    @InjectModel(OfferEntity.name)
+    private readonly offerModel: Model<OfferEntity>,
   ) {}
 
   async create(
     article: Partial<Omit<IArticle, 'deletedAt'>>,
   ): Promise<IArticle> {
+    const offer = await this.offerModel.findById(article.offerId!);
+    if (!offer) throw new NotFoundException('Offer not found');
+
     article.createdAt = new Date(Date.now());
     article.updatedAt = new Date(Date.now());
-
     const createdArticle = await this.articleModel.create(article);
     return {
       ...createdArticle.toObject(),
@@ -64,6 +69,9 @@ export class ArticleService {
     id: string,
     updateData: Partial<IArticle>,
   ): Promise<IArticle | null> {
+    const article = await this.findById(id);
+    if (!article) throw new NotFoundException('Article not found');
+
     updateData.updatedAt = new Date(Date.now());
     const updated = await this.articleModel
       .findByIdAndUpdate(id, updateData, { returnDocument: 'after' })
@@ -87,6 +95,8 @@ export class ArticleService {
   }
 
   async softDelete(id: string): Promise<IArticle | null> {
+    const article = await this.findById(id);
+    if (!article) throw new NotFoundException('Article not found');
     const deleted = await this.articleModel
       .findByIdAndUpdate(
         id,
