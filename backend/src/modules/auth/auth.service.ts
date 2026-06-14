@@ -35,7 +35,7 @@ export class AuthService {
     const existingUser = await this.userService.findByEmail(tmpUser.email);
     if (existingUser) throw new HttpException(EError.EMAIL_ALREADY_EXISTS, 400);
 
-    const salt = genSaltSync(parseInt(process.env.SALT_ROUNDS + '') || 10);
+    const salt = genSaltSync(10);
     const cryptedPassword = hashSync(tmpUser.password, salt);
     tmpUser.password = cryptedPassword;
     tmpUser.otp = this.generateOtp();
