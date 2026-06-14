@@ -9,6 +9,8 @@ import { ArticleModule } from './modules/article/article.module';
 import { PaymentMethodModule } from './modules/paymentMethod/paymentMethod.module';
 import { PaymentModule } from './modules/payment/payment.module';
 import { OrderModule } from './modules/order/order.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { OrderModule } from './modules/order/order.module';
     MongooseModule.forRoot(
       process.env.DB_URI ?? 'mongodb://localhost:27017/shop2mada',
     ),
+    AuthModule,
+    UserModule,
     GameModule,
     OfferModule,
     ArticleModule,
