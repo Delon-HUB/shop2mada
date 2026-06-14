@@ -49,22 +49,20 @@
         <div v-else class="flex row wrap flex-start">
           <q-item clickable @click="() => (editGameDialog = true)">
             <q-item-section>
-              <q-item-label><q-icon size="24px" name="edit" />Modifier </q-item-label>
+              <q-item-label><q-icon size="1.5em" name="edit" />Modifier </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item clickable @click="deleteGameDialog">
             <q-item-section>
-              <q-item-label
-                ><q-icon size="24px" color="red" name="delete" />Supprimer
-              </q-item-label>
+              <q-item-label><q-icon size="1.5em" color="red" name="delete" />Supprimer </q-item-label>
             </q-item-section>
           </q-item>
 
           <q-item clickable @click="() => (addOfferDialog = true)">
             <q-item-section>
               <q-item-label
-                ><q-icon size="24px" color="primary" name="add" />Nouvelle offre
+                ><q-icon size="1.5em" color="primary" name="add" />Nouvelle offre
               </q-item-label>
             </q-item-section>
           </q-item>

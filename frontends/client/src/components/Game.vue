@@ -1,9 +1,9 @@
 <template>
   <q-card flat bordered class="card q-pa-none fit">
     <q-card-section class="q-pa-none">
-      <q-img class="image" :src="game.cover" />
-      <p class="text-center text-h6 text-bold">{{ game.name }}</p>
+      <q-img class="image" :src="game.cover" :ratio="16 / 9" />
     </q-card-section>
+    <q-card-section class="text-center text-caption">{{ game.name }}</q-card-section>
   </q-card>
 </template>
 
@@ -16,32 +16,16 @@ const props = defineProps<{
 
 <style scoped lang="css">
 .image {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   background-size: cover !important;
   background-position: center top !important;
-  width: 248px;
-  height: 150px;
+  width: 100%;
 }
 
 .card {
-  max-width: 250px;
-  border-radius: 12px;
-}
-
-@media (max-width: 1000px) {
-  .image {
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    background-size: cover !important;
-    background-position: center top !important;
-    width: 158px;
-    height: 100px;
-  }
-
-  .card {
-    max-width: 160px;
-    border-radius: 12px;
-  }
+  min-width: 12em;
+  max-width: 12em;
+  border-radius: 8px;
 }
 </style>

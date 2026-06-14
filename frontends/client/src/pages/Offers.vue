@@ -1,102 +1,74 @@
 <template>
-  <q-card flat class="q-pa-none q-ma-none">
-    <p
-      class="flex row wrap items-stretch justify-center bg-grey-1 q-pa-xs text-bold"
-      style="border-top-left-radius: 4px; border-top-right-radius: 4px"
-    >
-      <q-btn
-        icon="sell"
-        v-for="offer in offers"
-        :key="offer._id"
-        no-caps
-        flat
-        rounded
-        :label="offer.name"
-        class="text-overline q-mr-xs q-mb-xs text-white"
-        :style="
-          tab == offer.name
-            ? { backgroundColor: 'blue', color: 'white' }
-            : { backgroundColor: 'gray', color: 'black' }
-        "
-        @click="() => (tab = offer.name)"
-      />
-    </p>
-
-    <q-tab-panels v-model="tab" animated class="q-pa-none">
-      <q-tab-panel
-        v-for="offer in offers"
-        :name="offer.name"
-        class="articles q-pa-none flex row justify-center wrap"
+  <q-card flat class="q-pa-none q-ma-none bg-grey-1">
+    <q-card-section class="q-ma-none q-pa-none">
+      <q-img :src="currentGame?.cover" class="image q-mb-md" no-native-menu />
+      <p
+        class="absolute-bottom-right q-mt-none text-subtitle1 bg-grey-1 q-px-md text-bold"
+        style="border-top-left-radius: 12px"
       >
-        <article-item
-          v-if="offer.articles.length > 0"
-          v-for="article in offer.articles.sort((a, b) => a.price - b.price)"
-          :key="article._id"
-          :article="article"
-          class="article_item q-ma-xs"
-        />
-        <p v-else class="text-bold text-caption">Aucun article disponible pour le moment</p>
-      </q-tab-panel>
-    </q-tab-panels>
+        {{ currentGame?.name }}
+      </p>
+    </q-card-section>
+    <q-card-section class="q-ma-none q-pa-none">
+      <div class="text-center text-black bg-grey-1">
+        <q-tabs
+          v-model="currentTab"
+          dense
+          class="q-pa-none"
+          active-color="primary"
+          indicator-color="primary"
+          align="center"
+        >
+          <q-tab
+            v-for="offer in currentGame?.offers"
+            :key="offer._id"
+            :name="offer._id"
+            class="text-bold"
+            no-caps
+            ripple
+          >
+            <span>{{ offer.name }}</span>
+          </q-tab>
+        </q-tabs>
+      </div>
+      <q-tab-panels v-model="currentTab" animated class="q-pa-none bg-grey-1 q-mt-md">
+        <q-tab-panel
+          v-for="offer in currentGame?.offers"
+          :name="offer._id"
+          class="articles q-pa-none flex row justify-center wrap"
+        >
+          <article-item
+            v-if="offer.articles.length > 0"
+            v-for="article in offer.articles.sort((a, b) => a.price - b.price)"
+            :key="article._id"
+            :article="article"
+            class="article_item q-ma-xs"
+          />
+          <p v-else class="text-bold text-caption">Aucun article disponible pour le moment</p>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card-section>
   </q-card>
 </template>
 
 <script setup lang="ts">
 import ArticleItem from '@/components/ArticleItem.vue'
+import router from '@/router'
 import { useGameStore } from '@/stores/game.store'
-import type { IOffer } from '@shared/Types/Interfaces'
-import { computed, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, ref } from 'vue'
 
-const games = computed(() => useGameStore().games)
-const router = useRouter()
-const offers = ref<IOffer[]>([])
-const tab = ref(offers.value.length > 0 ? offers.value[0]!.name : '')
+const $gameStore = useGameStore()
+const currentTab = ref($gameStore.currentGame?.offers[0]?._id)
 
-watch(
-  () => games.value,
-  () => {
-    const gameId = router.currentRoute.value.query.game_id
-    if (gameId) {
-      const game = games.value.find((g) => g._id === gameId)
-      if (game && game.offers && game.offers.length > 0) {
-        offers.value = game.offers
-        tab.value = game.offers[0]!.name
-      }
-    }
-  },
-)
+const currentGame = computed(() => $gameStore.currentGame)
 
-const gameId = router.currentRoute.value.query.game_id
-if (gameId) {
-  const game = games.value.find((g) => g._id === gameId)
-  if (game && game.offers && game.offers.length > 0) {
-    offers.value = game.offers
-    tab.value = game.offers[0]!.name
-  }
-}
+if (!currentGame.value) router.push('/games')
 </script>
 
 <style lang="css" scoped>
 .image {
-  background-size: cover !important;
   background-position: center top !important;
-  max-height: 120px;
-}
-
-.carousel {
-  background-size: cover !important;
-  background-position: center top !important;
-}
-
-.offer {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+  max-height: 20vh;
 }
 
 .article_item {

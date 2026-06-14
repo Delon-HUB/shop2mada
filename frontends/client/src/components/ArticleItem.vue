@@ -31,6 +31,7 @@
         @click="
           $shoppingCartStore.add({
             article: props.article as IArticle,
+            name: (props.article as IArticle).name,
             quantity: 1,
             unitPrice: props.article.price,
           })

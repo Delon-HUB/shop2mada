@@ -5,6 +5,7 @@ import { ref } from 'vue'
 
 export const useGameStore = defineStore('gameStore', () => {
   let games = ref<IGame[]>([])
+  const currentGame = ref<IGame>()
 
   const init = async () => {
     await getAll()
@@ -15,5 +16,5 @@ export const useGameStore = defineStore('gameStore', () => {
     games.value = response.data as IGame[]
   }
 
-  return { games, init }
+  return { games, init, currentGame }
 })
