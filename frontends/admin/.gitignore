@@ -39,4 +39,4 @@ __screenshots__/
 *.timestamp-*-*.mjs
 
 # Environment variables
-.env*
+.env
