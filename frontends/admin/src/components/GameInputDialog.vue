@@ -33,12 +33,13 @@
 </template>
 
 <script setup lang="ts">
+import { ECategory } from '@shared/Types/Enums'
 import type { IGame } from '@shared/Types/Interfaces'
 import { computed, ref, watch } from 'vue'
 
 const emits = defineEmits(['finished'])
 const model = defineModel<boolean>()
-const options = ref(['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'])
+const options = ref(Object.keys(ECategory))
 
 const props = defineProps<{ game?: IGame }>()
 const game = ref<Partial<IGame>>({

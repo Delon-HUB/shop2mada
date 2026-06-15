@@ -14,6 +14,6 @@ import { ArticleEntity, ArticleSchema } from './entities/article.entity';
   ],
   providers: [ArticleService],
   controllers: [ArticleController],
-  exports: [ArticleService],
+  exports: [ArticleService, MongooseModule],
 })
 export class ArticleModule {}

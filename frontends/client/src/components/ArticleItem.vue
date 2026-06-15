@@ -16,7 +16,7 @@
     >
       <p class="text-center q-ma-none text-bold">{{ props.article.name }}</p>
       <p class="text-center text-overline text-bold text-primary">
-        + {{ Math.floor(Math.random() * 100) }} diamonds bonus
+        {{ props.article.description }}
       </p>
 
       <p class="text-center">{{ props.article.price }} Ar</p>

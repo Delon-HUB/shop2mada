@@ -10,6 +10,10 @@ import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '../mail/mail.module';
 import { PaymentMethodModule } from '../paymentMethod/paymentMethod.module';
 import { PaymentMethodService } from '../paymentMethod/paymentMethod.service';
+import { GameService } from '../game/game.service';
+import { GameModule } from '../game/game.module';
+import { ArticleService } from '../article/article.service';
+import { ArticleModule } from '../article/article.module';
 
 @Module({
   imports: [
@@ -20,7 +24,15 @@ import { PaymentMethodService } from '../paymentMethod/paymentMethod.service';
     JwtModule,
     MailModule,
     PaymentMethodModule,
+    GameModule,
+    ArticleModule,
   ],
-  providers: [SeedService, AuthService, PaymentMethodService],
+  providers: [
+    SeedService,
+    AuthService,
+    PaymentMethodService,
+    GameService,
+    ArticleService,
+  ],
 })
 export class SeedModule {}

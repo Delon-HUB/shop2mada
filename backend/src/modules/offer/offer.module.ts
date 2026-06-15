@@ -22,6 +22,6 @@ import { ArticleService } from '../article/article.service';
   ],
   providers: [OfferService, ArticleService],
   controllers: [OfferController],
-  exports: [OfferService, ArticleService],
+  exports: [OfferService, ArticleService, MongooseModule],
 })
 export class OfferModule {}

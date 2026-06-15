@@ -22,5 +22,6 @@ import {
   ],
   controllers: [GameController],
   providers: [GameService, OfferService],
+  exports: [GameService, OfferService, MongooseModule],
 })
 export class GameModule {}

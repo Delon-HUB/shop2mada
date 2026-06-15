@@ -12,6 +12,7 @@
           v-model="userCredential.email"
           type="email"
           label="Votre email"
+          :debounce="1_000"
           :rules="[
             () =>
               /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm.test(
