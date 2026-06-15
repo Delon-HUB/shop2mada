@@ -43,7 +43,6 @@ export class AuthService {
     const user: IUser = await this.userService.create(tmpUser);
 
     await this.mailService.sendOtp(user.email, user.otp!);
-    console.log('register');
     return user;
   }
 
