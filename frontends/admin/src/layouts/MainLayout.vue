@@ -55,6 +55,17 @@
                   </q-item-section>
                   <q-item-section>Sécurité</q-item-section>
                 </q-item>
+                <q-item
+                  clickable
+                  v-ripple
+                  class="q-my-none q-py-none text-negative"
+                  @click="() => $authStore.logout()"
+                >
+                  <q-item-section avatar>
+                    <q-icon name="logout" />
+                  </q-item-section>
+                  <q-item-section>Se déconnecter</q-item-section>
+                </q-item>
               </div>
             </q-expansion-item>
           </q-list>
@@ -65,12 +76,14 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/Auth.store'
 import { useOrderStore } from '@/stores/order.store'
 import { usePaymentMethodStore } from '@/stores/paymentMethod.store'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 
 const $q = useQuasar()
+const $authStore = useAuthStore()
 
 const drawer = ref($q.screen.gt.md)
 const menuList = [
