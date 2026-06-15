@@ -35,7 +35,10 @@
           Cette plateforme parmet l'achat d'articles virtuels pour plusieurs jeux. De nouveau
           catalogues seront ajoutés régulièrement.
         </p>
-        <p class="text-h6">Choisissez votre jeu</p>
+        <p v-if="games.length > 0" class="text-h6">Choisissez votre jeu</p>
+        <p v-else class="text-overline text-center">
+          Désolé aucun jeux disponibles pour le moment.
+        </p>
         <div
           class="flex wrap bg-grey-1 q-py-md rounded-borders"
           :class="$q.screen.gt.md ? 'flex-start' : 'justify-evenly'"

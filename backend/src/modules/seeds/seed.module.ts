@@ -8,6 +8,8 @@ import { AuthService } from '../auth/auth.service';
 import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { MailModule } from '../mail/mail.module';
+import { PaymentMethodModule } from '../paymentMethod/paymentMethod.module';
+import { PaymentMethodService } from '../paymentMethod/paymentMethod.service';
 
 @Module({
   imports: [
@@ -17,7 +19,8 @@ import { MailModule } from '../mail/mail.module';
     UserModule,
     JwtModule,
     MailModule,
+    PaymentMethodModule,
   ],
-  providers: [SeedService, AuthService],
+  providers: [SeedService, AuthService, PaymentMethodService],
 })
 export class SeedModule {}

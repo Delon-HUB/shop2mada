@@ -15,5 +15,6 @@ import { PaymentMethodController } from './paymentMethod.controller';
   ],
   providers: [PaymentMethodService],
   controllers: [PaymentMethodController],
+  exports: [PaymentMethodService, MongooseModule],
 })
 export class PaymentMethodModule {}
