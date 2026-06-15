@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { IPayment } from '../../shared/Types/Interfaces';
 import { PaymentService } from './payment.service';
+import { Public } from '../../shared/Types/decorators/decorators';
 
 @Controller('payment')
 export class PaymentController {
@@ -19,6 +20,7 @@ export class PaymentController {
     return 'hello from payments';
   }
 
+  @Public()
   @Post()
   async create(@Body() createPaymentDto: Partial<IPayment>) {
     return await this.paymentService.create(createPaymentDto);

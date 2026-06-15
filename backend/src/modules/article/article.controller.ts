@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import type { IArticle } from '../../shared/Types/Interfaces';
+import { Public } from '../../shared/Types/decorators/decorators';
 
 @Controller('article')
 export class ArticleController {
@@ -19,11 +20,13 @@ export class ArticleController {
     return await this.articleService.create(article);
   }
 
+  @Public()
   @Get()
   async findAll() {
     return await this.articleService.findAll();
   }
 
+  @Public()
   @Get(':id')
   async findById(@Param('id') id: string) {
     return await this.articleService.findById(id);

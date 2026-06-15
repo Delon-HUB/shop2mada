@@ -1,7 +1,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import type { IUser, ILogin } from '../../shared/Types/Interfaces';
+import { Public } from '../../shared/Types/decorators/decorators';
 
+@Public()
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

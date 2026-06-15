@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import type { IGame } from '../../shared/Types/Interfaces';
 import { GameService } from './game.service';
+import { Public } from '../../shared/Types/decorators/decorators';
 
 @Controller('game')
 export class GameController {
@@ -19,11 +20,13 @@ export class GameController {
     return await this.gameService.create(createGameDto);
   }
 
+  @Public()
   @Get()
   async findAll() {
     return await this.gameService.findAll();
   }
 
+  @Public()
   @Get(':id')
   async findById(@Param('id') id: string) {
     return await this.gameService.findById(id);

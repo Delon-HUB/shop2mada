@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { OfferService } from './offer.service';
 import { type IOffer } from '../../shared/Types/Interfaces';
+import { Public } from '../../shared/Types/decorators/decorators';
 
 @Controller('offer')
 export class OfferController {
@@ -20,11 +21,13 @@ export class OfferController {
     return await this.offerService.create(offer);
   }
 
+  @Public()
   @Get()
   async findAll() {
     return this.offerService.findAll();
   }
 
+  @Public()
   @Get(':id')
   async findById(@Param('id') id: string) {
     return await this.offerService.findById(id);

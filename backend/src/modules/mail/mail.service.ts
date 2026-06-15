@@ -79,7 +79,7 @@ export class MailService {
             <p>Si vous n'avez pas demandé ce code, vous pouvez ignorer cet e-mail.</p>
             <p>Merci,<br />L'équipe Support</p>
 
-            <div class="footer">© 2025 MADA-event. Tous droits réservés.</div>
+            <div class="footer">© 2025 Shop2Mada. Tous droits réservés.</div>
             </div>
         </body>
         </html>`;
@@ -115,7 +115,7 @@ export class MailService {
 `;
 
     const info = this.transporter.sendMail({
-      from: { name: 'mada-event', address: process.env.EMAIL_FROM + '' },
+      from: { name: 'SHOP2MADA', address: process.env.EMAIL_FROM + '' },
       to,
       subject: `Bille pour l'événement ${event}`,
       html: htmlTemplate,

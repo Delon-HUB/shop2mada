@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { IOrder, IPayment } from '../../shared/Types/Interfaces';
 import { OrderService } from './order.service';
+import { Public } from '../../shared/Types/decorators/decorators';
 
 @Controller('order')
 export class OrderController {
@@ -12,6 +13,7 @@ export class OrderController {
     return orders.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
+  @Public()
   @Post()
   async create(
     @Body('order') createOrderDto: Partial<IOrder>,
