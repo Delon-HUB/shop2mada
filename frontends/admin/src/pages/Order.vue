@@ -8,8 +8,8 @@
     />
     <p v-else>Aucun résultat corréspondant</p>
   </div>
-  <div v-else class="q-gutter-md flex items-start flex-center wrap q-mt-xl">
-    <Order v-for="order in $orderStore.orders" :order="order" :key="order._id" />
+  <div v-else class="q-gutter-lg flex wrap q-mt-xl">
+    <Order class="self-start" v-for="order in $orderStore.orders" :order="order" :key="order._id" />
   </div>
   <q-page-sticky expand position="top" class="bg-grey-1">
     <q-toolbar class="q-px-xs flex flex-center">

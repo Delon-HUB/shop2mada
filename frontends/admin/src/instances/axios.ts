@@ -1,4 +1,7 @@
-import axios from 'axios'
+import type { EError } from '@shared/Types/Enums'
+import axios, { AxiosError } from 'axios'
+import { translateError } from '@shared/utils/errorForHumain'
+import { useAuthStore } from '@/stores/Auth.store'
 
 const token = localStorage.getItem('token') || ''
 let secureAPI = axios.create({
@@ -17,4 +20,31 @@ const publicAPI = axios.create({
     Accept: 'application/json',
   },
 })
+
+publicAPI.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    const message = translateError(
+      (error.response?.data as { statusCode: number; message: EError })?.message || error.code,
+    )
+    const $authStore = useAuthStore()
+    $authStore.ERROR_MESSAGE = message
+    if (error.status == 401) $authStore.logout()
+    return Promise.reject(error)
+  },
+)
+
+secureAPI.interceptors.response.use(
+  (response) => response,
+  (error: AxiosError) => {
+    const message = translateError(
+      (error.response?.data as { statusCode: number; message: EError })?.message || error.code,
+    )
+    const $authStore = useAuthStore()
+    $authStore.ERROR_MESSAGE = message
+    if (error.status == 401) $authStore.logout()
+    return Promise.reject(error)
+  },
+)
+
 export { publicAPI, secureAPI }

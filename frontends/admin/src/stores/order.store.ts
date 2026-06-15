@@ -1,4 +1,4 @@
-import { publicAPI } from '@/instances/axios'
+import { secureAPI } from '@/instances/axios'
 import type { IOrder, IPayment } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -20,7 +20,7 @@ export const useOrderStore = defineStore('orderStore', () => {
   }
 
   const getAll = async () => {
-    const response = await publicAPI.get('/order')
+    const response = await secureAPI.get('/order')
     orders.value = response.data as IOrder[]
   }
 
@@ -28,7 +28,7 @@ export const useOrderStore = defineStore('orderStore', () => {
     id: string,
     updateData: Partial<IPayment>,
   ): Promise<IPayment> => {
-    const response = await publicAPI.put(`/payment/${id}`, updateData)
+    const response = await secureAPI.put(`/payment/${id}`, updateData)
     const pUpdated = response.data as IPayment
     return pUpdated
   }
@@ -37,7 +37,7 @@ export const useOrderStore = defineStore('orderStore', () => {
     id: string,
     updateData: Partial<IOrder>,
   ): Promise<IOrder> => {
-    const response = await publicAPI.put(`/order/${id}`, updateData)
+    const response = await secureAPI.put(`/order/${id}`, updateData)
     const pUpdated = response.data as IOrder
     return pUpdated
   }

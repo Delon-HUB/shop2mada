@@ -7,7 +7,7 @@ import type {
   IPayment,
   IPaymentMethod,
 } from '@shared/Types/Interfaces'
-import { publicAPI } from '@/instances/axios'
+import { publicAPI, secureAPI } from '@/instances/axios'
 
 export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   const orderItems = ref<IOrderItem[]>([])
@@ -31,6 +31,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
           article: article._id,
           quantity: item.quantity,
           unitPrice: article.price,
+          name: article.name,
         }
       }),
       playerId,
@@ -47,7 +48,7 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
   }
 
   const getPaymentMethods = async () => {
-    const response = await publicAPI.get(`/payment-method?activate=true`)
+    const response = await secureAPI.get(`/payment-method?activate=true`)
     paymentMethods.value = response.data as IPaymentMethod[]
   }
 

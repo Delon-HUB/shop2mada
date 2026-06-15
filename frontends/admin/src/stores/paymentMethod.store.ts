@@ -1,4 +1,4 @@
-import { publicAPI } from '@/instances/axios'
+import { secureAPI } from '@/instances/axios'
 import type { IPaymentMethod } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -11,7 +11,7 @@ export const usePaymentMethodStore = defineStore('paymentMethodStore', () => {
   }
 
   const getAll = async () => {
-    const response = await publicAPI.get(`/payment-method?activate=false`)
+    const response = await secureAPI.get(`/payment-method?activate=false`)
     paymentMethods.value = response.data as IPaymentMethod[]
   }
 
@@ -20,7 +20,7 @@ export const usePaymentMethodStore = defineStore('paymentMethodStore', () => {
   }
 
   const update = async (id: string, updateData: Partial<IPaymentMethod>) => {
-    const response = await publicAPI.put(`/payment-method/${id}`, updateData)
+    const response = await secureAPI.put(`/payment-method/${id}`, updateData)
     const pmUpdated = response.data as IPaymentMethod
     const index = paymentMethods.value.findIndex((pm) => pm._id == pmUpdated._id)
     paymentMethods.value.splice(index, 1, pmUpdated)

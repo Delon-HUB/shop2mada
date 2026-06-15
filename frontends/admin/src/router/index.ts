@@ -1,42 +1,28 @@
 import MainLayout from '@/layouts/MainLayout.vue'
-import Dashboard from '@/pages/Dashboard.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { HOME_ROUTER } from './home'
+import { AUTH_ROUTER } from './auth'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
+      path: '/auth',
+      name: 'auth',
+      redirect: '/auth/login',
+      component: () => import('@/layouts/AuthLayout.vue'),
+      children: [...AUTH_ROUTER],
+    },
+    {
       path: '/',
       component: MainLayout,
       redirect: '/dashboard',
-      children: [
-        {
-          path: '/dashboard',
-          component: Dashboard,
-        },
-        {
-          path: '/games',
-          component: () => import('@/pages/Game.vue'),
-        },
-        {
-          path: '/orders',
-          component: () => import('@/pages/Order.vue'),
-        },
-        {
-          path: '/settings',
-          redirect: 'payment-method',
-          children: [
-            {
-              path: '/payment-method',
-              component: () => import('@/pages/PaymentMethod.vue'),
-            },
-            {
-              path: '/contact',
-              component: () => import('@/pages/Contact.vue'),
-            },
-          ],
-        },
-      ],
+      children: [...HOME_ROUTER],
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: () => import('../pages/NotFound.vue'),
     },
   ],
 })

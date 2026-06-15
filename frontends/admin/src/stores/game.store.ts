@@ -1,4 +1,4 @@
-import { publicAPI } from '@/instances/axios'
+import { publicAPI, secureAPI } from '@/instances/axios'
 import type { IGame } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
@@ -16,18 +16,18 @@ export const useGameStore = defineStore('gameStore', () => {
   }
 
   const addGame = async (newGame: Partial<IGame>) => {
-    const response = await publicAPI.post('/game', newGame)
+    const response = await secureAPI.post('/game', newGame)
     response.data && games.value.push(response.data as IGame)
   }
 
   const update = async (id: string, updateData: Partial<IGame>) => {
-    const response = await publicAPI.put(`/game/${id}`, updateData)
+    const response = await secureAPI.put(`/game/${id}`, updateData)
     const updatedGame = response.data as IGame
     return updatedGame
   }
 
   const deleteFn = async (id: string) => {
-    const response = await publicAPI.delete(`/game/${id}`)
+    const response = await secureAPI.delete(`/game/${id}`)
     const deletedObj = response.data as IGame
     games.value = games.value.filter((g) => g._id != deletedObj._id)
     return deletedObj

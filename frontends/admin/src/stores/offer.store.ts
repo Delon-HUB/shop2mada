@@ -1,4 +1,4 @@
-import { publicAPI } from '@/instances/axios'
+import { secureAPI } from '@/instances/axios'
 import type { IOffer } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
@@ -7,19 +7,19 @@ export const useOfferStore = defineStore('offerStore', () => {
   const $gameStore = useGameStore()
 
   const addOffer = async (newOffer: Partial<IOffer>) => {
-    const response = await publicAPI.post('/offer', newOffer)
+    const response = await secureAPI.post('/offer', newOffer)
     if (response.data) {
       $gameStore.games.find((g) => g._id === newOffer.gameId)?.offers?.push(response.data as IOffer)
     }
   }
   const update = async (id: string, updateData: Partial<IOffer>) => {
-    const response = await publicAPI.put(`/offer/${id}`, updateData)
+    const response = await secureAPI.put(`/offer/${id}`, updateData)
     const updatedOffer = response.data as IOffer
     return updatedOffer
   }
 
   const deleteFn = async (id: string) => {
-    const response = await publicAPI.delete(`/offer/${id}`)
+    const response = await secureAPI.delete(`/offer/${id}`)
     const deletedObj = response.data as IOffer
     const game = $gameStore.games.find((g) => g._id == deletedObj.gameId)
     if (game) {

@@ -1,4 +1,4 @@
-import { publicAPI } from '@/instances/axios'
+import { secureAPI } from '@/instances/axios'
 import type { IArticle } from '@shared/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
@@ -7,7 +7,7 @@ export const useArticleStore = defineStore('articleStore', () => {
   const $gameStore = useGameStore()
 
   const addArticle = async (newArticle: Partial<IArticle>) => {
-    const response = await publicAPI.post('/article', newArticle)
+    const response = await secureAPI.post('/article', newArticle)
     if (response.data) {
       $gameStore.games = $gameStore.games.map((g) => {
         const offer = g.offers.find((o) => o._id === newArticle.offerId)
@@ -20,13 +20,13 @@ export const useArticleStore = defineStore('articleStore', () => {
   }
 
   const update = async (id: string, updateData: Partial<IArticle>) => {
-    const response = await publicAPI.put(`/article/${id}`, updateData)
+    const response = await secureAPI.put(`/article/${id}`, updateData)
     const updatedArticle = response.data as IArticle
     return updatedArticle
   }
 
   const deleteFn = async (id: string) => {
-    const response = await publicAPI.delete(`/article/${id}`)
+    const response = await secureAPI.delete(`/article/${id}`)
     const deletedObj = response.data as IArticle
 
     for (let i = 0; i < $gameStore.games.length; i++) {
