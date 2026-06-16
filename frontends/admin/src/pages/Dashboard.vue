@@ -174,8 +174,8 @@
 import { computed } from 'vue'
 import Chart from '@/components/Chart.vue'
 import { useOrderStore } from '@/stores/order.store'
-import type { IPayment } from '@shared/Types/Interfaces'
-import { EDeliveryStatus, EPaymentStatus } from '@shared/Types/Enums'
+import type { IPayment } from '@/Types/Interfaces'
+import { EDeliveryStatus, EPaymentStatus } from '@/Types/Enums'
 
 const $orderStore = useOrderStore()
 const payments = computed(() => $orderStore.orders.map((o) => o.payment as IPayment))

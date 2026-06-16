@@ -1,5 +1,5 @@
 import { secureAPI } from '@/instances/axios'
-import type { IPaymentMethod } from '@shared/Types/Interfaces'
+import type { IPaymentMethod } from '@/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 

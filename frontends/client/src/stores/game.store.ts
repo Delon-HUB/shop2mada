@@ -1,5 +1,5 @@
 import { publicAPI } from '@/instances/axios'
-import type { IGame } from '@shared/Types/Interfaces'
+import type { IGame } from '@/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 

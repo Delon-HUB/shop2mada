@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
-import { type IArticle } from '@shared/Types/Interfaces'
+import type { IArticle } from '@/Types/Interfaces'
 import { computed } from 'vue'
 
 const props = defineProps<{

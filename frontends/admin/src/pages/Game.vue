@@ -22,7 +22,7 @@
 import Game from '@/components/Game.vue'
 import GameInputDialog from '@/components/GameInputDialog.vue'
 import { useGameStore } from '@/stores/game.store'
-import type { IGame } from '@shared/Types/Interfaces'
+import type { IGame } from '@/Types/Interfaces'
 import { computed, ref } from 'vue'
 
 const $gameStore = useGameStore()

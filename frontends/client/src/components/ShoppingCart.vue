@@ -186,7 +186,7 @@
 import { computed, ref, watch } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
-import type { IArticle, IPaymentMethod } from '@shared/Types/Interfaces/index.ts'
+import type { IArticle, IPaymentMethod } from '@/Types/Interfaces/index.ts'
 import { useQuasar, copyToClipboard } from 'quasar'
 
 const loading = ref<boolean>(false)

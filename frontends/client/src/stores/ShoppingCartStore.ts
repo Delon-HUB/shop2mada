@@ -1,12 +1,6 @@
 import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
-import type {
-  IArticle,
-  IOrder,
-  IOrderItem,
-  IPayment,
-  IPaymentMethod,
-} from '@shared/Types/Interfaces'
+import type { IArticle, IOrder, IOrderItem, IPayment, IPaymentMethod } from '@/Types/Interfaces'
 import { publicAPI, secureAPI } from '@/instances/axios'
 
 export const useShoppingCartStore = defineStore('shoppingCartStore', () => {

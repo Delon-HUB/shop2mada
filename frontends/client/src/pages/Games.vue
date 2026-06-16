@@ -73,7 +73,7 @@
 import Game from '@/components/Game.vue'
 import router from '@/router'
 import { useGameStore } from '@/stores/game.store'
-import type { IGame } from '@shared/Types/Interfaces'
+import type { IGame } from '@/Types/Interfaces'
 import { computed, ref, watch } from 'vue'
 
 const $gameStore = useGameStore()

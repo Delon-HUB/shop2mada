@@ -182,14 +182,8 @@
 
 <script setup lang="ts">
 import { useOrderStore } from '@/stores/order.store'
-import { EDeliveryStatus, EPaymentStatus } from '@shared/Types/Enums'
-import type {
-  IOrderItem,
-  IOrder,
-  IPayment,
-  IPaymentMethod,
-  IArticle,
-} from '@shared/Types/Interfaces'
+import { EDeliveryStatus, EPaymentStatus } from '@/Types/Enums'
+import type { IOrderItem, IOrder, IPayment, IPaymentMethod } from '@/Types/Interfaces'
 import { copyToClipboard } from 'quasar'
 import { computed, ref } from 'vue'
 

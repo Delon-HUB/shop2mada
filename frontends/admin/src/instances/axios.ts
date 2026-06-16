@@ -1,11 +1,11 @@
-import type { EError } from '@shared/Types/Enums'
 import axios, { AxiosError } from 'axios'
-import { translateError } from '@shared/utils/errorForHumain'
+import { translateError } from '@/utils/errorForHumain'
 import { useAuthStore } from '@/stores/Auth.store'
+import type { EError } from '@/Types/Enums'
 
 const token = localStorage.getItem('token') || ''
 let secureAPI = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}`,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -14,7 +14,7 @@ let secureAPI = axios.create({
 })
 
 const publicAPI = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}:${import.meta.env.VITE_API_PORT}`,
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

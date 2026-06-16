@@ -1,5 +1,5 @@
 import { secureAPI } from '@/instances/axios'
-import type { IArticle } from '@shared/Types/Interfaces'
+import type { IArticle } from '@/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
 

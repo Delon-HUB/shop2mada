@@ -33,8 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { ECategory } from '@shared/Types/Enums'
-import type { IGame } from '@shared/Types/Interfaces'
+import { ECategory } from '@/Types/Enums'
+import type { IGame } from '@/Types/Interfaces'
 import { computed, ref, watch } from 'vue'
 
 const emits = defineEmits(['finished'])

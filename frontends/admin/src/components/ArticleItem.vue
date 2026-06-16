@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IArticle } from '@shared/Types/Interfaces'
+import type { IArticle } from '@/Types/Interfaces'
 import { useQuasar } from 'quasar'
 import { ref } from 'vue'
 import ArticleInputDialog from './ArticleInputDialog.vue'

@@ -102,7 +102,7 @@
 </template>
 <script setup lang="ts">
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
-import type { IPaymentMethod } from '@shared/Types/Interfaces'
+import type { IPaymentMethod } from '@/Types/Interfaces'
 import { computed, ref } from 'vue'
 
 const emits = defineEmits(['finished'])

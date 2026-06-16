@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IArticle } from '@shared/Types/Interfaces'
+import type { IArticle } from '@/Types/Interfaces'
 import { ref, watch } from 'vue'
 
 const emits = defineEmits(['finished'])

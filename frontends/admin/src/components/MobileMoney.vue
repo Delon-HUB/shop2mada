@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { usePaymentMethodStore } from '@/stores/paymentMethod.store'
-import type { IPaymentMethod } from '@shared/Types/Interfaces'
+import type { IPaymentMethod } from '@/Types/Interfaces'
 import { computed, ref, watch } from 'vue'
 
 const $paymentMethodStore = usePaymentMethodStore()

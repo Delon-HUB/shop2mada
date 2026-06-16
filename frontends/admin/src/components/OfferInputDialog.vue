@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import type { IOffer } from '@shared/Types/Interfaces'
+import type { IOffer } from '@/Types/Interfaces'
 import { ref, watch } from 'vue'
 
 const model = defineModel<boolean>()

@@ -1,5 +1,5 @@
 import { secureAPI } from '@/instances/axios'
-import type { IOffer } from '@shared/Types/Interfaces'
+import type { IOffer } from '@/Types/Interfaces'
 import { defineStore } from 'pinia'
 import { useGameStore } from './game.store'
 

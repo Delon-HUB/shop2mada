@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import router from '@/router'
 import { useAuthStore } from '@/stores/Auth.store'
-import type { IUser } from '@shared/Types/Interfaces'
+import type { IUser } from '@/Types/Interfaces'
 import { computed, reactive, ref, watch } from 'vue'
 
 const canSend = computed(() =>

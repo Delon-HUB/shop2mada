@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { type IArticle, type IOrderItem } from '@shared/Types/Interfaces'
+import type { IArticle, IOrderItem } from '@/Types/Interfaces'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 
 const props = defineProps<{

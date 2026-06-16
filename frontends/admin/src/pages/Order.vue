@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import Order from '@/components/Order.vue'
 import { useOrderStore } from '@/stores/order.store'
-import type { IOrder, IPayment } from '@shared/Types/Interfaces'
+import type { IOrder, IPayment } from '@/Types/Interfaces'
 import { ref, watch } from 'vue'
 
 const $orderStore = useOrderStore()
