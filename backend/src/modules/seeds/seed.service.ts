@@ -11,6 +11,8 @@ import { PaymentMethodService } from '../paymentMethod/paymentMethod.service';
 import { GameService } from '../game/game.service';
 import { OfferService } from '../offer/offer.service';
 import { ArticleService } from '../article/article.service';
+import gamedata from './data/games.json';
+import paymentMethodData from './data/paymentMethod.json';
 
 @Injectable()
 export class SeedService {
@@ -51,7 +53,8 @@ export class SeedService {
   }
 
   async createMobileMoney() {
-    const paymentMethodList: IPaymentMethod[] = require('./data/paymentMethod.json');
+    const paymentMethodList: IPaymentMethod[] =
+      paymentMethodData as IPaymentMethod[];
     const createdList = await Promise.all(
       paymentMethodList.map(
         async (pm) => await this.paymentMethodService.create(pm),
@@ -62,7 +65,7 @@ export class SeedService {
   }
 
   async createGame() {
-    const gameList: IGame[] = require('./data/games.json');
+    const gameList: IGame[] = gamedata as IGame[];
 
     const createdList = await Promise.all(
       gameList.map(async (g) => {
