@@ -1,0 +1,54 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: mongoDB
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - shop2mada-network
+
+  backend:
+    build:
+      context: ./backend
+    container_name: shop2mada-back
+    env_file:
+      - ./backend/.env
+    ports:
+      - 5000:5000
+    depends_on:
+      - mongo
+    networks:
+      - shop2mada-network
+
+  admin:
+    build:
+      context: "./frontends/admin"
+    container_name: shop2mada-admin
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - shop2mada-network
+    environment:
+      - VITE_API_URL="http://backend:5000"
+
+  client:
+    build:
+      context: "./frontends/client"
+    container_name: shop2mada-client
+    environment:
+      - VITE_API_URL=http://backend:5000
+    ports:
+      - 8081:80
+    networks:
+      - shop2mada-network
+
+volumes:
+  mongo_data:
+
+networks:
+  shop2mada-network:
+    driver: bridge
