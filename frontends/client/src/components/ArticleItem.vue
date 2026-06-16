@@ -23,7 +23,7 @@
     </q-card-section>
     <q-card-actions align="center">
       <q-btn
-        class="text-bold"
+        class="text-bold absolute-bottom-center"
         style="width: 50%"
         outline
         no-caps

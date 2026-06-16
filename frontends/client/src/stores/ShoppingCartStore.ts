@@ -37,8 +37,9 @@ export const useShoppingCartStore = defineStore('shoppingCartStore', () => {
       paymentRef,
       amount: 0,
     }
-    await publicAPI.post('/order', { order: order, payment: payment })
+    const orderCreated = await publicAPI.post('/order', { order: order, payment: payment })
     orderItems.value = []
+    return orderCreated
   }
 
   const getPaymentMethods = async () => {

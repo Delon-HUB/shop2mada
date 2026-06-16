@@ -183,7 +183,7 @@
   </q-layout>
 </template>
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import ShoppingCartItem from './ShoppingCartItem.vue'
 import { useShoppingCartStore } from '@/stores/ShoppingCartStore'
 import type { IArticle, IPaymentMethod } from '@/Types/Interfaces/index.ts'
@@ -216,7 +216,25 @@ const canSubmit = computed(
 
 const sendOrder = async () => {
   loading.value = true
-  await $shoppingCartStore.purchase(playerId.value, nickname.value, contact.value, paymentRef.value)
+  const response = await $shoppingCartStore.purchase(
+    playerId.value,
+    nickname.value,
+    contact.value,
+    paymentRef.value,
+  )
+
+  if (response.status == 201)
+    $q.notify({
+      color: 'primary',
+      textColor: 'white',
+      classes: 'text-caption text-bold',
+      icon: 'check_circle',
+      message: 'Commande bien récu',
+      caption: 'Merci de nous avoir fait confiance',
+      position: 'center',
+      timeout: 3_000,
+    })
+
   loading.value = false
   playerId.value = ''
   nickname.value = ''
