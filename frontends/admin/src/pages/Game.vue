@@ -1,0 +1,37 @@
+<template>
+  <p>
+    <q-btn
+      outline
+      no-caps
+      color="primary"
+      icon="add"
+      label="nouveau jeu"
+      @click="() => (showGameInput = !showGameInput)"
+    />
+  </p>
+  <p v-for="game in games" :key="game._id">
+    <Game :game="game" />
+  </p>
+
+  <GameInputDialog v-model="showGameInput" @finished="handleAddGame">
+    <p class="text-center text-h6 q-mt-xs">Ajouter un jeux</p>
+  </GameInputDialog>
+</template>
+
+<script setup lang="ts">
+import Game from '@/components/Game.vue'
+import GameInputDialog from '@/components/GameInputDialog.vue'
+import { useGameStore } from '@/stores/game.store'
+import type { IGame } from '@/Types/Interfaces'
+import { computed, ref } from 'vue'
+
+const $gameStore = useGameStore()
+$gameStore.init()
+const games = computed(() => $gameStore.games || [])
+
+const showGameInput = ref(false)
+
+const handleAddGame = async (newGame: Partial<IGame>) => {
+  await $gameStore.addGame(newGame)
+}
+</script>
